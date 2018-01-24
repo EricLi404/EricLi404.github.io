@@ -42,7 +42,7 @@
 <meta property="og:url" content="http://ericli.top/2018/01/25/nginx笔记/index.html">
 <meta property="og:site_name" content="DropLet">
 <meta property="og:description" content="搞nginx的笔记">
-<meta property="og:updated_time" content="2018-01-24T13:54:55.101Z">
+<meta property="og:updated_time" content="2018-01-24T15:50:15.895Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="nginx笔记">
 <meta name="twitter:description" content="搞nginx的笔记">
@@ -168,6 +168,25 @@
 </table>
 <p>设置定时每天早上2:22汇总nginx的log文件</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo crontab -e</span><br><span class="line"></span><br><span class="line">#----------------------#</span><br><span class="line"></span><br><span class="line">#在打开的文件中输入：</span><br><span class="line">22 02 * * * /usr/local/EricShell/nginx-logs-conclude</span><br></pre></td></tr></table></figure>
+<h2 id="0x05-location-语法"><a href="#0x05-location-语法" class="headerlink" title="0x05. location 语法"></a>0x05. location 语法</h2><h3 id="三种匹配方式"><a href="#三种匹配方式" class="headerlink" title="三种匹配方式"></a>三种匹配方式</h3><ul>
+<li>location = patt {}    #精准匹配</li>
+<li>location patt{}       #一般匹配</li>
+<li>location ~ patt{}     #正则匹配</li>
+</ul>
+<h3 id="location-语法如何发挥作用"><a href="#location-语法如何发挥作用" class="headerlink" title="location 语法如何发挥作用"></a>location 语法如何发挥作用</h3><p><em>以下内容摘自燕十八老师的课程讲义</em></p>
+<h4 id="e-g-1"><a href="#e-g-1" class="headerlink" title="e.g.  1"></a>e.g.  1</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">location = / &#123;</span><br><span class="line">            root   /var/www/html/;</span><br><span class="line">           index  index.htm index.html;</span><br><span class="line">&#125;</span><br><span class="line">       </span><br><span class="line">location / &#123;</span><br><span class="line">           root   /usr/local/nginx/html;</span><br><span class="line">          index  index.html index.htm;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当访问<code>http://ericli.com/</code> 时，具体匹配流程为：</p>
+<ol>
+<li>“/“ 命中精准匹配 “/“，解析为<code>index</code> 的第一条配置<code>/index.htm</code> 。</li>
+<li>“/index/htm” 命中一般匹配 ，</li>
+</ol>
+<h4 id="e-g-2"><a href="#e-g-2" class="headerlink" title="e.g.   2"></a>e.g.   2</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">            root   /usr/local/nginx/html;</span><br><span class="line">            index  index.html index.htm;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">location ~ image &#123;</span><br><span class="line">           root /var/www/image;</span><br><span class="line">           index index.html;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果我们访问  <code>http://ericli.com/image/logo.png</code><br>此时, “/“ 与”/image/logo.png” 匹配<br>同时,”image”正则 与”image/logo.png”也能匹配,<br>最终会访问正则匹配的 /var/www/image/logo.png </p>
+<h4 id="e-g-3"><a href="#e-g-3" class="headerlink" title="e.g.   3"></a>e.g.   3</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">             root   /usr/local/nginx/html;</span><br><span class="line">             index  index.html index.htm;</span><br><span class="line">         &#125;</span><br><span class="line"> </span><br><span class="line">location /foo &#123;</span><br><span class="line">            root /var/www/html;</span><br><span class="line">             index index.html;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们访问 <code>http://ericli.com/foo</code> ,对于uri “/foo”,   两个location的patt,都能匹配他们,<br>此时, 真正访问后者的 <code>/var/www/html/index.html</code><br>原因:”/foo”匹配的更长(更具体)。</p>
+<h2 id="0x06-nginx-常用命令参数"><a href="#0x06-nginx-常用命令参数" class="headerlink" title="0x06. nginx 常用命令参数"></a>0x06. nginx 常用命令参数</h2><p><strong>查看nginx相关进程</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps aux|grep nginx</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">nginx -t            # 测试配置是否正确</span><br><span class="line">nginx -s reload     # 加载最新配置</span><br><span class="line">nginx -s stop       # 立即停止</span><br><span class="line">nginx -s quit       # 优雅的停止</span><br><span class="line">nginx -s reopen     # 重新打开日志</span><br><span class="line">sudo nginx –c /usr/local/etc/nginx/nginx.conf     # 指定配置文件启动</span><br></pre></td></tr></table></figure>
             </div>
           
 
