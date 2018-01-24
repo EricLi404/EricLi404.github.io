@@ -91,6 +91,28 @@
   </entry>
   
   <entry>
+    <title>MySQL外键踩坑记录</title>
+    <link href="http://ericli.top/2018/01/22/MySQL%E5%A4%96%E9%94%AE%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/"/>
+    <id>http://ericli.top/2018/01/22/MySQL外键踩坑记录/</id>
+    <published>2018-01-21T16:00:00.000Z</published>
+    <updated>2018-01-22T11:42:40.644Z</updated>
+    
+    <content type="html"><![CDATA[<ol><li><p>MySQL有两种常用的引擎类型：MyISAM和InnoDB。目前只有InnoDB引擎类型支持外键约束。</p></li><li><p>外键的使用需要满足下列的条件：</p><ul><li>两张表必须都是InnoDB表，并且它们没有临时表。</li><li>建立外键关系的对应列必须具有相似的InnoDB内部数据类型。</li><li>建立外键关系的对应列必须建立了索引。</li><li>假如显式的给出了CONSTRAINT symbol，那symbol在数据库中必须是唯一的。假如没有显式的给出，InnoDB会自动的创建。</li></ul></li><li><p>外键的四种动作介绍：（默认是RESTRICT）</p><ul><li>CASCADE: 从父表中删除或更新对应的行，同时自动的删除或更新自表中匹配的行。ON DELETE CANSCADE和ON UPDATE CANSCADE都被InnoDB所支持。</li><li>SET NULL: 从父表中删除或更新对应的行，同时将子表中的外键列设为空。注意，这些在外键列没有被设为NOT NULL时才有效。ON DELETE SET NULL和ON UPDATE SET SET NULL都被InnoDB所支持。</li><li>NO ACTION: InnoDB拒绝删除或者更新父表。</li><li>RESTRICT: 拒绝删除或者更新父表。指定RESTRICT（或者NO ACTION）和忽略ON DELETE或者ON UPDATE选项的效果是一样的。</li></ul></li><li><p>外键的四种动作选择：</p><ul><li>父表更新时子表也更新（CASCADE），父表删除时如果子表有匹配的项，删除失败（RESTRICT）； </li><li>父表更新时子表也更新（CASCADE），父表删除时子表匹配的项也删除 （RESTRICT）。</li></ul></li><li><p><code>Cannot add foreign key constraint</code>, 这是创建外键时经常遇到的一个问题，排查方向：</p><ul><li>两边的类型属性等有出入（注意有些软件默认生成的id是有<code>unsigned</code> 的，注意观察两者类型是否一致）</li><li>某个表里面已经有值了</li></ul></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      记录了使用MySQL外键时踩过的坑。
+    
+    </summary>
+    
+    
+      <category term="database" scheme="http://ericli.top/tags/database/"/>
+    
+      <category term="MySQL" scheme="http://ericli.top/tags/MySQL/"/>
+    
+  </entry>
+  
+  <entry>
     <title>MySQL所有者不是mysql的解决方案</title>
     <link href="http://ericli.top/2018/01/22/MySQL%E6%89%80%E6%9C%89%E8%80%85%E4%B8%8D%E6%98%AFmysql%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"/>
     <id>http://ericli.top/2018/01/22/MySQL所有者不是mysql的解决方案/</id>
@@ -111,28 +133,6 @@
       <category term="database" scheme="http://ericli.top/tags/database/"/>
     
       <category term="Linux" scheme="http://ericli.top/tags/Linux/"/>
-    
-      <category term="MySQL" scheme="http://ericli.top/tags/MySQL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>MySQL外键踩坑记录</title>
-    <link href="http://ericli.top/2018/01/22/MySQL%E5%A4%96%E9%94%AE%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/"/>
-    <id>http://ericli.top/2018/01/22/MySQL外键踩坑记录/</id>
-    <published>2018-01-21T16:00:00.000Z</published>
-    <updated>2018-01-22T11:42:40.644Z</updated>
-    
-    <content type="html"><![CDATA[<ol><li><p>MySQL有两种常用的引擎类型：MyISAM和InnoDB。目前只有InnoDB引擎类型支持外键约束。</p></li><li><p>外键的使用需要满足下列的条件：</p><ul><li>两张表必须都是InnoDB表，并且它们没有临时表。</li><li>建立外键关系的对应列必须具有相似的InnoDB内部数据类型。</li><li>建立外键关系的对应列必须建立了索引。</li><li>假如显式的给出了CONSTRAINT symbol，那symbol在数据库中必须是唯一的。假如没有显式的给出，InnoDB会自动的创建。</li></ul></li><li><p>外键的四种动作介绍：（默认是RESTRICT）</p><ul><li>CASCADE: 从父表中删除或更新对应的行，同时自动的删除或更新自表中匹配的行。ON DELETE CANSCADE和ON UPDATE CANSCADE都被InnoDB所支持。</li><li>SET NULL: 从父表中删除或更新对应的行，同时将子表中的外键列设为空。注意，这些在外键列没有被设为NOT NULL时才有效。ON DELETE SET NULL和ON UPDATE SET SET NULL都被InnoDB所支持。</li><li>NO ACTION: InnoDB拒绝删除或者更新父表。</li><li>RESTRICT: 拒绝删除或者更新父表。指定RESTRICT（或者NO ACTION）和忽略ON DELETE或者ON UPDATE选项的效果是一样的。</li></ul></li><li><p>外键的四种动作选择：</p><ul><li>父表更新时子表也更新（CASCADE），父表删除时如果子表有匹配的项，删除失败（RESTRICT）； </li><li>父表更新时子表也更新（CASCADE），父表删除时子表匹配的项也删除 （RESTRICT）。</li></ul></li><li><p><code>Cannot add foreign key constraint</code>, 这是创建外键时经常遇到的一个问题，排查方向：</p><ul><li>两边的类型属性等有出入（注意有些软件默认生成的id是有<code>unsigned</code> 的，注意观察两者类型是否一致）</li><li>某个表里面已经有值了</li></ul></li></ol>]]></content>
-    
-    <summary type="html">
-    
-      记录了使用MySQL外键时踩过的坑。
-    
-    </summary>
-    
-    
-      <category term="database" scheme="http://ericli.top/tags/database/"/>
     
       <category term="MySQL" scheme="http://ericli.top/tags/MySQL/"/>
     
@@ -203,6 +203,26 @@
   </entry>
   
   <entry>
+    <title>如何判断网站是否使用了HTTP2</title>
+    <link href="http://ericli.top/2017/10/20/%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E7%BD%91%E7%AB%99%E6%98%AF%E5%90%A6%E4%BD%BF%E7%94%A8%E4%BA%86HTTP2/"/>
+    <id>http://ericli.top/2017/10/20/如何判断网站是否使用了HTTP2/</id>
+    <published>2017-10-19T16:00:00.000Z</published>
+    <updated>2018-01-21T13:06:55.001Z</updated>
+    
+    <content type="html"><![CDATA[<p>使用 chrome 打开网站，打开 console。</p><p>输入<code>window.chrome.loadTimes()</code> ，执行</p><p> <code>google.com</code>采用了 HTTP/2 结果输出为</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">commitLoadTime</span><br><span class="line">:</span><br><span class="line">1508489268.11</span><br><span class="line">connectionInfo</span><br><span class="line">:</span><br><span class="line">&quot;h2&quot;</span><br><span class="line">finishDocumentLoadTime</span><br><span class="line">:</span><br><span class="line">1508489278.826</span><br><span class="line">finishLoadTime</span><br><span class="line">:</span><br><span class="line">1508489278.84</span><br><span class="line">firstPaintAfterLoadTime</span><br><span class="line">:</span><br><span class="line">0</span><br><span class="line">firstPaintTime</span><br><span class="line">:</span><br><span class="line">1508489282.901</span><br><span class="line">navigationType</span><br><span class="line">:</span><br><span class="line">&quot;Other&quot;</span><br><span class="line">npnNegotiatedProtocol</span><br><span class="line">:</span><br><span class="line">&quot;h2&quot;</span><br><span class="line">requestTime</span><br><span class="line">:</span><br><span class="line">1508489265.936</span><br><span class="line">startLoadTime</span><br><span class="line">:</span><br><span class="line">1508489265.936</span><br><span class="line">wasAlternateProtocolAvailable</span><br><span class="line">:</span><br><span class="line">false</span><br><span class="line">wasFetchedViaSpdy</span><br><span class="line">:</span><br><span class="line">true</span><br><span class="line">wasNpnNegotiated</span><br><span class="line">:</span><br><span class="line">true</span><br></pre></td></tr></table></figure><p>如图<br><img src="http://img.blog.csdn.net/20171020165049487?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGVpZmx5eQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p><p>则表示采用了 HTTP/2 ,.</p><hr><p>反之，<code>baidu.com</code> 没有采用 HTTP/2，则如图</p><p><img src="http://img.blog.csdn.net/20171020165251464?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGVpZmx5eQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>]]></content>
+    
+    <summary type="html">
+    
+      本文记录了判断网站是否使用了HTTP2的方法。
+    
+    </summary>
+    
+    
+      <category term="network" scheme="http://ericli.top/tags/network/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Ubuntu shadowsocks 服务器搭建</title>
     <link href="http://ericli.top/2017/10/20/Ubuntu%20shadowsocks%20%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/"/>
     <id>http://ericli.top/2017/10/20/Ubuntu shadowsocks 服务器搭建/</id>
@@ -221,26 +241,6 @@
       <category term="network" scheme="http://ericli.top/tags/network/"/>
     
       <category term="Linux" scheme="http://ericli.top/tags/Linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>如何判断网站是否使用了HTTP2</title>
-    <link href="http://ericli.top/2017/10/20/%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E7%BD%91%E7%AB%99%E6%98%AF%E5%90%A6%E4%BD%BF%E7%94%A8%E4%BA%86HTTP2/"/>
-    <id>http://ericli.top/2017/10/20/如何判断网站是否使用了HTTP2/</id>
-    <published>2017-10-19T16:00:00.000Z</published>
-    <updated>2018-01-21T13:06:55.001Z</updated>
-    
-    <content type="html"><![CDATA[<p>使用 chrome 打开网站，打开 console。</p><p>输入<code>window.chrome.loadTimes()</code> ，执行</p><p> <code>google.com</code>采用了 HTTP/2 结果输出为</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">commitLoadTime</span><br><span class="line">:</span><br><span class="line">1508489268.11</span><br><span class="line">connectionInfo</span><br><span class="line">:</span><br><span class="line">&quot;h2&quot;</span><br><span class="line">finishDocumentLoadTime</span><br><span class="line">:</span><br><span class="line">1508489278.826</span><br><span class="line">finishLoadTime</span><br><span class="line">:</span><br><span class="line">1508489278.84</span><br><span class="line">firstPaintAfterLoadTime</span><br><span class="line">:</span><br><span class="line">0</span><br><span class="line">firstPaintTime</span><br><span class="line">:</span><br><span class="line">1508489282.901</span><br><span class="line">navigationType</span><br><span class="line">:</span><br><span class="line">&quot;Other&quot;</span><br><span class="line">npnNegotiatedProtocol</span><br><span class="line">:</span><br><span class="line">&quot;h2&quot;</span><br><span class="line">requestTime</span><br><span class="line">:</span><br><span class="line">1508489265.936</span><br><span class="line">startLoadTime</span><br><span class="line">:</span><br><span class="line">1508489265.936</span><br><span class="line">wasAlternateProtocolAvailable</span><br><span class="line">:</span><br><span class="line">false</span><br><span class="line">wasFetchedViaSpdy</span><br><span class="line">:</span><br><span class="line">true</span><br><span class="line">wasNpnNegotiated</span><br><span class="line">:</span><br><span class="line">true</span><br></pre></td></tr></table></figure><p>如图<br><img src="http://img.blog.csdn.net/20171020165049487?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGVpZmx5eQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p><p>则表示采用了 HTTP/2 ,.</p><hr><p>反之，<code>baidu.com</code> 没有采用 HTTP/2，则如图</p><p><img src="http://img.blog.csdn.net/20171020165251464?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGVpZmx5eQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>]]></content>
-    
-    <summary type="html">
-    
-      本文记录了判断网站是否使用了HTTP2的方法。
-    
-    </summary>
-    
-    
-      <category term="network" scheme="http://ericli.top/tags/network/"/>
     
   </entry>
   
@@ -288,9 +288,9 @@
     
       <category term="PHP" scheme="http://ericli.top/tags/PHP/"/>
     
-      <category term="Apache" scheme="http://ericli.top/tags/Apache/"/>
-    
       <category term="brew" scheme="http://ericli.top/tags/brew/"/>
+    
+      <category term="Apache" scheme="http://ericli.top/tags/Apache/"/>
     
       <category term="nginx" scheme="http://ericli.top/tags/nginx/"/>
     
