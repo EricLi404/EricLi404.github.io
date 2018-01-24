@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="本文记录了一些 macOS 的一些 tips 。"/>
+
+
+
+
+  <meta name="keywords" content="macOS," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="DropLet">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="http://ericli.top/2017/06/14/Tips of macOS/"/>
+
+
+<meta name="description" content="本文记录了一些 macOS 的一些 tips 。">
+<meta name="keywords" content="macOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tips of macOS">
+<meta property="og:url" content="http://ericli.top/2017/06/14/Tips of macOS/index.html">
+<meta property="og:site_name" content="DropLet">
+<meta property="og:description" content="本文记录了一些 macOS 的一些 tips 。">
+<meta property="og:updated_time" content="2018-01-20T18:56:17.965Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Tips of macOS">
+<meta name="twitter:description" content="本文记录了一些 macOS 的一些 tips 。">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> Tips of macOS - DropLet </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">DropLet</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Tips of macOS
+        
+      </h1>
+
+      <time class="post-time">
+          Jun 14 2017
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <h1 id="字体美化（华文黑体删除）"><a href="#字体美化（华文黑体删除）" class="headerlink" title="字体美化（华文黑体删除）"></a>字体美化（华文黑体删除）</h1><blockquote>
+<p>本章节参考了孫志貴的一篇博文<br>链接：<a href="http://www.jianshu.com/p/fa5515f09299" target="_blank" rel="noopener">http://www.jianshu.com/p/fa5515f09299</a></p>
+</blockquote>
+<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>1.很多第三方应用打开时会提示下载“华文黑体”，然而在 macOS10.13 中却总是下载失败；<br>2.macOS 中有很多字体在一些地方的显示效果会透露着一股农业重金属的感觉。</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>在恢复模式的终端运行一个 shell , 删除相关字体。</p>
+<h3 id="创建-shell-脚本a-sh"><a href="#创建-shell-脚本a-sh" class="headerlink" title="创建 shell 脚本a.sh"></a>创建 shell 脚本<code>a.sh</code></h3><p>在<code>/Volumes/Macintosh HD</code> 新建一个 shell 文件，内容在下面两个中选择一个。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">只删除华文黑体</span><br><span class="line"></span><br><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">cd &quot;System&quot;</span><br><span class="line"></span><br><span class="line">find . -name &quot;STHeiti*&quot; -type f -delete</span><br><span class="line">find . -name &quot;华文*黑*&quot; -type f -delete</span><br><span class="line">find . -name &quot;STXihei*&quot; -type f -delete</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">删除所有不美观字体</span><br><span class="line"></span><br><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">cd &quot;System&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">find . -name &quot;STHeiti*&quot; -type f -delete</span><br><span class="line">find . -name &quot;华文*黑*&quot; -type f -delete</span><br><span class="line">find . -name &quot;STXihei*&quot; -type f -delete</span><br><span class="line">find . -name &quot;Hei.ttf*&quot; -type f -delete</span><br><span class="line">find . -name &quot;SIL-Hei-Med-Jian.fontinfo&quot; -type f -delete</span><br><span class="line">find . -name &quot;儷黑 Pro.ttf*&quot; -type f -delete</span><br><span class="line">find . -name &quot;LiHeiPro.fontinfo&quot; -type f -delete</span><br><span class="line">find . -name &quot;BiauKai.ttf*&quot; -type f -delete</span><br><span class="line">find . -name &quot;DFKaiShu-SB-Estd-BF.fontinfo&quot; -type f -delete</span><br></pre></td></tr></table></figure>
+<h3 id="运行-shell-脚本"><a href="#运行-shell-脚本" class="headerlink" title="运行 shell 脚本"></a>运行 shell 脚本</h3><ol>
+<li>重启的时候按 cmd + R 进入恢复模式</li>
+<li>进入终端切换到相应目录，执行<code>bash a.sh</code></li>
+</ol>
+<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><p>如果是删除全部不美观字体，那么耗时会比较长，我用了大概将近20分钟吧，要耐心等待，等他运行完再重启。</p>
+<h1 id="调整Launchpad行列数目"><a href="#调整Launchpad行列数目" class="headerlink" title="调整Launchpad行列数目"></a>调整Launchpad行列数目</h1><h2 id="流程："><a href="#流程：" class="headerlink" title="流程："></a>流程：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 改变行数：</span><br><span class="line">defaults write com.apple.dock springboard-rows -int X</span><br><span class="line"></span><br><span class="line">// 改变列数：</span><br><span class="line">defaults write com.apple.dock springboard-columns -int X</span><br><span class="line"></span><br><span class="line">//改变生效：</span><br><span class="line">killall Dock</span><br><span class="line"></span><br><span class="line">其中X是大于0的整数。根据自己喜好调整即可。</span><br></pre></td></tr></table></figure>
+<p>恢复默认：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">defaults write com.apple.dock springboard-rows Default</span><br><span class="line">defaults write com.apple.dock springboard-columns Default</span><br><span class="line">killall Dock</span><br></pre></td></tr></table></figure></p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/macOS/">macOS</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2017/07/10/mac使用 brew 安装php apache 及php nginx 记录/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">mac使用 brew 安装php apache 及php nginx 记录</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2017/03/29/ThinkPHP5.0部署于Linux中白屏或500错误解决方案/">
+        <span class="next-text nav-default">ThinkPHP5.0部署于Linux中白屏或500错误解决方案</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2015 -
+    
+    2018
+    <span class="footer-author">EricLi. 鲁ICP备16001445号.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

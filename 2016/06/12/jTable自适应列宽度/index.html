@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="本文记录了笔者JavaSE课程学习中解决的一个问题。"/>
+
+
+
+
+  <meta name="keywords" content="Java,code," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="DropLet">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="http://ericli.top/2016/06/12/jTable自适应列宽度/"/>
+
+
+<meta name="description" content="本文记录了笔者JavaSE课程学习中解决的一个问题。">
+<meta name="keywords" content="Java,code">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jTable自适应列宽度">
+<meta property="og:url" content="http://ericli.top/2016/06/12/jTable自适应列宽度/index.html">
+<meta property="og:site_name" content="DropLet">
+<meta property="og:description" content="本文记录了笔者JavaSE课程学习中解决的一个问题。">
+<meta property="og:updated_time" content="2018-01-21T13:00:42.490Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jTable自适应列宽度">
+<meta name="twitter:description" content="本文记录了笔者JavaSE课程学习中解决的一个问题。">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> jTable自适应列宽度 - DropLet </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">DropLet</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          jTable自适应列宽度
+        
+      </h1>
+
+      <time class="post-time">
+          Jun 12 2016
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>使用：把要设置自适应宽度的jtable传入既可。<br>为了显示效果，每个列宽我还额外加了10px，如果想修改这个值，可以修改<code>column.setWidth(width + myTable.getIntercellSpacing().width + 10);</code></p>
+<pre><code>/**
+ * 使jtable自适应列宽度
+ * @param myTable
+ */
+public static void FitTableColumns(JTable myTable) {
+    JTableHeader header = myTable.getTableHeader();
+    int rowCount = myTable.getRowCount();
+
+    Enumeration columns = myTable.getColumnModel().getColumns();
+    while (columns.hasMoreElements()) {
+        TableColumn column = (TableColumn) columns.nextElement();
+        int col = header.getColumnModel().getColumnIndex(column.getIdentifier());
+        int width = (int) myTable.getTableHeader().getDefaultRenderer()
+                .getTableCellRendererComponent(myTable, column.getIdentifier(), false, false, -1, col)
+                .getPreferredSize().getWidth();
+        for (int row = 0; row &lt; rowCount; row++) {
+            int preferedWidth = (int) myTable.getCellRenderer(row, col)
+                    .getTableCellRendererComponent(myTable, myTable.getValueAt(row, col), false, false, row, col)
+                    .getPreferredSize().getWidth();
+            width = Math.max(width, preferedWidth);
+        }
+        header.setResizingColumn(column);
+        column.setWidth(width + myTable.getIntercellSpacing().width + 10);
+    }
+}
+</code></pre>
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/Java/">Java</a>
+		  
+			<a href="/tags/code/">code</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2016/07/09/rip协议java模拟实现/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">rip协议Java模拟实现</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2016/06/11/jTable导出到excel/">
+        <span class="next-text nav-default">jTable导出到excel</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2015 -
+    
+    2018
+    <span class="footer-author">EricLi. 鲁ICP备16001445号.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

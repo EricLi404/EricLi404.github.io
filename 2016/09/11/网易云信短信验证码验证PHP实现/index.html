@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="本文给出了使用网易云信相关付费接口实现发送短信验证码的 PHP 实现方式"/>
+
+
+
+
+  <meta name="keywords" content="code,PHP," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="DropLet">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="http://ericli.top/2016/09/11/网易云信短信验证码验证PHP实现/"/>
+
+
+<meta name="description" content="本文给出了使用网易云信相关付费接口实现发送短信验证码的 PHP 实现方式">
+<meta name="keywords" content="code,PHP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网易云信短信验证码验证PHP实现">
+<meta property="og:url" content="http://ericli.top/2016/09/11/网易云信短信验证码验证PHP实现/index.html">
+<meta property="og:site_name" content="DropLet">
+<meta property="og:description" content="本文给出了使用网易云信相关付费接口实现发送短信验证码的 PHP 实现方式">
+<meta property="og:updated_time" content="2018-01-21T13:04:19.776Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="网易云信短信验证码验证PHP实现">
+<meta name="twitter:description" content="本文给出了使用网易云信相关付费接口实现发送短信验证码的 PHP 实现方式">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> 网易云信短信验证码验证PHP实现 - DropLet </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">DropLet</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          网易云信短信验证码验证PHP实现
+        
+      </h1>
+
+      <time class="post-time">
+          Sep 11 2016
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>网易云信5分一条，阿里大于4分5一条，但是网易云信自带验证系统，阿里大于需要自己指定验证码，自己做验证，但是，，，，阿里大于可以自己定义签名，而网易云信只能使用默认的【云短信】，而且阿里大于的短信模板审核很快，，，网易云信妈的，。，，审核了两天，这还是我联系了客服妹子，要不，，，好了。。。不黑网易了。。。接下来上代码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">/**</span><br><span class="line"> * Created by PhpStorm.</span><br><span class="line"> * User: EricLi</span><br><span class="line"> * Date: 2016/9/10</span><br><span class="line"> * Time: 9:20</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">//Auth 类，直接引入就行</span><br><span class="line"></span><br><span class="line">class Auth</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">//将你注册的 key和 secret 定义好。</span><br><span class="line"></span><br><span class="line">    const APP_KEY = &apos;your key&apos;;</span><br><span class="line">    const APP_SECRET = &apos;tour secret&apos;;</span><br><span class="line">//发送验证码函数，传入手机号即可</span><br><span class="line">    public function SendSmsCode($mobile = &quot;&quot;)&#123;</span><br><span class="line">        $appKey = self::APP_KEY;</span><br><span class="line">        $appSecret = self::APP_SECRET;</span><br><span class="line">        $nonce = &apos;100&apos;;</span><br><span class="line">        $curTime = time();</span><br><span class="line">        $checkSum = sha1($appSecret . $nonce . $curTime);</span><br><span class="line">        $data  = array(</span><br><span class="line">            &apos;mobile&apos;=&gt; $mobile,</span><br><span class="line">        );</span><br><span class="line">        $data = http_build_query($data);</span><br><span class="line">        $opts = array (</span><br><span class="line">            &apos;http&apos; =&gt; array(</span><br><span class="line">                &apos;method&apos; =&gt; &apos;POST&apos;,</span><br><span class="line">                &apos;header&apos; =&gt; array(</span><br><span class="line">                    &apos;Content-Type:application/x-www-form-urlencoded;charset=utf-8&apos;,</span><br><span class="line">                    &quot;AppKey:$appKey&quot;,</span><br><span class="line">                    &quot;Nonce:$nonce&quot;,</span><br><span class="line">                    &quot;CurTime:$curTime&quot;,</span><br><span class="line">                    &quot;CheckSum:$checkSum&quot;</span><br><span class="line">                ),</span><br><span class="line">                &apos;content&apos; =&gt;  $data</span><br><span class="line">            ),</span><br><span class="line">        );</span><br><span class="line">        $context = stream_context_create($opts);</span><br><span class="line">        $html = file_get_contents(&quot;https://api.netease.im/sms/sendcode.action&quot;, false, $context);</span><br><span class="line">        echo $html;</span><br><span class="line">    &#125;</span><br><span class="line">//验证码校验函数，传入手机号，以及该手机号反馈给你的验证码，</span><br><span class="line">    public function CheckSmsYzm($mobile = &quot;&quot;,$Code=&quot;&quot;)&#123;</span><br><span class="line">        $appKey = self::APP_KEY;</span><br><span class="line">        $appSecret = self::APP_SECRET;</span><br><span class="line">        $nonce = &apos;100&apos;;</span><br><span class="line">        $curTime = time();</span><br><span class="line">        $checkSum = sha1($appSecret . $nonce . $curTime);</span><br><span class="line">        $data  = array(</span><br><span class="line">            &apos;mobile&apos;=&gt; $mobile,</span><br><span class="line">            &apos;code&apos; =&gt; $Code,</span><br><span class="line">        );</span><br><span class="line">        $data = http_build_query($data);</span><br><span class="line">        $opts = array (</span><br><span class="line">            &apos;http&apos; =&gt; array(</span><br><span class="line">                &apos;method&apos; =&gt; &apos;POST&apos;,</span><br><span class="line">                &apos;header&apos; =&gt; array(</span><br><span class="line">                    &apos;Content-Type:application/x-www-form-urlencoded;charset=utf-8&apos;,</span><br><span class="line">                    &quot;AppKey:$appKey&quot;,</span><br><span class="line">                    &quot;Nonce:$nonce&quot;,</span><br><span class="line">                    &quot;CurTime:$curTime&quot;,</span><br><span class="line">                    &quot;CheckSum:$checkSum&quot;</span><br><span class="line">                ),</span><br><span class="line">                &apos;content&apos; =&gt;  $data</span><br><span class="line">            ),</span><br><span class="line">        );</span><br><span class="line">        $context = stream_context_create($opts);</span><br><span class="line">        $html = file_get_contents(&quot;https://api.netease.im/sms/verifycode.action&quot;, false, $context);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/code/">code</a>
+		  
+			<a href="/tags/PHP/">PHP</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2016/09/15/Oracle DBMS占用大量内存的解决方法/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Oracle DBMS占用大量内存的解决方法</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2016/07/10/DES算法java模拟实现/">
+        <span class="next-text nav-default">DES算法Java模拟实现</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2015 -
+    
+    2018
+    <span class="footer-author">EricLi. 鲁ICP备16001445号.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

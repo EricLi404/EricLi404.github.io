@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="本文记录了笔者大二下学期的计算机网络原理课程设计所做内容。"/>
+
+
+
+
+  <meta name="keywords" content="Java,code," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="DropLet">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="http://ericli.top/2016/07/09/rip协议java模拟实现/"/>
+
+
+<meta name="description" content="本文记录了笔者大二下学期的计算机网络原理课程设计所做内容。">
+<meta name="keywords" content="Java,code">
+<meta property="og:type" content="article">
+<meta property="og:title" content="rip协议Java模拟实现">
+<meta property="og:url" content="http://ericli.top/2016/07/09/rip协议java模拟实现/index.html">
+<meta property="og:site_name" content="DropLet">
+<meta property="og:description" content="本文记录了笔者大二下学期的计算机网络原理课程设计所做内容。">
+<meta property="og:image" content="http://img.blog.csdn.net/20160709003245099">
+<meta property="og:updated_time" content="2018-01-21T13:04:19.730Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="rip协议Java模拟实现">
+<meta name="twitter:description" content="本文记录了笔者大二下学期的计算机网络原理课程设计所做内容。">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20160709003245099">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> rip协议Java模拟实现 - DropLet </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">DropLet</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          rip协议Java模拟实现
+        
+      </h1>
+
+      <time class="post-time">
+          Jul 09 2016
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <blockquote>
+<p>大二下学期的计算机网络原理课程设计</p>
+</blockquote>
+<hr>
+<h3 id="已同步github"><a href="#已同步github" class="headerlink" title="已同步github"></a>已同步github</h3><h2 id="url-https-github-com-EricLi404-Java-Demos-tree-master-Rip-Demo"><a href="#url-https-github-com-EricLi404-Java-Demos-tree-master-Rip-Demo" class="headerlink" title="url:https://github.com/EricLi404/Java-Demos/tree/master/Rip-Demo"></a>url:<a href="https://github.com/EricLi404/Java-Demos/tree/master/Rip-Demo" target="_blank" rel="noopener">https://github.com/EricLi404/Java-Demos/tree/master/Rip-Demo</a></h2><h2 id="一、设计题目：距离矢量路由选择算法的模拟实现"><a href="#一、设计题目：距离矢量路由选择算法的模拟实现" class="headerlink" title="一、设计题目：距离矢量路由选择算法的模拟实现"></a>一、设计题目：距离矢量路由选择算法的模拟实现</h2><h2 id="二、设计要求"><a href="#二、设计要求" class="headerlink" title="二、设计要求"></a>二、设计要求</h2><p>（1）掌握距离矢量路由选择选择算法的工作原理。<br>（2）采用C、Java等编程语言实现距离矢量路由选择选择算法。<br>（3）算法输入：<br>带权图G，如图1所示。<br><img src="http://img.blog.csdn.net/20160709003245099" alt="这里写图片描述"><br>（4）算法输出：</p>
+<ul>
+<li>某个顶点v（路由器）在第i次周期后的整个路由表。</li>
+<li>路由表的结构&lt;目的网络，跳数，下一跳&gt;</li>
+</ul>
+<h2 id="三、设计思路"><a href="#三、设计思路" class="headerlink" title="三、设计思路"></a>三、设计思路</h2><p>距离矢量路由选择选择算法有多种，本设计采用的是比较经典的RIP协议，根据设计要求，只要求输出路由器在第i次周期后的整个路由表，为突出设计要求，本设计简化了RIP协议，与RIPv1，RIPv2和RIPng相比，本设计精简了水平分割、毒性逆转和抑制计时功能，本设计采用手动触发更新，即：手动输入循环周期i次，然后执行i次更新，并输出结果。<br>系统中涉及到三个对象，network，router，routertable，分别表示网络空间，路由器，路由表。其中，系统一共具有1个网络，网络中包括至少一个路由器，每个路由器拥有一个路由表。<br>系统执行大致分为三个阶段：<br>阶段一，系统读取配置文件./config/network.properties，通过其中的配置项来初始化网络空间，建立路由表，建立邻接关系。<br>阶段二，系统提示用户输入周期i，用户将输入反馈给系统。<br>阶段三，系统根据用户输入，执行响应轮次的路由表更新，输出结果。<br>配置文件书写规则：<br>e.g. </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">routernum=6     //路由器数量</span><br><span class="line">networknum=7     //网络数量</span><br><span class="line">0=0              //左侧表示路由器编号，右侧表示网络编号</span><br><span class="line">1=0,1,3,4        //路由器和网络号都从0开始计数</span><br><span class="line">2=1,2			//右侧为该路由器连接的网络，中间用英文&quot;,&quot;隔开</span><br><span class="line">3=3,6</span><br><span class="line">4=3</span><br><span class="line">5=4,5</span><br></pre></td></tr></table></figure>
+<h2 id="四、源码"><a href="#四、源码" class="headerlink" title="四、源码"></a>四、源码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">//Index.java   主类</span><br><span class="line"></span><br><span class="line">package rip;</span><br><span class="line"></span><br><span class="line">import java.util.Scanner;</span><br><span class="line"></span><br><span class="line">public class Index &#123;</span><br><span class="line">	public static void main(String[] args)&#123;</span><br><span class="line">		Network network = new Network();</span><br><span class="line">		network.initNetwork();</span><br><span class="line">		network.setnearRouter();</span><br><span class="line">		System.out.print(&quot;请输入循环轮次:&quot;);</span><br><span class="line">		Scanner in = new Scanner(System.in);</span><br><span class="line">		int i = in.nextInt();</span><br><span class="line">		in.close();</span><br><span class="line">		for(int j = 0; j &lt; i; j++)&#123;</span><br><span class="line">			System.out.println(&quot;=========================循环轮次&quot;+(j+1)+&quot;===========================&quot;);</span><br><span class="line">			network.changeAllRouter();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line">//Network.java 网络空间类</span><br><span class="line"></span><br><span class="line">package rip;</span><br><span class="line"></span><br><span class="line">import java.util.HashMap;</span><br><span class="line"></span><br><span class="line">public class Network &#123;</span><br><span class="line">	private  int   routernum;</span><br><span class="line">	private  int   networknum;</span><br><span class="line">	public Router[] routers;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	public int getRouternum() &#123;</span><br><span class="line">		return routernum;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void setRouternum(int routernum) &#123;</span><br><span class="line">		this.routernum = routernum;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public int getNetworknum() &#123;</span><br><span class="line">		return networknum;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void setNetworknum(int networknum) &#123;</span><br><span class="line">		this.networknum = networknum;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public Router[] getRouters() &#123;</span><br><span class="line">		return routers;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void setRouters(Router[] routers) &#123;</span><br><span class="line">		this.routers = routers;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public Network() &#123;</span><br><span class="line">		super();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	public void initNetwork()&#123;</span><br><span class="line">		HashMap&lt;String, String[]&gt; netconf = Util.readNetworkConfig();</span><br><span class="line">		setRouternum(Integer.parseInt(netconf.get(&quot;routernum&quot;)[0]));</span><br><span class="line">		setNetworknum(Integer.parseInt(netconf.get(&quot;networknum&quot;)[0]));</span><br><span class="line">		//TODO 建立各路由器以及路由表       !important</span><br><span class="line">		Router routerssss[] = new Router[routernum];</span><br><span class="line">		for (int i = 0; i &lt; routernum; i++) &#123;</span><br><span class="line">			HashMap&lt;Integer, String[]&gt; list = new HashMap&lt;&gt;();</span><br><span class="line">			String[] strings = netconf.get(String.valueOf(i));</span><br><span class="line">			for(int j = 0; j &lt; strings.length;j++)&#123;</span><br><span class="line">				String[] temp = &#123;strings[j],&quot;1&quot;, String.valueOf(i)&#125;;</span><br><span class="line">				list.put(j, temp);</span><br><span class="line">			&#125;</span><br><span class="line">			RouterTable routerTable = new RouterTable(list, i);</span><br><span class="line">			Router router = new Router(i, routerTable);</span><br><span class="line">			routerssss[i] = router;</span><br><span class="line">		&#125;</span><br><span class="line">		setRouters(routerssss);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	public void setnearRouter()&#123;</span><br><span class="line">		for (int i = 0; i &lt; routers.length; i++) &#123;</span><br><span class="line">			String str1 = Util.intArray2string(routers[i].getNearNetwork());</span><br><span class="line">			String str3 = &quot;&quot;;</span><br><span class="line">			for(int j = 0; j &lt; routers.length; j++)&#123;</span><br><span class="line">				String str2 = Util.intArray2string(routers[j].getNearNetwork());</span><br><span class="line">				for(int k = 0; k &lt; str2.length(); k++)&#123;</span><br><span class="line">					if (str1.contains(str2.substring(k, k+1))) &#123;</span><br><span class="line">						str3 += j;</span><br><span class="line">						break;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			if (str3.length() &gt; 0) &#123;</span><br><span class="line">				int p[] = new int[str3.length()];</span><br><span class="line">				for (int j = 0; j &lt; str3.length(); j++) &#123;</span><br><span class="line">					p[j] = Integer.parseInt(str3.substring(j, j+1));</span><br><span class="line">				&#125;</span><br><span class="line">				routers[i].setNearRouter(p);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	public void changeAllRouter()&#123;</span><br><span class="line">		//TODO for 循环，每个路由器获取其临近路由器的路由表，然后更新自己的路由表</span><br><span class="line">		for(int i = 0; i &lt; routers.length; i++)&#123;</span><br><span class="line">//			System.out.println(&quot;外循环********************路由器&quot;+i+&quot;开始获取路由表&quot;);</span><br><span class="line">			for(int j = 0; j &lt; routers[i].getNearRouter().length; j++)&#123;</span><br><span class="line">//				System.out.println(&quot;内循环********************路由器了获取路由表&quot;+j);</span><br><span class="line">				routers[i].changeRouterTable(routers[routers[i].getNearRouter()[j]].getRouterTable());</span><br><span class="line">			&#125;</span><br><span class="line">			routers[i].echoRoutertable();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br></pre></td><td class="code"><pre><span class="line">// Router.java 路由器类</span><br><span class="line"></span><br><span class="line">package rip;</span><br><span class="line"></span><br><span class="line">import java.util.HashMap;</span><br><span class="line"></span><br><span class="line">public class Router &#123;</span><br><span class="line">	private  final int routerId;</span><br><span class="line">	private RouterTable routerTable;</span><br><span class="line">	private int[] nearRouter;</span><br><span class="line">	private int[] nearNetwork;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	public RouterTable getRouterTable() &#123;</span><br><span class="line">		return routerTable;</span><br><span class="line">	&#125;</span><br><span class="line">	public void setRouterTable(RouterTable routerTable) &#123;</span><br><span class="line">		this.routerTable = routerTable;</span><br><span class="line">	&#125;</span><br><span class="line">	public void changeRouterTable(RouterTable otherRouterTable)&#123;</span><br><span class="line">		// 规则：</span><br><span class="line">				// 1.  传入的为其临近路由器的路由表</span><br><span class="line">				// 2. 解析路由表</span><br><span class="line">				// 3. 如果有自己路由表里有的网络，检查跳数是否为15，不为15进行以下操作</span><br><span class="line">				// 4. 如果“跳数+1” 小于 本路由表对应条目的跳数，则修改记录</span><br><span class="line">				// 5. 修改记录 “网络号(不变)”，“跳数+1”,“下一跳路由(该路由条目的来源路由)” </span><br><span class="line">				// 6. else如果有本自己路由表里没有的网路，检查跳数是否为15，不为15进行以下操作</span><br><span class="line">				// 7. 添加记录 “网络号”，“跳数+1”,“下一跳路由(该路由条目的来源路由)”</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		//将自己的路由表里 所有的网络号建立一个String，所有的跳数建立一个String，</span><br><span class="line">		//遍历外来路由表的各个网络号，判断是否存在相同的值</span><br><span class="line">		//如果存在 判断跳数（1.是否不等于15，2，是否小于自己对应的跳数+1）</span><br><span class="line">		//          如果满足，修改路由表对应数据</span><br><span class="line">		//			 如果不满足。do nothing</span><br><span class="line">		//如果不存在，判断跳数是否不等于15，</span><br><span class="line">		//            如果满足，添加该路由条目</span><br><span class="line">				</span><br><span class="line">			HashMap&lt;Integer, String[] &gt; otherList = otherRouterTable.getList();</span><br><span class="line">			HashMap&lt;Integer, String[] &gt; selfList = routerTable.getList();</span><br><span class="line">			String otherNetnum = &quot;&quot;;</span><br><span class="line">			String otherTiaonum = &quot;&quot;;</span><br><span class="line">			String selfNetnum = &quot;&quot;;</span><br><span class="line">			String selfTiaonum = &quot;&quot;;</span><br><span class="line">			String selfShouldMod = &quot;&quot;;</span><br><span class="line">			String otherShouldMod = &quot;&quot;;</span><br><span class="line">			String shouldAdd = &quot;&quot;;</span><br><span class="line">			for(int i = 0 ; i &lt; otherList.size(); i++)&#123;</span><br><span class="line">				otherNetnum += otherList.get(i)[0];</span><br><span class="line">				otherTiaonum += otherList.get(i)[1];</span><br><span class="line">			&#125;</span><br><span class="line">			for(int i = 0; i &lt; selfList.size(); i++)&#123;</span><br><span class="line">				selfNetnum += selfList.get(i)[0];</span><br><span class="line">				selfTiaonum += selfList.get(i)[1];</span><br><span class="line">			&#125;</span><br><span class="line">			for(int i = 0; i &lt; otherNetnum.length(); i++)&#123;</span><br><span class="line">//				System.out.println(&quot;第&quot;+i+&quot;循环检验========================&quot;);</span><br><span class="line">				int res = selfNetnum.indexOf(otherNetnum.substring(i,i+1));</span><br><span class="line">				int p = Integer.parseInt(otherTiaonum.substring(i, i+1));</span><br><span class="line">				if (res != -1) &#123;</span><br><span class="line">					int q = Integer.parseInt(selfTiaonum.substring(res, res+1));</span><br><span class="line">					if (p &lt; 15) &#123;</span><br><span class="line">						if ((p+1) &lt; q ) &#123;</span><br><span class="line">							//TODO 修改路由表对应数据</span><br><span class="line">//							System.out.println(&quot;premod=======&quot;+selfNetnum.substring(res, res+1)+&quot;--------&quot;+otherNetnum.substring(i,i+1));</span><br><span class="line">							selfShouldMod += String.valueOf(res);</span><br><span class="line">							otherShouldMod += String.valueOf(i);</span><br><span class="line">						&#125;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;else if (res == -1) &#123;</span><br><span class="line">					if (p &lt; 15) &#123;</span><br><span class="line">						//TODO 添加该条目</span><br><span class="line">//						System.out.println(&quot;preadd=====&quot;+otherNetnum.substring(i,i+1));</span><br><span class="line">						shouldAdd += String.valueOf(i);</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;else &#123;</span><br><span class="line">					System.err.println(&quot;core change err&quot;);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			if (selfShouldMod.length() &gt; 0) &#123;</span><br><span class="line">				for(int i = 0; i &lt; selfShouldMod.length(); i++)&#123;</span><br><span class="line">//					System.out.println(&quot;mod&quot;);</span><br><span class="line">					selfList.remove(selfShouldMod.substring(i,i+1));</span><br><span class="line">					String newChange[] = &#123;</span><br><span class="line">								otherList.get(Integer.parseInt(otherShouldMod.substring(i, i+1)))[0],</span><br><span class="line">								String.valueOf(Integer.parseInt(otherList.get(Integer.parseInt(otherShouldMod.substring(i,i+1)))[1])+1),</span><br><span class="line">								String.valueOf(otherRouterTable.getRouterID())</span><br><span class="line">							&#125;; </span><br><span class="line">					selfList.put(Integer.parseInt(selfShouldMod.substring(i,i+1)), newChange);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			if (shouldAdd.length() &gt; 0) &#123;</span><br><span class="line">//				System.out.println(&quot;1111111111111self.size=================&quot;+selfList.size());</span><br><span class="line">				int len = selfList.size();</span><br><span class="line">				for(int i = 0; i &lt; shouldAdd.length(); i++)&#123;</span><br><span class="line">//					System.out.println(&quot;add&quot;);</span><br><span class="line">					String newChange[] = &#123;</span><br><span class="line">							otherList.get(Integer.parseInt(shouldAdd.substring(i, i+1)))[0],</span><br><span class="line">							String.valueOf(Integer.parseInt(otherList.get(Integer.parseInt(shouldAdd.substring(i,i+1)))[1])+1),</span><br><span class="line">							String.valueOf(otherRouterTable.getRouterID())</span><br><span class="line">						&#125;; </span><br><span class="line">					selfList.put(len+i, newChange);</span><br><span class="line">//					System.out.println(&quot;self.size=================&quot;+selfList.size());</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			routerTable.setList(selfList);</span><br><span class="line">			setRouterTable(routerTable);</span><br><span class="line">	&#125;</span><br><span class="line">	public int[] getNearRouter() &#123;</span><br><span class="line">		return nearRouter;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">	public void setNearRouter(int[] nearRouter) &#123;</span><br><span class="line">		this.nearRouter = nearRouter;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public int[] getNearNetwork() &#123;</span><br><span class="line">		return nearNetwork;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void setNearNetwork(int[] nearNetwork) &#123;</span><br><span class="line">		this.nearNetwork = nearNetwork;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public int getRouterId() &#123;</span><br><span class="line">		return routerId;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	public void echoRoutertable()&#123;</span><br><span class="line">		RouterTable rtTables = getRouterTable(); </span><br><span class="line">		HashMap&lt;Integer, String[]&gt; list = rtTables.getList();</span><br><span class="line">		System.out.println(&quot;*******路由器 &quot;+getRouterTable().getRouterID()+&quot; 路由表******&quot;);</span><br><span class="line">		for (int i = 0; i &lt; list.size(); i++) &#123;</span><br><span class="line">			String[] pStrings = list.get(i);</span><br><span class="line">			System.out.println(&quot;网络：&quot;+pStrings[0]+&quot;  |   &quot;+&quot;跳数：&quot;+pStrings[1]+&quot;   |   &quot;+&quot;下一跳路由器： &quot;+pStrings[2]);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	public Router(int routerId, RouterTable routerTable) &#123;</span><br><span class="line">		super();</span><br><span class="line">		this.routerId = routerId;</span><br><span class="line">		this.routerTable = routerTable;</span><br><span class="line">		//TODO 记录临近的网络</span><br><span class="line">		int[] p = new int[routerTable.getList().size()];</span><br><span class="line">		for(int i = 0; i &lt; routerTable.getList().size(); i++)&#123;</span><br><span class="line">			p[i] = Integer.parseInt(routerTable.getList().get(i)[0]);</span><br><span class="line">		&#125;</span><br><span class="line">		this.nearNetwork = p;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">// RouterTable.java  路由表类</span><br><span class="line"></span><br><span class="line">package rip;</span><br><span class="line"></span><br><span class="line">import java.util.HashMap;</span><br><span class="line"></span><br><span class="line">public class RouterTable &#123;</span><br><span class="line">	private HashMap&lt;Integer, String[] &gt; list;</span><br><span class="line">	private int routerID;</span><br><span class="line">	</span><br><span class="line">	public HashMap&lt;Integer, String[]&gt; getList() &#123;</span><br><span class="line">		return list;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void setList(HashMap&lt;Integer, String[]&gt; list) &#123;</span><br><span class="line">		this.list = list;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public int getRouterID() &#123;</span><br><span class="line">		return routerID;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void setRouterID(int routerID) &#123;</span><br><span class="line">		this.routerID = routerID;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">	public RouterTable(HashMap&lt;Integer, String[]&gt; list, int routerID) &#123;</span><br><span class="line">		super();</span><br><span class="line">		this.list = list;</span><br><span class="line">		this.routerID = routerID;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line">// Util.java  通用函数类</span><br><span class="line">package rip;</span><br><span class="line"></span><br><span class="line">import java.io.BufferedReader;</span><br><span class="line">import java.io.FileInputStream;</span><br><span class="line">import java.io.FileNotFoundException;</span><br><span class="line">import java.io.IOException;</span><br><span class="line">import java.io.InputStream;</span><br><span class="line">import java.io.InputStreamReader;</span><br><span class="line">import java.util.Enumeration;</span><br><span class="line">import java.util.HashMap;</span><br><span class="line">import java.util.Properties;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">public class Util &#123;</span><br><span class="line">	private final static String propertiesUrl = &quot;./config/network.properties&quot;;</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 读取网络配置信息</span><br><span class="line"> * ###网络配置信息相关文档见readme.md</span><br><span class="line"> * @return hashmap</span><br><span class="line"> */</span><br><span class="line">	public static HashMap&lt;String, String[]&gt; readNetworkConfig()&#123;</span><br><span class="line">		HashMap&lt;String, String[]&gt; netconf = new HashMap&lt;&gt;();</span><br><span class="line">		Properties Networkconfig = new Properties();</span><br><span class="line">		try &#123;</span><br><span class="line">			Networkconfig.load(new FileInputStream(propertiesUrl));</span><br><span class="line">		&#125; catch (FileNotFoundException e) &#123;</span><br><span class="line">			// TODO Auto-generated catch block</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125; catch (IOException e) &#123;</span><br><span class="line">			// TODO Auto-generated catch block</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		 @SuppressWarnings(&quot;rawtypes&quot;)</span><br><span class="line">		Enumeration enumm = Networkconfig.propertyNames();</span><br><span class="line">		          while(enumm.hasMoreElements()) &#123;</span><br><span class="line">		              String strKey = (String) enumm.nextElement();</span><br><span class="line">		              String strValue = Networkconfig.getProperty(strKey);</span><br><span class="line">		              String[] strValueArray = strValue.split(&quot;,&quot;);</span><br><span class="line">		              netconf.put(strKey, strValueArray);</span><br><span class="line">		       &#125;</span><br><span class="line">		          return netconf;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	/**</span><br><span class="line">	 * 将int[]数组转为string</span><br><span class="line">	 * @param intarr int[]</span><br><span class="line">	 * @return string</span><br><span class="line">	 */</span><br><span class="line">	public static String intArray2string(int intarr[])&#123;</span><br><span class="line">		String string = &quot;&quot;;</span><br><span class="line">		for(int i = 0; i &lt; intarr.length; i++)&#123;</span><br><span class="line">			string += String.valueOf(intarr[i]);</span><br><span class="line">		&#125;</span><br><span class="line">		return string;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	public static String callCmd(String cmd) throws IOException, InterruptedException &#123;</span><br><span class="line">                // 使用Runtime来执行command，生成Process对象</span><br><span class="line">                Process process = Runtime.getRuntime().exec(new String[] &#123; &quot;/bin/sh&quot;, &quot;-c&quot;, cmd &#125;);</span><br><span class="line">                // int exitCode = process.waitFor();</span><br><span class="line">                // 取得命令结果的输出流</span><br><span class="line">                InputStream is = process.getInputStream();</span><br><span class="line">                // 用一个读输出流类去读</span><br><span class="line">                InputStreamReader isr = new InputStreamReader(is);</span><br><span class="line">                // 用缓冲器读行</span><br><span class="line">                BufferedReader br = new BufferedReader(isr);</span><br><span class="line">                String line = null;</span><br><span class="line">                StringBuilder sb = new StringBuilder();</span><br><span class="line">                while ((line = br.readLine()) != null) &#123;</span><br><span class="line">                    System.out.println(line);</span><br><span class="line">                    sb.append(line);</span><br><span class="line">                &#125;</span><br><span class="line">                is.close();</span><br><span class="line">                isr.close();</span><br><span class="line">                br.close();</span><br><span class="line">                return sb.toString();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">         </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/Java/">Java</a>
+		  
+			<a href="/tags/code/">code</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2016/07/10/DES算法java模拟实现/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">DES算法Java模拟实现</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2016/06/12/jTable自适应列宽度/">
+        <span class="next-text nav-default">jTable自适应列宽度</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2015 -
+    
+    2018
+    <span class="footer-author">EricLi. 鲁ICP备16001445号.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="本文记录了笔者在使用 ionic 和 MUI 开发跨平台 移动app 时实现的双击返回键退出应用。"/>
+
+
+
+
+  <meta name="keywords" content="code," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="DropLet">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="http://ericli.top/2015/08/26/Ionic + MUI实现双击返回键退出应用/"/>
+
+
+<meta name="description" content="本文记录了笔者在使用 ionic 和 MUI 开发跨平台 移动app 时实现的双击返回键退出应用。">
+<meta name="keywords" content="code">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ionic + MUI实现双击返回键退出应用">
+<meta property="og:url" content="http://ericli.top/2015/08/26/Ionic + MUI实现双击返回键退出应用/index.html">
+<meta property="og:site_name" content="DropLet">
+<meta property="og:description" content="本文记录了笔者在使用 ionic 和 MUI 开发跨平台 移动app 时实现的双击返回键退出应用。">
+<meta property="og:updated_time" content="2018-01-21T13:00:42.520Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ionic + MUI实现双击返回键退出应用">
+<meta name="twitter:description" content="本文记录了笔者在使用 ionic 和 MUI 开发跨平台 移动app 时实现的双击返回键退出应用。">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> Ionic + MUI实现双击返回键退出应用 - DropLet </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">DropLet</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Ionic + MUI实现双击返回键退出应用
+        
+      </h1>
+
+      <time class="post-time">
+          Aug 26 2015
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <blockquote>
+<p>使用ionic+MUI联合开发app，鉴于ionic单方面实现的双击返回键过于复杂，所以想出了使用ionic与html5+API一起使用实现双击返回键退出应用，单击返回键返回上层的功能。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">$scope.listenbackbutton = function() &#123;</span><br><span class="line">	document.addEventListener(&quot;plusready&quot;, onPlusReady, false);</span><br><span class="line">		function onPlusReady() &#123;</span><br><span class="line">			plus.key.addEventListener(&quot;backbutton&quot;, function() &#123;</span><br><span class="line">				if ($location.path() == &apos;/tab/index&apos;) &#123;</span><br><span class="line">					if (plus.os.name == &quot;Android&quot;) &#123;</span><br><span class="line">						$ionicLoading.show(&#123;</span><br><span class="line">							template: &quot;再次点击返回键退出应用&quot;</span><br><span class="line">						&#125;);</span><br><span class="line">							$timeout(function() &#123;</span><br><span class="line">							$ionicLoading.hide();</span><br><span class="line">						plus.key.removeEventListener(&quot;backbutton&quot;, function() &#123;&#125;);</span><br><span class="line">							return;</span><br><span class="line">							&#125;, 1000);</span><br><span class="line">						plus.key.addEventListener(&quot;backbutton&quot;, function() &#123;</span><br><span class="line">							plus.runtime.quit();</span><br><span class="line">						&#125;);</span><br><span class="line">				&#125; else &#123;</span><br><span class="line">					outSet(&quot;此平台不支持直接退出程序，请按Home键切换应用&quot;);</span><br><span class="line">					&#125;</span><br><span class="line">				&#125; else &#123;</span><br><span class="line">					$ionicHistory.goBack();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/code/">code</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2015/09/14/Linux搭建ftp服务器/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Linux搭建ftp服务器</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2015/08/23/Ionic省市县三级联动/">
+        <span class="next-text nav-default">Ionic省市县三级联动</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2015 -
+    
+    2018
+    <span class="footer-author">EricLi. 鲁ICP备16001445号.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="本文记录了笔者在使用 brew 安装 apache 和 nginx 时遇到的一些问题的解决方案。"/>
+
+
+
+
+  <meta name="keywords" content="macOS,PHP,Apache,brew,nginx," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="DropLet">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="http://ericli.top/2017/07/10/mac使用 brew 安装php apache 及php nginx 记录/"/>
+
+
+<meta name="description" content="本文记录了笔者在使用 brew 安装 apache 和 nginx 时遇到的一些问题的解决方案。">
+<meta name="keywords" content="macOS,PHP,Apache,brew,nginx">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mac使用 brew 安装php apache 及php nginx 记录">
+<meta property="og:url" content="http://ericli.top/2017/07/10/mac使用 brew 安装php apache 及php nginx 记录/index.html">
+<meta property="og:site_name" content="DropLet">
+<meta property="og:description" content="本文记录了笔者在使用 brew 安装 apache 和 nginx 时遇到的一些问题的解决方案。">
+<meta property="og:updated_time" content="2018-01-20T18:56:05.033Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mac使用 brew 安装php apache 及php nginx 记录">
+<meta name="twitter:description" content="本文记录了笔者在使用 brew 安装 apache 和 nginx 时遇到的一些问题的解决方案。">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> mac使用 brew 安装php apache 及php nginx 记录 - DropLet </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">DropLet</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          mac使用 brew 安装php apache 及php nginx 记录
+        
+      </h1>
+
+      <time class="post-time">
+          Jul 10 2017
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <h2 id="brew-安装php-apache-bug"><a href="#brew-安装php-apache-bug" class="headerlink" title="brew 安装php  apache bug"></a>brew 安装php  apache bug</h2><p>不管是 <code>PHP 5</code> 还是 <code>PHP7</code> 都会丢失<code>libphp5.so</code> 或者<code>libphp7.so</code> 导致无法使用。</p>
+<p><strong>解决方案</strong></p>
+<ul>
+<li>有人给作者的 Github 提了 issue ，解决方案见<a href="https://github.com/Homebrew/homebrew-php/issues/3601" target="_blank" rel="noopener">https://github.com/Homebrew/homebrew-php/issues/3601</a></li>
+<li>stack overflow 也有相关讨论<a href="https://stackoverflow.com/questions/38855651/php7-on-macos-sierra-beta-fails-to-install" target="_blank" rel="noopener">https://stackoverflow.com/questions/38855651/php7-on-macos-sierra-beta-fails-to-install</a></li>
+</ul>
+<h2 id="brew-安装-php-nginx-bug"><a href="#brew-安装-php-nginx-bug" class="headerlink" title="brew 安装 php nginx bug"></a>brew 安装 php nginx bug</h2><p>默认的 <code>nginx.conf</code> 配置得有一些问题。</p>
+<p><code>nginx.conf</code> 所在路径 <code>/usr/local/etc/nginx/nginx.conf</code> </p>
+<p>此配置文件中只涉及到默认的 php 路径，如果配置了 vhost ，该配置就不起作用了附上我的配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#user  nobody;</span><br><span class="line">worker_processes  1;</span><br><span class="line"></span><br><span class="line">#error_log  logs/error.log;</span><br><span class="line">#error_log  logs/error.log  notice;</span><br><span class="line">#error_log  logs/error.log  info;</span><br><span class="line"></span><br><span class="line">#pid        logs/nginx.pid;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">events &#123;</span><br><span class="line">    worker_connections  1024;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line">    include       mime.types;</span><br><span class="line">    default_type  application/octet-stream;</span><br><span class="line"></span><br><span class="line">    #log_format  main  &apos;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &apos;</span><br><span class="line">    #                  &apos;$status $body_bytes_sent &quot;$http_referer&quot; &apos;</span><br><span class="line">    #                  &apos;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&apos;;</span><br><span class="line"></span><br><span class="line">    #access_log  logs/access.log  main;</span><br><span class="line"></span><br><span class="line">    sendfile        on;</span><br><span class="line">    #tcp_nopush     on;</span><br><span class="line"></span><br><span class="line">    #keepalive_timeout  0;</span><br><span class="line">    keepalive_timeout  65;</span><br><span class="line"></span><br><span class="line">    #gzip  on;</span><br><span class="line"></span><br><span class="line">    server &#123;</span><br><span class="line">        listen       80;</span><br><span class="line">        server_name  localhost;</span><br><span class="line"></span><br><span class="line">        #charset koi8-r;</span><br><span class="line"></span><br><span class="line">        #access_log  logs/host.access.log  main;</span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">            root   html;</span><br><span class="line">            index index.php index.html index.htm;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        #error_page  404              /404.html;</span><br><span class="line"></span><br><span class="line">        # redirect server error pages to the static page /50x.html</span><br><span class="line">        #</span><br><span class="line">        error_page   500 502 503 504  /50x.html;</span><br><span class="line">        location = /50x.html &#123;</span><br><span class="line">            root   html;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        # proxy the PHP scripts to Apache listening on 127.0.0.1:80</span><br><span class="line">        #</span><br><span class="line">        #location ~ \.php$ &#123;</span><br><span class="line">        #    proxy_pass   http://127.0.0.1;</span><br><span class="line">        #&#125;</span><br><span class="line"></span><br><span class="line">        # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000</span><br><span class="line">        #</span><br><span class="line">        location ~ \.php$ &#123;</span><br><span class="line">	   fastcgi_intercept_errors on;</span><br><span class="line">            root           html;</span><br><span class="line">            fastcgi_pass   127.0.0.1:9000;</span><br><span class="line">            fastcgi_index  index.php;</span><br><span class="line">            fastcgi_param  SCRIPT_FILENAME  /usr/local/Cellar/nginx/1.12.0_1/html$fastcgi_script_name;</span><br><span class="line">            include        /usr/local/etc/nginx/fastcgi_params;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        # deny access to .htaccess files, if Apache&apos;s document root</span><br><span class="line">        # concurs with nginx&apos;s one</span><br><span class="line">        #</span><br><span class="line">        #location ~ /\.ht &#123;</span><br><span class="line">        #    deny  all;</span><br><span class="line">        #&#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    include servers/*;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我的 vhost 配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">server_name cgadmin.com;</span><br><span class="line">listen 80 ;</span><br><span class="line">       	root  /Users/leif/www/cgadmin/public;</span><br><span class="line">       	index index.html index.htm index.php;</span><br><span class="line">location ~ .php$ &#123;</span><br><span class="line">       	fastcgi_pass 127.0.0.1:9000;</span><br><span class="line">       	fastcgi_index index.php;</span><br><span class="line">       	//这一句配置的是项目目录地址</span><br><span class="line">       	fastcgi_param SCRIPT_FILENAME   /Users/leif/www/cgadmin/public$fastcgi_script_name;</span><br><span class="line">       	include fastcgi_params;</span><br><span class="line">  	 &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/macOS/">macOS</a>
+		  
+			<a href="/tags/PHP/">PHP</a>
+		  
+			<a href="/tags/Apache/">Apache</a>
+		  
+			<a href="/tags/brew/">brew</a>
+		  
+			<a href="/tags/nginx/">nginx</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2017/08/30/nginx 502 解决记录（php-fpm 启动失败）/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">nginx 502 解决记录（php-fpm 启动失败）</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2017/06/14/Tips of macOS/">
+        <span class="next-text nav-default">Tips of macOS</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2015 -
+    
+    2018
+    <span class="footer-author">EricLi. 鲁ICP备16001445号.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="记录了使用MySQL外键时踩过的坑。"/>
+
+
+
+
+  <meta name="keywords" content="database,MySQL," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="DropLet">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="http://ericli.top/2018/01/22/MySQL外键踩坑记录/"/>
+
+
+<meta name="description" content="记录了使用MySQL外键时踩过的坑。">
+<meta name="keywords" content="database,MySQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL外键踩坑记录">
+<meta property="og:url" content="http://ericli.top/2018/01/22/MySQL外键踩坑记录/index.html">
+<meta property="og:site_name" content="DropLet">
+<meta property="og:description" content="记录了使用MySQL外键时踩过的坑。">
+<meta property="og:updated_time" content="2018-01-22T11:42:40.644Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL外键踩坑记录">
+<meta name="twitter:description" content="记录了使用MySQL外键时踩过的坑。">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> MySQL外键踩坑记录 - DropLet </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">DropLet</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          MySQL外键踩坑记录
+        
+      </h1>
+
+      <time class="post-time">
+          Jan 22 2018
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <ol>
+<li><p>MySQL有两种常用的引擎类型：MyISAM和InnoDB。目前只有InnoDB引擎类型支持外键约束。</p>
+</li>
+<li><p>外键的使用需要满足下列的条件：</p>
+<ul>
+<li>两张表必须都是InnoDB表，并且它们没有临时表。</li>
+<li>建立外键关系的对应列必须具有相似的InnoDB内部数据类型。</li>
+<li>建立外键关系的对应列必须建立了索引。</li>
+<li>假如显式的给出了CONSTRAINT symbol，那symbol在数据库中必须是唯一的。假如没有显式的给出，InnoDB会自动的创建。</li>
+</ul>
+</li>
+<li><p>外键的四种动作介绍：（默认是RESTRICT）</p>
+<ul>
+<li>CASCADE: 从父表中删除或更新对应的行，同时自动的删除或更新自表中匹配的行。ON DELETE CANSCADE和ON UPDATE CANSCADE都被InnoDB所支持。</li>
+<li>SET NULL: 从父表中删除或更新对应的行，同时将子表中的外键列设为空。注意，这些在外键列没有被设为NOT NULL时才有效。ON DELETE SET NULL和ON UPDATE SET SET NULL都被InnoDB所支持。</li>
+<li>NO ACTION: InnoDB拒绝删除或者更新父表。</li>
+<li>RESTRICT: 拒绝删除或者更新父表。指定RESTRICT（或者NO ACTION）和忽略ON DELETE或者ON UPDATE选项的效果是一样的。</li>
+</ul>
+</li>
+<li><p>外键的四种动作选择：</p>
+<ul>
+<li>父表更新时子表也更新（CASCADE），父表删除时如果子表有匹配的项，删除失败（RESTRICT）； </li>
+<li>父表更新时子表也更新（CASCADE），父表删除时子表匹配的项也删除 （RESTRICT）。</li>
+</ul>
+</li>
+<li><p><code>Cannot add foreign key constraint</code>, 这是创建外键时经常遇到的一个问题，排查方向：</p>
+<ul>
+<li>两边的类型属性等有出入（注意有些软件默认生成的id是有<code>unsigned</code> 的，注意观察两者类型是否一致）</li>
+<li>某个表里面已经有值了</li>
+</ul>
+</li>
+</ol>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/database/">database</a>
+		  
+			<a href="/tags/MySQL/">MySQL</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2018/01/22/MySQL所有者不是mysql的解决方案/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">MySQL所有者不是mysql的解决方案</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2018/01/18/mac brew 权限问题解决记录/">
+        <span class="next-text nav-default">mac brew 权限问题解决记录</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2015 -
+    
+    2018
+    <span class="footer-author">EricLi. 鲁ICP备16001445号.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

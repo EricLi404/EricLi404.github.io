@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="本文记录了升级 macOS 10.13 之后遇到 nginx 502 问题的解决方案。"/>
+
+
+
+
+  <meta name="keywords" content="macOS,PHP,nginx," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="DropLet">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="http://ericli.top/2017/08/30/nginx 502 解决记录（php-fpm 启动失败）/"/>
+
+
+<meta name="description" content="本文记录了升级 macOS 10.13 之后遇到 nginx 502 问题的解决方案。">
+<meta name="keywords" content="macOS,PHP,nginx">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nginx 502 解决记录（php-fpm 启动失败）">
+<meta property="og:url" content="http://ericli.top/2017/08/30/nginx 502 解决记录（php-fpm 启动失败）/index.html">
+<meta property="og:site_name" content="DropLet">
+<meta property="og:description" content="本文记录了升级 macOS 10.13 之后遇到 nginx 502 问题的解决方案。">
+<meta property="og:updated_time" content="2018-01-20T18:42:52.505Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="nginx 502 解决记录（php-fpm 启动失败）">
+<meta name="twitter:description" content="本文记录了升级 macOS 10.13 之后遇到 nginx 502 问题的解决方案。">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> nginx 502 解决记录（php-fpm 启动失败） - DropLet </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">DropLet</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          nginx 502 解决记录（php-fpm 启动失败）
+        
+      </h1>
+
+      <time class="post-time">
+          Aug 30 2017
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>安装 <code>macOS 10.13</code> 之后发现 <code>nginx</code> 产生了 <code>502 错误</code>，具体解决方式记录如下：</p>
+<h3 id="打开-nginx-error-log"><a href="#打开-nginx-error-log" class="headerlink" title="打开 nginx error log"></a>打开 <code>nginx error log</code></h3><blockquote>
+<p>注：<br>此处 nginx 使用的是 brew 安装的 nginx ，使用其他工具或不同时间安装的 nginx ，在查看 nginx error log 时具体操作可能不同。</p>
+</blockquote>
+<p>我的<code>nginx</code>默认并没有打开 <code>error log</code>，编辑 <code>nginx.conf</code>，打开<code>error log</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">error_log  logs/error.log;</span><br></pre></td></tr></table></figure>
+<p>此时，运行一下<code>sudo nginx</code> 会在<code>/usr/local/Cellar/nginx/1.12.0_1/logs</code> 下产生<code>error.log</code>  文件，</p>
+<p>打开 error log 发现错误信息如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[error] 1676#0: *1 kevent() reported that connect() failed (61: Connection refused) while connecting to upstream, client: 127.0.0.1, server: www, request: &quot;GET / HTTP/1.1&quot;, upstream: &quot;fastcgi://127.0.0.1:9000&quot;, host: &quot;www&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="检查php-fpm"><a href="#检查php-fpm" class="headerlink" title="检查php-fpm"></a>检查<code>php-fpm</code></h3><p>运行<code>sudo php-fpm</code> 报错如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[30-Aug-2017 14:33:37] ERROR: failed to open configuration file &apos;/private/etc/php-fpm.conf&apos;: No such file or directory (2)</span><br><span class="line">[30-Aug-2017 14:33:37] ERROR: failed to load configuration file &apos;/private/etc/php-fpm.conf&apos;</span><br><span class="line">[30-Aug-2017 14:33:37] ERROR: FPM initialization failed</span><br></pre></td></tr></table></figure>
+<h3 id="确定原因为php-fpm-配置文件丢失"><a href="#确定原因为php-fpm-配置文件丢失" class="headerlink" title="确定原因为php-fpm 配置文件丢失"></a>确定原因为<code>php-fpm</code> 配置文件丢失</h3><p>在<code>/private/etc/</code> 找到了<code>php-fpm</code> 的默认配置文件<code>/private/etc/php-fpm.comf.default</code> ；</p>
+<p>复制，新建一份配置文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo cp /private/etc/php-fpm.comf.default /private/etc/php-fpm.conf</span><br></pre></td></tr></table></figure>
+<p>再次运行<code>sudo php-fpm</code> 报错如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/private/etc/php-fpm.conf</span><br><span class="line">[30-Aug-2017 15:19:50] WARNING: Nothing matches the include pattern &apos;/private/etc/php-fpm.d/*.conf&apos; from /private/etc/php-fpm.conf at line 125.</span><br><span class="line">[30-Aug-2017 15:19:50] ERROR: failed to open error_log (/usr/var/log/php-fpm.log): No such file or directory (2)</span><br><span class="line">[30-Aug-2017 15:19:50] ERROR: failed to post process the configuration</span><br><span class="line">[30-Aug-2017 15:19:50] ERROR: FPM initialization failed</span><br></pre></td></tr></table></figure>
+<p>进入<code>/private/etc/php-fpm.d</code> ，复制新建一份配置文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo cp /private/etc/php-fpm.d/www.conf.default /private/etc/php-fpm.d/www.conf</span><br></pre></td></tr></table></figure>
+<p>修改 <code>php-fpm log</code> 默认保存位置</p>
+<p>编辑<code>sudo vim /private/etc/php-fpm.conf</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">error_log = /usr/local/var/log/php-fpm.log</span><br></pre></td></tr></table></figure>
+<p>再次执行<code>sudo php-fpm</code>  ，无错误提示。</p>
+<p>重新启动 <code>nginx</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo nginx -s stop</span><br><span class="line">sudo nginx</span><br></pre></td></tr></table></figure>
+<p>发现<code>502错误</code> 已解决</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/macOS/">macOS</a>
+		  
+			<a href="/tags/PHP/">PHP</a>
+		  
+			<a href="/tags/nginx/">nginx</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2017/10/20/如何判断网站是否使用了HTTP2/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">如何判断网站是否使用了HTTP2</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2017/07/10/mac使用 brew 安装php apache 及php nginx 记录/">
+        <span class="next-text nav-default">mac使用 brew 安装php apache 及php nginx 记录</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2015 -
+    
+    2018
+    <span class="footer-author">EricLi. 鲁ICP备16001445号.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

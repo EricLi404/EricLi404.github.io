@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="本文记录了笔者在阿里云  Ubuntu server 搭建 ftp 服务器的过程。"/>
+
+
+
+
+  <meta name="keywords" content="Linux," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="DropLet">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="http://ericli.top/2015/09/14/Linux搭建ftp服务器/"/>
+
+
+<meta name="description" content="本文记录了笔者在阿里云  Ubuntu server 搭建 ftp 服务器的过程。">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux搭建ftp服务器">
+<meta property="og:url" content="http://ericli.top/2015/09/14/Linux搭建ftp服务器/index.html">
+<meta property="og:site_name" content="DropLet">
+<meta property="og:description" content="本文记录了笔者在阿里云  Ubuntu server 搭建 ftp 服务器的过程。">
+<meta property="og:updated_time" content="2018-01-21T13:02:21.701Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux搭建ftp服务器">
+<meta name="twitter:description" content="本文记录了笔者在阿里云  Ubuntu server 搭建 ftp 服务器的过程。">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> Linux搭建ftp服务器 - DropLet </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">DropLet</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Linux搭建ftp服务器
+        
+      </h1>
+
+      <time class="post-time">
+          Sep 14 2015
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <blockquote>
+<p>服务器环境：Ubuntu server</p>
+</blockquote>
+<h2 id="1-安装ftp客户端"><a href="#1-安装ftp客户端" class="headerlink" title="1.安装ftp客户端"></a>1.安装ftp客户端</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install vsftpd</span><br></pre></td></tr></table></figure>
+<h2 id="2-新建ftp用户user，用于远程登陆ftp"><a href="#2-新建ftp用户user，用于远程登陆ftp" class="headerlink" title="2. 新建ftp用户user，用于远程登陆ftp"></a>2. 新建ftp用户user，用于远程登陆ftp</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir /home/user     #新建用户文件夹</span><br><span class="line"></span><br><span class="line">sudo useradd -d /home/user -s /bin/bash user   #新建用户</span><br><span class="line"></span><br><span class="line">sudo passwd user         #为新建的用户添加密码</span><br></pre></td></tr></table></figure>
+<h2 id="3-新建一个用于交换文件的文件夹"><a href="#3-新建一个用于交换文件的文件夹" class="headerlink" title="3. 新建一个用于交换文件的文件夹"></a>3. 新建一个用于交换文件的文件夹</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cd /home/user</span><br><span class="line"></span><br><span class="line">mkdir file</span><br><span class="line"></span><br><span class="line">chown user:root file</span><br><span class="line"></span><br><span class="line">chmod -R 755 file</span><br></pre></td></tr></table></figure>
+<p>此时file文件夹为数据交换文件夹</p>
+<h2 id="4-配置-etc-vsftpd-conf"><a href="#4-配置-etc-vsftpd-conf" class="headerlink" title="4.配置/etc/vsftpd.conf"></a>4.配置/etc/vsftpd.conf</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#将下列配置项的注释取消</span><br><span class="line"></span><br><span class="line">local_enable=YES</span><br><span class="line"></span><br><span class="line">write_enable=YES</span><br><span class="line"></span><br><span class="line">local_umask=022</span><br><span class="line"></span><br><span class="line">anon_upload_enable=YES</span><br><span class="line"></span><br><span class="line">anon_mkdir_write_enable=YES</span><br></pre></td></tr></table></figure>
+<h2 id="5-附：-etc-vsftpd-conf配置项详解"><a href="#5-附：-etc-vsftpd-conf配置项详解" class="headerlink" title="5.附：/etc/vsftpd.conf配置项详解"></a>5.附：/etc/vsftpd.conf配置项详解</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line"># 是否允许匿名登录FTP服务器，默认设置为YES允许 </span><br><span class="line"># 用户可使用用户名ftp或anonymous进行ftp登录，口令为用户的E-mail地址。 </span><br><span class="line"># 如不允许匿名访问则设置为NO</span><br><span class="line">anonymous_enable=YES</span><br><span class="line"># 是否允许本地用户(即linux系统中的用户帐号)登录FTP服务器，默认设置为YES允许 </span><br><span class="line"># 本地用户登录后会进入用户主目录，而匿名用户登录后进入匿名用户的下载目录/var/ftp/pub</span><br><span class="line"># 若只允许匿名用户访问，前面加上#注释掉即可阻止本地用户访问FTP服务器 </span><br><span class="line">local_enable=YES</span><br><span class="line"># 是否允许本地用户对FTP服务器文件具有写权限，默认设置为YES允许 </span><br><span class="line">write_enable=YES</span><br><span class="line"># 掩码，本地用户默认掩码为077</span><br><span class="line"># 你可以设置本地用户的文件掩码为缺省022，也可根据个人喜好将其设置为其他值 </span><br><span class="line">#local_umask=022</span><br><span class="line"># 是否允许匿名用户上传文件，须将全局的write_enable=YES。默认为YES</span><br><span class="line">#anon_upload_enable=YES</span><br><span class="line"># 是否允许匿名用户创建新文件夹 </span><br><span class="line">#anon_mkdir_write_enable=YES</span><br><span class="line"># 是否激活目录欢迎信息功能 </span><br><span class="line"># 当用户用CMD模式首次访问服务器上某个目录时，FTP服务器将显示欢迎信息 </span><br><span class="line"># 默认情况下，欢迎信息是通过该目录下的.message文件获得的 </span><br><span class="line"># 此文件保存自定义的欢迎信息，由用户自己建立 </span><br><span class="line">#dirmessage_enable=YES</span><br><span class="line"># 是否让系统自动维护上传和下载的日志文件 </span><br><span class="line"># 默认情况该日志文件为/var/log/vsftpd.log,也可以通过下面的xferlog_file选项对其进行设定 </span><br><span class="line"># 默认值为NO</span><br><span class="line">xferlog_enable=YES</span><br><span class="line"># Make sure PORT transfer connections originate from port 20 (ftp-data). </span><br><span class="line"># 是否设定FTP服务器将启用FTP数据端口的连接请求 </span><br><span class="line"># ftp-data数据传输，21为连接控制端口 </span><br><span class="line">connect_from_port_20=YES</span><br><span class="line"># 设定是否允许改变上传文件的属主，与下面一个设定项配合使用 </span><br><span class="line"># 注意，不推荐使用root用户上传文件 </span><br><span class="line">#chown_uploads=YES</span><br><span class="line"># 设置想要改变的上传文件的属主，如果需要，则输入一个系统用户名 </span><br><span class="line"># 可以把上传的文件都改成root属主。whoever：任何人 </span><br><span class="line">#chown_username=whoever</span><br><span class="line"># 设定系统维护记录FTP服务器上传和下载情况的日志文件 </span><br><span class="line"># /var/log/vsftpd.log是默认的，也可以另设其它 </span><br><span class="line">#xferlog_file=/var/log/vsftpd.log</span><br><span class="line"># 是否以标准xferlog的格式书写传输日志文件 </span><br><span class="line"># 默认为/var/log/xferlog，也可以通过xferlog_file选项对其进行设定 </span><br><span class="line"># 默认值为NO</span><br><span class="line">#xferlog_std_format=YES</span><br><span class="line"># 以下是附加配置，添加相应的选项将启用相应的设置 </span><br><span class="line"># 是否生成两个相似的日志文件 </span><br><span class="line"># 默认在/var/log/xferlog和/var/log/vsftpd.log目录下 </span><br><span class="line"># 前者是wu_ftpd类型的传输日志，可以利用标准日志工具对其进行分析；后者是vsftpd类型的日志 </span><br><span class="line">#dual_log_enable</span><br><span class="line"># 是否将原本输出到/var/log/vsftpd.log中的日志，输出到系统日志 </span><br><span class="line">#syslog_enable</span><br><span class="line"># 设置数据传输中断间隔时间，此语句表示空闲的用户会话中断时间为600秒 </span><br><span class="line"># 即当数据传输结束后，用户连接FTP服务器的时间不应超过600秒。可以根据实际情况对该值进行修改 </span><br><span class="line">#idle_session_timeout=600</span><br><span class="line"># 设置数据连接超时时间，该语句表示数据连接超时时间为120秒，可根据实际情况对其个修改 </span><br><span class="line">#data_connection_timeout=120</span><br><span class="line"># 运行vsftpd需要的非特权系统用户，缺省是nobody</span><br><span class="line">#nopriv_user=ftpsecure</span><br><span class="line"># 是否识别异步ABOR请求。 </span><br><span class="line"># 如果FTP client会下达“async ABOR”这个指令时，这个设定才需要启用 </span><br><span class="line"># 而一般此设定并不安全，所以通常将其取消 </span><br><span class="line">#async_abor_enable=YES</span><br><span class="line"># 是否以ASCII方式传输数据。默认情况下，服务器会忽略ASCII方式的请求。 </span><br><span class="line"># 启用此选项将允许服务器以ASCII方式传输数据 </span><br><span class="line"># 不过，这样可能会导致由&quot;SIZE /big/file&quot;方式引起的DoS攻击 </span><br><span class="line">#ascii_upload_enable=YES</span><br><span class="line">#ascii_download_enable=YES</span><br><span class="line"># 登录FTP服务器时显示的欢迎信息 </span><br><span class="line"># 如有需要，可在更改目录欢迎信息的目录下创建名为.message的文件，并写入欢迎信息保存后 </span><br><span class="line">#ftpd_banner=Welcome to blah FTP service. </span><br><span class="line"># 黑名单设置。如果很讨厌某些email address，就可以使用此设定来取消他的登录权限 </span><br><span class="line"># 可以将某些特殊的email address抵挡住。 </span><br><span class="line">#deny_email_enable=YES</span><br><span class="line"># 当上面的deny_email_enable=YES时，可以利用这个设定项来规定哪些邮件地址不可登录vsftpd服务器 </span><br><span class="line"># 此文件需用户自己创建，一行一个email address即可 </span><br><span class="line">#banned_email_file=/etc/vsftpd/banned_emails</span><br><span class="line"># 用户登录FTP服务器后是否具有访问自己目录以外的其他文件的权限 </span><br><span class="line"># 设置为YES时，用户被锁定在自己的home目录中，vsftpd将在下面chroot_list_file选项值的位置寻找chroot_list文件 </span><br><span class="line"># 必须与下面的设置项配合 </span><br><span class="line">#chroot_list_enable=YES</span><br><span class="line"># 被列入此文件的用户，在登录后将不能切换到自己目录以外的其他目录 </span><br><span class="line"># 从而有利于FTP服务器的安全管理和隐私保护。此文件需自己建立 </span><br><span class="line">#chroot_list_file=/etc/vsftpd/chroot_list</span><br><span class="line"># 是否允许递归查询。默认为关闭，以防止远程用户造成过量的I/O</span><br><span class="line">#ls_recurse_enable=YES</span><br><span class="line"># 是否允许监听。 </span><br><span class="line"># 如果设置为YES，则vsftpd将以独立模式运行，由vsftpd自己监听和处理IPv4端口的连接请求 </span><br><span class="line">listen=YES</span><br><span class="line"># 设定是否支持IPV6。如要同时监听IPv4和IPv6端口， </span><br><span class="line"># 则必须运行两套vsftpd，采用两套配置文件 </span><br><span class="line"># 同时确保其中有一个监听选项是被注释掉的 </span><br><span class="line">#listen_ipv6=YES</span><br><span class="line"># 设置PAM外挂模块提供的认证服务所使用的配置文件名，即/etc/pam.d/vsftpd文件 </span><br><span class="line"># 此文件中file=/etc/vsftpd/ftpusers字段，说明了PAM模块能抵挡的帐号内容来自文件/etc/vsftpd/ftpusers中 </span><br><span class="line">#pam_service_name=vsftpd</span><br><span class="line"># 是否允许ftpusers文件中的用户登录FTP服务器，默认为NO</span><br><span class="line"># 若此项设为YES，则user_list文件中的用户允许登录FTP服务器 </span><br><span class="line"># 而如果同时设置了userlist_deny=YES，则user_list文件中的用户将不允许登录FTP服务器，甚至连输入密码提示信息都没有 </span><br><span class="line">#userlist_enable=YES/NO</span><br><span class="line"># 设置是否阻扯user_list文件中的用户登录FTP服务器，默认为YES</span><br><span class="line">#userlist_deny=YES/NO</span><br><span class="line"># 是否使用tcp_wrappers作为主机访问控制方式。 </span><br><span class="line"># tcp_wrappers可以实现linux系统中网络服务的基于主机地址的访问控制 </span><br><span class="line"># 在/etc目录中的hosts.allow和hosts.deny两个文件用于设置tcp_wrappers的访问控制 </span><br><span class="line"># 前者设置允许访问记录，后者设置拒绝访问记录。 </span><br><span class="line"># 如想限制某些主机对FTP服务器192.168.57.2的匿名访问，编缉/etc/hosts.allow文件，如在下面增加两行命令： </span><br><span class="line"># vsftpd:192.168.57.1:DENY 和vsftpd:192.168.57.9:DENY </span><br><span class="line"># 表明限制IP为192.168.57.1/192.168.57.9主机访问IP为192.168.57.2的FTP服务器 </span><br><span class="line"># 此时FTP服务器虽可以PING通，但无法连接 </span><br><span class="line">tcp_wrappers=YES</span><br></pre></td></tr></table></figure>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/Linux/">Linux</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2015/09/14/Ubuntu-unity桌面禁用客人会话/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">ubuntu-unity桌面禁用客人会话</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2015/08/26/Ionic + MUI实现双击返回键退出应用/">
+        <span class="next-text nav-default">Ionic + MUI实现双击返回键退出应用</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2015 -
+    
+    2018
+    <span class="footer-author">EricLi. 鲁ICP备16001445号.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

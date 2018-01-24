@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="本文记录了笔者JavaSE课程学习中解决的一个问题。"/>
+
+
+
+
+  <meta name="keywords" content="Java,code," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="DropLet">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="http://ericli.top/2016/06/11/jTable导出到excel/"/>
+
+
+<meta name="description" content="本文记录了笔者JavaSE课程学习中解决的一个问题。">
+<meta name="keywords" content="Java,code">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jTable导出到excel">
+<meta property="og:url" content="http://ericli.top/2016/06/11/jTable导出到excel/index.html">
+<meta property="og:site_name" content="DropLet">
+<meta property="og:description" content="本文记录了笔者JavaSE课程学习中解决的一个问题。">
+<meta property="og:updated_time" content="2018-01-21T13:00:42.523Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jTable导出到excel">
+<meta name="twitter:description" content="本文记录了笔者JavaSE课程学习中解决的一个问题。">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> jTable导出到excel - DropLet </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">DropLet</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          jTable导出到excel
+        
+      </h1>
+
+      <time class="post-time">
+          Jun 11 2016
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>实现将jtable导出到excel中，直接传入jtable和文件url就行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">	 * 导出jtable的model到excel</span><br><span class="line">	 * @param table 要导出的jtable</span><br><span class="line">	 * @param file 要导出到的file</span><br><span class="line">	 * @throws IOException IO异常</span><br><span class="line">	 */</span><br><span class="line">	public static void exportTable(JTable table, File file) throws IOException &#123;</span><br><span class="line">		try &#123;</span><br><span class="line">			OutputStream out = new FileOutputStream(file);</span><br><span class="line">			TableModel model = table.getModel();</span><br><span class="line">			WritableWorkbook wwb = Workbook.createWorkbook(out);</span><br><span class="line">			// 创建字表，并写入数据</span><br><span class="line">			WritableSheet ws = wwb.createSheet(&quot;中文&quot;, 0);</span><br><span class="line">			// 添加标题</span><br><span class="line">			for (int i = 0; i &lt; model.getColumnCount(); i++) &#123;</span><br><span class="line">				jxl.write.Label labelN = new jxl.write.Label(i, 0, model.getColumnName(i));</span><br><span class="line">				try &#123;</span><br><span class="line">					ws.addCell(labelN);</span><br><span class="line">				&#125; catch (RowsExceededException e) &#123;</span><br><span class="line">					// TODO Auto-generated catch block</span><br><span class="line">					e.printStackTrace();</span><br><span class="line">				&#125; catch (WriteException e) &#123;</span><br><span class="line">					// TODO Auto-generated catch block</span><br><span class="line">					e.printStackTrace();</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			// 添加列</span><br><span class="line">			for (int i = 0; i &lt; model.getColumnCount(); i++) &#123;</span><br><span class="line">				for (int j = 1; j &lt;= model.getRowCount(); j++) &#123;</span><br><span class="line">					jxl.write.Label labelN = new jxl.write.Label(i, j, model.getValueAt(j - 1, i).toString());</span><br><span class="line">					try &#123;</span><br><span class="line">						ws.addCell(labelN);</span><br><span class="line">					&#125; catch (RowsExceededException e) &#123;</span><br><span class="line">						e.printStackTrace();</span><br><span class="line">					&#125; catch (WriteException e) &#123;</span><br><span class="line">						e.printStackTrace();</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			wwb.write();</span><br><span class="line">			try &#123;</span><br><span class="line">				wwb.close();</span><br><span class="line">			&#125; catch (WriteException e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; catch (FileNotFoundException e) &#123;</span><br><span class="line">			JOptionPane.showMessageDialog(null, &quot;导入数据前请关闭工作表&quot;);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/Java/">Java</a>
+		  
+			<a href="/tags/code/">code</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2016/06/12/jTable自适应列宽度/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">jTable自适应列宽度</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2016/04/26/Linux配置JDK环境变量/">
+        <span class="next-text nav-default">Linux配置JDK环境</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2015 -
+    
+    2018
+    <span class="footer-author">EricLi. 鲁ICP备16001445号.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

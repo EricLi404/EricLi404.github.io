@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="批量转换文件编码 shell 脚本。"/>
+
+
+
+
+  <meta name="keywords" content="macOS,Linux," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="DropLet">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="http://ericli.top/2016/12/15/mac或linux批量转换文件编码/"/>
+
+
+<meta name="description" content="批量转换文件编码 shell 脚本。">
+<meta name="keywords" content="macOS,Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mac或linux批量转换文件编码">
+<meta property="og:url" content="http://ericli.top/2016/12/15/mac或linux批量转换文件编码/index.html">
+<meta property="og:site_name" content="DropLet">
+<meta property="og:description" content="批量转换文件编码 shell 脚本。">
+<meta property="og:updated_time" content="2018-01-21T12:57:27.159Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mac或linux批量转换文件编码">
+<meta name="twitter:description" content="批量转换文件编码 shell 脚本。">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> mac或linux批量转换文件编码 - DropLet </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">DropLet</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          mac或linux批量转换文件编码
+        
+      </h1>
+
+      <time class="post-time">
+          Dec 15 2016
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <blockquote>
+<p>坑*的 Android 老师，期末考试让我们在他给出的项目上继续写代码。。。然而，给出的项目中，java 代码部分用的是GB2312，其他地方用的都是 UTF-8，简直坑*。</p>
+</blockquote>
+<p>由于 Mac/Linux 自带一个 iconv ，可以转换文件编码，所以可以借用这个命令来进行文件编码的批量转换。</p>
+<hr>
+<p><strong>进入主题，，直接贴代码</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">find *.$1 -exec sh -c &quot;iconv -f $2 -t $3 &#123;&#125; &gt; &#123;&#125;.temp&quot; \;</span><br><span class="line">find *.$1 -exec rm &#123;&#125; \;</span><br><span class="line">rename &apos;s/\.temp$//&apos; *.temp</span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong><br>有些版本的 osx 是不自带 rename 的，比如我目前（2016年12月）使用的osx10.12.2，需要自己安装rename 才可以使用，安装方式很简单，使用<code>brew install rename</code> 安装就可以了。</p>
+<p>或者可以使用这个版本的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">find *.$1 -exec sh -c &quot;iconv -f $2 -t $3 &#123;&#125; &gt; &#123;&#125;.temp&quot; \;</span><br><span class="line">find *.$1 -exec rm &#123;&#125; \;</span><br><span class="line">for files in *.temp</span><br><span class="line">do</span><br><span class="line">     mv $files $&#123;files%.temp&#125;</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<p><strong>使用方式：</strong></p>
+<p>按顺序传入三个参数：<br>要转码的文件拓展名  源编码   目的编码<br>e.g.<br><code>alliconv.sh java gb2312 utf8</code></p>
+<p><strong>ps：</strong><br>另外，macOS 上发现 <code>/usr/bin</code> ,<code>/usr/sbin</code> 目录不能写入，</p>
+<p>此时可以：<br>1.新建一个运行目录<br>2.关闭 rootless</p>
+<p>新建运行目录就不说了，一般就直接用 <code>/usr/local/bin</code><br>下面给出关闭 rootless 的操作方式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//重启按住 Command+R，进入恢复模式，打开Terminal。</span><br><span class="line"></span><br><span class="line">csrutil disable</span><br></pre></td></tr></table></figure>
+<p>修改好了之后还可以选择再次打开，打开的方式为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//重启按住 Command+R，进入恢复模式，打开Terminal。</span><br><span class="line"></span><br><span class="line">csrutil enable</span><br></pre></td></tr></table></figure>
+<p>以上代码在 osx10.12中测试通过，linux 待测试。</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/macOS/">macOS</a>
+		  
+			<a href="/tags/Linux/">Linux</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2017/03/29/ThinkPHP5.0部署于Linux中白屏或500错误解决方案/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">ThinkPHP5.0部署于Linux中白屏或500错误解决方案</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2016/11/03/macOS缺少Freetype终极解决方案/">
+        <span class="next-text nav-default">macOS 缺少 Freetype 终极解决方案</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2015 -
+    
+    2018
+    <span class="footer-author">EricLi. 鲁ICP备16001445号.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

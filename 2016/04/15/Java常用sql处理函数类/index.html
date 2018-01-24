@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="本文记录了笔者学习Java过程中常用到的一个sql处理函数类。"/>
+
+
+
+
+  <meta name="keywords" content="Java,code,database," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="DropLet">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="http://ericli.top/2016/04/15/Java常用sql处理函数类/"/>
+
+
+<meta name="description" content="本文记录了笔者学习Java过程中常用到的一个sql处理函数类。">
+<meta name="keywords" content="Java,code,database">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java常用sql处理函数类">
+<meta property="og:url" content="http://ericli.top/2016/04/15/Java常用sql处理函数类/index.html">
+<meta property="og:site_name" content="DropLet">
+<meta property="og:description" content="本文记录了笔者学习Java过程中常用到的一个sql处理函数类。">
+<meta property="og:updated_time" content="2018-01-22T11:05:51.736Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java常用sql处理函数类">
+<meta name="twitter:description" content="本文记录了笔者学习Java过程中常用到的一个sql处理函数类。">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> Java常用sql处理函数类 - DropLet </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">DropLet</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Java常用sql处理函数类
+        
+      </h1>
+
+      <time class="post-time">
+          Apr 15 2016
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>java常用sql处理函数类</p>
+<p>使用jdbc操作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br></pre></td><td class="code"><pre><span class="line">import java.sql.Connection;</span><br><span class="line">import java.sql.DriverManager;</span><br><span class="line">import java.sql.ResultSet;</span><br><span class="line">import java.sql.SQLException;</span><br><span class="line">import java.sql.Statement;</span><br><span class="line">import java.util.HashMap;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//封装了数据库的增删改查操作</span><br><span class="line"></span><br><span class="line">public class Sqlutil &#123;</span><br><span class="line">	/**</span><br><span class="line">	 * 连接数据库 </span><br><span class="line">	 * @param url</span><br><span class="line">	 * @param user</span><br><span class="line">	 * @param passwd</span><br><span class="line">	 * @return</span><br><span class="line">	 */</span><br><span class="line">	public static Connection connect(String url, String user, String passwd) &#123;</span><br><span class="line">		Connection conn = null;</span><br><span class="line">		try &#123;</span><br><span class="line">			Class.forName(&quot;com.mysql.jdbc.Driver&quot;);</span><br><span class="line">		&#125; catch (ClassNotFoundException e) &#123;</span><br><span class="line">			// TODO Auto-generated catch block</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		try &#123;</span><br><span class="line">			conn = DriverManager.getConnection(url, user, passwd);</span><br><span class="line">		&#125; catch (SQLException e) &#123;</span><br><span class="line">			// TODO Auto-generated catch block</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		return conn;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">/**</span><br><span class="line"> *   查一条</span><br><span class="line"> * @param conn</span><br><span class="line"> * @param sql</span><br><span class="line"> * @return</span><br><span class="line"> */</span><br><span class="line">	public static HashMap&lt;String, String&gt; fetchOne(Connection conn, String sql) &#123;</span><br><span class="line">		Statement stat = null;</span><br><span class="line">		ResultSet res = null;</span><br><span class="line">		HashMap&lt;String, String&gt; map = new HashMap&lt;&gt;();</span><br><span class="line">		try &#123;</span><br><span class="line">			stat = conn.createStatement();</span><br><span class="line">			res = stat.executeQuery(sql);</span><br><span class="line">			int col = res.getMetaData().getColumnCount();</span><br><span class="line">			res.next();</span><br><span class="line">			for (int i = 1; i &lt; col; i++) &#123;</span><br><span class="line">				map.put(res.getMetaData().getColumnName(i), res.getString(i));</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; catch (SQLException e) &#123;</span><br><span class="line">			// TODO Auto-generated catch block</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		return map;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	/**</span><br><span class="line">	 *   查多条</span><br><span class="line">	 * @param conn</span><br><span class="line">	 * @param sql</span><br><span class="line">	 * @return</span><br><span class="line">	 */</span><br><span class="line">	public static HashMap&lt;Integer, HashMap&lt;String, String&gt;&gt; fetchAll(Connection conn, String sql) &#123;</span><br><span class="line">		Statement stat = null;</span><br><span class="line">		ResultSet res = null;</span><br><span class="line">		HashMap&lt;Integer,HashMap&lt;String, String&gt;&gt; map = new HashMap&lt;&gt;();</span><br><span class="line">		try &#123;</span><br><span class="line">			stat = conn.createStatement();</span><br><span class="line">			res = stat.executeQuery(sql);</span><br><span class="line">			int col = res.getMetaData().getColumnCount();</span><br><span class="line">			int j = 0;</span><br><span class="line">			while (res.next()) &#123;</span><br><span class="line">				HashMap&lt;String, String&gt; tmap = new HashMap&lt;&gt;();</span><br><span class="line">				for (int i = 1; i &lt; col; i++) &#123;</span><br><span class="line">					tmap.put(res.getMetaData().getColumnName(i), res.getString(i));</span><br><span class="line">				&#125;</span><br><span class="line">				map.put(j, tmap);</span><br><span class="line">				j++;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; catch (SQLException e) &#123;</span><br><span class="line">			// TODO Auto-generated catch block</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		return map;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	/**</span><br><span class="line">	 *    增删改  </span><br><span class="line">	 * @param conn </span><br><span class="line">	 * @param sql</span><br><span class="line">	 * @return</span><br><span class="line">	 */</span><br><span class="line">	public static int update(Connection conn, String sql) &#123;</span><br><span class="line">		Statement stat;</span><br><span class="line">		int res = 0;</span><br><span class="line">		try &#123;</span><br><span class="line">			stat = conn.createStatement();</span><br><span class="line">			res = stat.executeUpdate(sql);</span><br><span class="line">		&#125; catch (SQLException e) &#123;</span><br><span class="line">			// TODO Auto-generated catch block</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		return res;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/Java/">Java</a>
+		  
+			<a href="/tags/code/">code</a>
+		  
+			<a href="/tags/database/">database</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2016/04/26/Linux修改用户目录文件名/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Linux修改用户目录文件名</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2016/04/14/Java实现md5和sha1加密类/">
+        <span class="next-text nav-default">Java实现md5和sha1加密类</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2015 -
+    
+    2018
+    <span class="footer-author">EricLi. 鲁ICP备16001445号.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

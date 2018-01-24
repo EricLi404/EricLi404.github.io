@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="小爬虫，从淘宝缓存服务器爬淘宝商品数据。"/>
+
+
+
+
+  <meta name="keywords" content="PHP," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="DropLet">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="http://ericli.top/2016/01/30/PHP实现抓取淘宝商品价格|人气|图片/"/>
+
+
+<meta name="description" content="小爬虫，从淘宝缓存服务器爬淘宝商品数据。">
+<meta name="keywords" content="PHP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP实现抓取淘宝商品价格|人气|图片">
+<meta property="og:url" content="http://ericli.top/2016/01/30/PHP实现抓取淘宝商品价格|人气|图片/index.html">
+<meta property="og:site_name" content="DropLet">
+<meta property="og:description" content="小爬虫，从淘宝缓存服务器爬淘宝商品数据。">
+<meta property="og:updated_time" content="2018-01-21T13:04:19.765Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHP实现抓取淘宝商品价格|人气|图片">
+<meta name="twitter:description" content="小爬虫，从淘宝缓存服务器爬淘宝商品数据。">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> PHP实现抓取淘宝商品价格|人气|图片 - DropLet </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">DropLet</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          PHP实现抓取淘宝商品价格|人气|图片
+        
+      </h1>
+
+      <time class="post-time">
+          Jan 30 2016
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>寒假在家无聊想看一下淘宝相关开发怎么样，注册了个淘宝开发者，然后想调api的时候，发现还要很多很复杂的步骤，而且有的还收费，太尼玛坑爹了，于是自己尝试抓了一些淘宝的数据，做了自己的api。</p>
+<p>其中获取商品人气，也就是收藏人数，目前只支持淘宝商品，不支持天猫，获取人气、商品名是淘宝和天猫都支持的，但是由于是抓取的淘宝的缓存文件，所以。。。有可能会出现一些问题，但我测试过程中还没遇到问题。</p>
+<p>如果大家在使用过程中发现问题，欢迎与我联系，我会进行改进。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">/**</span><br><span class="line"> * Created by PhpStorm.</span><br><span class="line"> * User: leif</span><br><span class="line"> * Date: 16/1/26</span><br><span class="line"> * Time: 10:17</span><br><span class="line"> * email: leiflyy@outlook.com</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> *  实现传入宝贝的id,返回宝贝的链接,支持淘宝</span><br><span class="line"> * @param $id 宝贝的id</span><br><span class="line"> * @return string 返回的宝贝的链接</span><br><span class="line"> */</span><br><span class="line">function getTbLink($id)&#123;</span><br><span class="line">    $url=&quot;https://item.taobao.com/item.htm?spm=a1z10.4-c.w5003-12641268955.30.0lDnKZ&amp;id=&quot;.$id.&quot;&amp;scene=taobao_shop&quot;;</span><br><span class="line">    return $url;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 实现传入宝贝的id,获取宝贝的商品名,支持淘宝和天猫</span><br><span class="line"> * @param $id  宝贝的id</span><br><span class="line"> * @return mixed  宝贝的商品名</span><br><span class="line"> */</span><br><span class="line">function getNameById($id)&#123;</span><br><span class="line">    $url=&quot;http://hws.m.taobao.com/cache/wdetail/5.0/?id=&quot;.$id;</span><br><span class="line">    $content=file_get_contents($url);</span><br><span class="line">    $content_ori=strip_tags($content);</span><br><span class="line">    $content_arr=json_decode($content_ori,true);</span><br><span class="line">    $detail=json_decode($content_arr[&apos;data&apos;][&apos;apiStack&apos;][&apos;0&apos;][&apos;value&apos;],true);</span><br><span class="line">    $success_sym=$detail[&apos;ret&apos;][&apos;0&apos;];//成功则返回&quot;SUCCESS::调用成功&quot;;</span><br><span class="line">    if($success_sym==&quot;SUCCESS::调用成功&quot;)&#123;</span><br><span class="line">        $name=$content_arr[&apos;data&apos;][&apos;itemInfoModel&apos;][&apos;title&apos;];</span><br><span class="line">        return $name;</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        return &quot;&lt;script type=&apos;text/javascript&apos;&gt;alert(&apos;宝贝不存在!&apos;);&lt;/script&gt;&quot;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 实现传入宝贝id,获取宝贝价格,支持淘宝和天猫</span><br><span class="line"> * @param $id   宝贝的id</span><br><span class="line"> * @return mixed 返回的宝贝的价格或价格区间</span><br><span class="line"> */</span><br><span class="line">function getPriceById($id)&#123;</span><br><span class="line">    $url=&quot;http://hws.m.taobao.com/cache/wdetail/5.0/?id=&quot;.$id;</span><br><span class="line">    $content=file_get_contents($url);</span><br><span class="line">    $content_ori=strip_tags($content);</span><br><span class="line">    $content_arr=json_decode($content_ori,true);</span><br><span class="line">    $pro_detail=json_decode($content_arr[&apos;data&apos;][&apos;apiStack&apos;][&apos;0&apos;][&apos;value&apos;],true);</span><br><span class="line">    $success_sym=$pro_detail[&apos;ret&apos;][&apos;0&apos;];//成功则返回&quot;SUCCESS::调用成功&quot;;</span><br><span class="line">    if($success_sym==&quot;SUCCESS::调用成功&quot;)&#123;</span><br><span class="line">        $pro_price=$pro_detail[&apos;data&apos;][&apos;itemInfoModel&apos;][&apos;priceUnits&apos;][&apos;0&apos;][&apos;price&apos;];</span><br><span class="line">        return $pro_price;</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        return &quot;&lt;script type=&apos;text/javascript&apos;&gt;alert(&apos;宝贝不存在!&apos;);&lt;/script&gt;&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> *  实现传入宝贝id,获取宝贝的收藏人数(人气),支持淘宝</span><br><span class="line"> * @param $id  宝贝id</span><br><span class="line"> * @return mixed   返回的宝贝的收藏人数(人气)</span><br><span class="line"> */</span><br><span class="line">function getPopById($id)&#123;</span><br><span class="line">    $url=getTbLink($id);</span><br><span class="line">    $urlinfo = parse_url($url);</span><br><span class="line">    parse_str($urlinfo[&apos;query&apos;], $query);</span><br><span class="line">    $id = $query[&apos;id&apos;];</span><br><span class="line">    $data = file_get_contents($url);</span><br><span class="line">    $start = strpos($data, &apos;counterApi&apos;);</span><br><span class="line">    $start = strpos($data, &quot;: &quot;, $start);</span><br><span class="line">    $end = strpos($data, &quot;&apos;,&quot;, $start);</span><br><span class="line">    $api = &apos;https:&apos; . substr($data, $start + 3, $end - $start - 3) . &apos;&amp;callback=jsonp107&apos;;</span><br><span class="line">    $response = file_get_contents($api);</span><br><span class="line">    $response = substr($response, 9, -2);</span><br><span class="line">    $arr = json_decode($response, true);</span><br><span class="line">    $popularity=$arr[&apos;ICCP_1_&apos;.$id];</span><br><span class="line">    return $popularity;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**   实现传入宝贝id，获取宝贝图片url</span><br><span class="line"> * @param $id    宝贝id</span><br><span class="line"> * @return mixd   宝贝图片url</span><br><span class="line"> */</span><br><span class="line">function getPicById($id)&#123;</span><br><span class="line">    $url=&quot;http://hws.m.taobao.com/cache/wdetail/5.0/?id=&quot;.$id;</span><br><span class="line">    $content=file_get_contents($url);</span><br><span class="line">    $content_ori=strip_tags($content);</span><br><span class="line">    $content_arr=json_decode($content_ori,true);</span><br><span class="line">    $detail=json_decode($content_arr[&apos;data&apos;][&apos;apiStack&apos;][&apos;0&apos;][&apos;value&apos;],true);</span><br><span class="line">    $success_sym=$detail[&apos;ret&apos;][&apos;0&apos;];//成功则返回&quot;SUCCESS::调用成功&quot;;</span><br><span class="line">    if($success_sym==&quot;SUCCESS::调用成功&quot;)&#123;</span><br><span class="line">        $name=$content_arr[&apos;data&apos;][&apos;itemInfoModel&apos;][&apos;picsPath&apos;];</span><br><span class="line">        return $name;</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        return &quot;&lt;script type=&apos;text/javascript&apos;&gt;alert(&apos;宝贝不存在!&apos;);&lt;/script&gt;&quot;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/PHP/">PHP</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2016/03/28/base64编码长度计算/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">base64编码长度计算</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2016/01/07/编译安装openresty+mysql+php7/">
+        <span class="next-text nav-default">CentOS编译安装openresty+mysql+php7</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2015 -
+    
+    2018
+    <span class="footer-author">EricLi. 鲁ICP备16001445号.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

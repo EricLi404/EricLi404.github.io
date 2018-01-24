@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="本文记录了MIUI显示虚拟按键方法。"/>
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="DropLet">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="http://ericli.top/2015/11/25/MIUI显示虚拟按键方法/"/>
+
+
+<meta name="description" content="本文记录了MIUI显示虚拟按键方法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MIUI显示虚拟按键方法">
+<meta property="og:url" content="http://ericli.top/2015/11/25/MIUI显示虚拟按键方法/index.html">
+<meta property="og:site_name" content="DropLet">
+<meta property="og:description" content="本文记录了MIUI显示虚拟按键方法。">
+<meta property="og:updated_time" content="2018-01-21T13:04:19.751Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MIUI显示虚拟按键方法">
+<meta name="twitter:description" content="本文记录了MIUI显示虚拟按键方法。">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> MIUI显示虚拟按键方法 - DropLet </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">DropLet</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          MIUI显示虚拟按键方法
+        
+      </h1>
+
+      <time class="post-time">
+          Nov 25 2015
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>1.安装一个文件管理器，并给root权限<br>2.将system文件夹挂载为可读写<br>3.编辑build.prop，<br>4.在最下边添加代码（如果已经有这条，就直接把数字修改为0） </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu.hw.mainkeys=0</span><br></pre></td></tr></table></figure>
+<p>5.保存退出重启 </p>
+<p>————————</p>
+<p>P.S.<br>2017年12月，可以使用此方法打开 全面屏手势</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2015/12/03/macOS配置Apache+MySQL+PHP+phpmyadmin/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">macOS配置Apache+MySQL+PHP+phpmyadmin.md</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2015/09/14/Ubuntu-unity桌面禁用客人会话/">
+        <span class="next-text nav-default">ubuntu-unity桌面禁用客人会话</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2015 -
+    
+    2018
+    <span class="footer-author">EricLi. 鲁ICP备16001445号.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

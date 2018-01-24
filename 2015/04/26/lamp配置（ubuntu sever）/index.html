@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="本文记录了在 ubuntu sever 配置 lamp 环境的过程。"/>
+
+
+
+
+  <meta name="keywords" content="Linux,MySQL,PHP,Apache," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="DropLet">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="http://ericli.top/2015/04/26/lamp配置（ubuntu sever）/"/>
+
+
+<meta name="description" content="本文记录了在 ubuntu sever 配置 lamp 环境的过程。">
+<meta name="keywords" content="Linux,MySQL,PHP,Apache">
+<meta property="og:type" content="article">
+<meta property="og:title" content="lamp配置（ubuntu sever）">
+<meta property="og:url" content="http://ericli.top/2015/04/26/lamp配置（ubuntu sever）/index.html">
+<meta property="og:site_name" content="DropLet">
+<meta property="og:description" content="本文记录了在 ubuntu sever 配置 lamp 环境的过程。">
+<meta property="og:updated_time" content="2018-01-22T11:10:08.422Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="lamp配置（ubuntu sever）">
+<meta name="twitter:description" content="本文记录了在 ubuntu sever 配置 lamp 环境的过程。">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> lamp配置（ubuntu sever） - DropLet </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">DropLet</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          lamp配置（ubuntu sever）
+        
+      </h1>
+
+      <time class="post-time">
+          Apr 26 2015
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <h1 id="1-apache2配置"><a href="#1-apache2配置" class="headerlink" title="1.apache2配置"></a>1.apache2配置</h1><h2 id="1-更新软件源"><a href="#1-更新软件源" class="headerlink" title="1.更新软件源"></a>1.更新软件源</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure>
+<h2 id="2-安装apache2及相关组件"><a href="#2-安装apache2及相关组件" class="headerlink" title="2.安装apache2及相关组件"></a>2.安装apache2及相关组件</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install apache2 apache2-bin apache2-data apache2-doc apache2-mpm-prefork apache2-utils</span><br></pre></td></tr></table></figure>
+<h2 id="3-修改默认首页"><a href="#3-修改默认首页" class="headerlink" title="3.修改默认首页"></a>3.修改默认首页</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/apache2/mods-enabled/dir.conf</span><br></pre></td></tr></table></figure>
+<p>将<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;IfModule mod_dir.c&gt;</span><br><span class="line">DirectoryIndex index.html index.cgi index.pl index.php index.xhtml index.htm </span><br><span class="line">&lt;/IfModule&gt;</span><br></pre></td></tr></table></figure></p>
+<p>修改为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;IfModule mod_dir.c&gt;</span><br><span class="line">DirectoryIndex index.php index.html index.cgi index.pl index.xhtml index.htm </span><br><span class="line">&lt;/IfModule&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="4-重启apache2服务"><a href="#4-重启apache2服务" class="headerlink" title="4.重启apache2服务"></a>4.重启apache2服务</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service apache2 restart</span><br></pre></td></tr></table></figure>
+<p>打开</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://localhost</span><br></pre></td></tr></table></figure>
+<p>显示apache2相关信息，表明安装成功。</p>
+<h1 id="2-安装mysql"><a href="#2-安装mysql" class="headerlink" title="2.安装mysql"></a>2.安装mysql</h1><h2 id="1-安装mysql以及mysql-client"><a href="#1-安装mysql以及mysql-client" class="headerlink" title="1.安装mysql以及mysql-client"></a>1.安装mysql以及mysql-client</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install mysql-server mysql-client</span><br></pre></td></tr></table></figure>
+<p>安装过程中会两次提示输入mysql密码</p>
+<h1 id="3-安装PHP"><a href="#3-安装PHP" class="headerlink" title="3.安装PHP"></a>3.安装PHP</h1><h2 id="1-安装php及相关拓展"><a href="#1-安装php及相关拓展" class="headerlink" title="1.安装php及相关拓展"></a>1.安装php及相关拓展</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo apt-get install php5 php-pear php5-mysql php5-dev libapache2-mod-php5 php5-dev php5-curl php5-gd php5-imagick php5-mcrypt</span><br></pre></td></tr></table></figure>
+<h1 id="4-安装phpmyadmin"><a href="#4-安装phpmyadmin" class="headerlink" title="4.安装phpmyadmin"></a>4.安装phpmyadmin</h1><h2 id="1-安装phpmyadmin"><a href="#1-安装phpmyadmin" class="headerlink" title="1.安装phpmyadmin"></a>1.安装phpmyadmin</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install phpmyadmin</span><br></pre></td></tr></table></figure>
+<p>安装时要求我们选择版本支持，此时选择apache2即可，然后输入mysql的用户名以及密码。</p>
+<h2 id="2-在var-www-html里添加链接"><a href="#2-在var-www-html里添加链接" class="headerlink" title="2.在var/www/html里添加链接"></a>2.在var/www/html里添加链接</h2><p>phpmyadmin默认安装位置是/usr/share/phpmyadmin,<br>我们应该在/var/www/html中建立/user/share/phpmyadmin的软链接，从而实现通过<a href="http://localhost/phpmyadmin访问phpmyadmin的效果" target="_blank" rel="noopener">http://localhost/phpmyadmin访问phpmyadmin的效果</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ln -s /usr/share/phpmyadmin /var/www/html/phpmyadmin</span><br></pre></td></tr></table></figure>
+<h1 id="５．-lamp开启方式"><a href="#５．-lamp开启方式" class="headerlink" title="５． lamp开启方式"></a>５． lamp开启方式</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">service apache2 start/restart/stop status 　 </span><br><span class="line">service mysql start/restart/stop status 　　　 </span><br><span class="line">mysql -u root -p 　　＃使用root用户登陆mysql,然后按提示输入密码。</span><br></pre></td></tr></table></figure>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/Linux/">Linux</a>
+		  
+			<a href="/tags/MySQL/">MySQL</a>
+		  
+			<a href="/tags/PHP/">PHP</a>
+		  
+			<a href="/tags/Apache/">Apache</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2015/05/13/HTTP服务器响应状态信息/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">HTTP服务器响应状态信息</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2015/03/12/解决Linux下Sublime text3无法输入中文的情况/">
+        <span class="next-text nav-default">解决Linux下sublime text3无法输入中文的情况</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2015 -
+    
+    2018
+    <span class="footer-author">EricLi. 鲁ICP备16001445号.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

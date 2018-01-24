@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。 时间限制：1秒  空间限制：32768K"/>
+
+
+
+
+  <meta name="keywords" content="Java,code," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="DropLet">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="http://ericli.top/2017/11/09/根据先序和中序遍历重建二叉树Java实现/"/>
+
+
+<meta name="description" content="输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。 时间限制：1秒  空间限制：32768K">
+<meta name="keywords" content="Java,code">
+<meta property="og:type" content="article">
+<meta property="og:title" content="根据先序和中序遍历重建二叉树Java实现">
+<meta property="og:url" content="http://ericli.top/2017/11/09/根据先序和中序遍历重建二叉树Java实现/index.html">
+<meta property="og:site_name" content="DropLet">
+<meta property="og:description" content="输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。 时间限制：1秒  空间限制：32768K">
+<meta property="og:updated_time" content="2018-01-21T13:04:19.793Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="根据先序和中序遍历重建二叉树Java实现">
+<meta name="twitter:description" content="输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。 时间限制：1秒  空间限制：32768K">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> 根据先序和中序遍历重建二叉树Java实现 - DropLet </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">DropLet</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          根据先序和中序遍历重建二叉树Java实现
+        
+      </h1>
+
+      <time class="post-time">
+          Nov 09 2017
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>《剑指offer》的第五题：</p>
+<blockquote>
+<p>题目描述：<br>输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。<br><br><br>时间限制：1秒  空间限制：32768K </p>
+</blockquote>
+<p>先来分析一下前序遍历和中序遍历得到的结果，</p>
+<p>前序遍历第一位是根节点；<br>中序遍历中，根节点左边的是根节点的左子树，右边是根节点的右子树。</p>
+<p>例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}。</p>
+<p>首先，根节点 是{ 1 }；<br>左子树是：前序{ 2,4,7 } ，中序{ 4,7,2 }；<br>右子树是：前序{ 3,5,6,8 } ，中序{ 5,3,8,6 }；</p>
+<p>这时，如果我们把左子树和右子树分别作为新的二叉树，则可以求出其根节点，左子树和右子树。</p>
+<p>这样，一直用这个方式，就可以实现重建二叉树。</p>
+<p>下面是代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><span class="line">//首先建立一个二叉树类</span><br><span class="line"> public class TreeNode &#123;</span><br><span class="line">    int val;</span><br><span class="line">     TreeNode left;</span><br><span class="line">     TreeNode right;</span><br><span class="line">    TreeNode(int x) &#123; </span><br><span class="line">	  val = x; </span><br><span class="line">    &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> //solution类，实现重建二叉树</span><br><span class="line">public class Solution &#123;</span><br><span class="line">    //主功能函数</span><br><span class="line">    public static TreeNode reConstructBinaryTree(int [] pre,int [] in) &#123;</span><br><span class="line">    	if(pre == null || in == null)&#123;</span><br><span class="line">    		return null;</span><br><span class="line">    	&#125;</span><br><span class="line">    	TreeNode mm = reConstructBinaryTreeCore(pre, in, 0, pre.length-1, 0, in.length-1);</span><br><span class="line">    	return mm;</span><br><span class="line">    &#125;</span><br><span class="line">    //核心递归</span><br><span class="line">    public static TreeNode reConstructBinaryTreeCore(int[] pre, int[] in, int preStart, int preEnd, int inStart, int inEnd) &#123;</span><br><span class="line">    	TreeNode tree = new TreeNode(pre[preStart]);</span><br><span class="line">    	tree.left = null;</span><br><span class="line">    	tree.right = null;</span><br><span class="line">    	if (preStart == preEnd &amp;&amp; inStart == inEnd) &#123;</span><br><span class="line">			return tree;</span><br><span class="line">		&#125;</span><br><span class="line">		int root = 0;</span><br><span class="line">		for(root= inStart; root &lt; inEnd; root++)&#123;</span><br><span class="line">			if (pre[preStart] == in[root]) &#123;</span><br><span class="line">				break;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		int leifLength = root - inStart;</span><br><span class="line">		int rightLength = inEnd - root;</span><br><span class="line">		if (leifLength &gt; 0) &#123;</span><br><span class="line">			tree.left = reConstructBinaryTreeCore(pre, in, preStart+1, preStart+leifLength, inStart, root-1);</span><br><span class="line">		&#125;</span><br><span class="line">		if (rightLength &gt; 0) &#123;</span><br><span class="line">			tree.right = reConstructBinaryTreeCore(pre, in, preStart+1+leifLength, preEnd, root+1, inEnd);</span><br><span class="line">		&#125;</span><br><span class="line">		return tree;</span><br><span class="line">	&#125;</span><br><span class="line">  //将二叉树先序遍历，用于测试结果</span><br><span class="line">    public static void preTraverseBinTree(TreeNode node)&#123;</span><br><span class="line">        if (node==null) &#123;</span><br><span class="line">              return;</span><br><span class="line">          &#125;</span><br><span class="line">        System.out.print(node.val+&quot;,&quot;);</span><br><span class="line">        if (node.left!=null) &#123;</span><br><span class="line">            preTraverseBinTree(node.left);</span><br><span class="line">          &#125;</span><br><span class="line">        if(node.right!=null)&#123;</span><br><span class="line">            preTraverseBinTree(node.right);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">	//将二叉树中序遍历，用于测试结果</span><br><span class="line">    public static void inTraverseBinTree(TreeNode node)&#123;</span><br><span class="line">        if (node==null) &#123;</span><br><span class="line">              return;</span><br><span class="line">          &#125;</span><br><span class="line">        if (node.left!=null) &#123;</span><br><span class="line">            inTraverseBinTree(node.left);</span><br><span class="line">          &#125;</span><br><span class="line">        System.out.print(node.val+&quot;,&quot;);</span><br><span class="line">        if(node.right!=null)&#123;</span><br><span class="line">            inTraverseBinTree(node.right);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">  //将二叉树后序遍历，用于测试结果</span><br><span class="line">    public static void postTraverseBinTree(TreeNode node)&#123;</span><br><span class="line">        if (node==null) &#123;</span><br><span class="line">              return;</span><br><span class="line">          &#125;</span><br><span class="line">        if (node.left!=null) &#123;</span><br><span class="line">            postTraverseBinTree(node.left);</span><br><span class="line">          &#125;</span><br><span class="line">        if(node.right!=null)&#123;</span><br><span class="line">            postTraverseBinTree(node.right);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.print(node.val+&quot;,&quot;);</span><br><span class="line">      &#125;</span><br><span class="line">      //主函数，用于测试结果</span><br><span class="line">    public static void main(String[] args)&#123;</span><br><span class="line">        int pre[] = &#123;1,2,4,7,3,5,8,9,6&#125;;</span><br><span class="line">        int in[]  = &#123;4,7,2,1,8,5,9,3,6&#125;;</span><br><span class="line">        TreeNode tree = reConstructBinaryTree(pre, in);</span><br><span class="line">        System.out.print(&quot;先序遍历结果:  &#123;&quot;);</span><br><span class="line">        preTraverseBinTree(tree);</span><br><span class="line">        System.out.println(&quot;&#125;&quot;);</span><br><span class="line">        System.out.print(&quot;中序遍历结果:  &#123;&quot;);</span><br><span class="line">        inTraverseBinTree(tree);</span><br><span class="line">        System.out.println(&quot;&#125;&quot;);</span><br><span class="line">        System.out.print(&quot;后序遍历结果:  &#123;&quot;);</span><br><span class="line">        postTraverseBinTree(tree);</span><br><span class="line">        System.out.println(&quot;&#125;&quot;);</span><br><span class="line">      &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/Java/">Java</a>
+		  
+			<a href="/tags/code/">code</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2017/11/09/Alfred 3 等破解版软件每次开机运行后都提示是否允许访问通讯录/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Alfred 3 等破解版软件每次开机运行后都提示是否允许访问通讯录</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2017/10/20/Ubuntu shadowsocks 服务器搭建/">
+        <span class="next-text nav-default">Ubuntu shadowsocks 服务器搭建</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2015 -
+    
+    2018
+    <span class="footer-author">EricLi. 鲁ICP备16001445号.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

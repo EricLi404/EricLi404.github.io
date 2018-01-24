@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="之前解决了 brew 的权限问题，今天发现在解决的过程中一不小心把 MySQL 的权限搞丢了。。。。"/>
+
+
+
+
+  <meta name="keywords" content="macOS,database,Linux,MySQL," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="DropLet">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="http://ericli.top/2018/01/22/MySQL所有者不是mysql的解决方案/"/>
+
+
+<meta name="description" content="之前解决了 brew 的权限问题，今天发现在解决的过程中一不小心把 MySQL 的权限搞丢了。。。。">
+<meta name="keywords" content="macOS,database,Linux,MySQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL所有者不是mysql的解决方案">
+<meta property="og:url" content="http://ericli.top/2018/01/22/MySQL所有者不是mysql的解决方案/index.html">
+<meta property="og:site_name" content="DropLet">
+<meta property="og:description" content="之前解决了 brew 的权限问题，今天发现在解决的过程中一不小心把 MySQL 的权限搞丢了。。。。">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNc79ly1fnpc5vydl1j30ik08qdgw.jpg">
+<meta property="og:updated_time" content="2018-01-22T05:58:17.339Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL所有者不是mysql的解决方案">
+<meta name="twitter:description" content="之前解决了 brew 的权限问题，今天发现在解决的过程中一不小心把 MySQL 的权限搞丢了。。。。">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006tNc79ly1fnpc5vydl1j30ik08qdgw.jpg">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> MySQL所有者不是mysql的解决方案 - DropLet </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">DropLet</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          MySQL所有者不是mysql的解决方案
+        
+      </h1>
+
+      <time class="post-time">
+          Jan 22 2018
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>之前解决了 brew 的权限问题，今天发现在解决的过程中一不小心把 MySQL 的权限搞丢了。<br>前情提要：<a href="http://blog.ericli.top/2018/01/18/mac%20brew%20权限问题解决记录/" target="_blank" rel="noopener">mac brew 权限问题解决记录</a></p>
+<p>在给 brew 权限的过程中，把 <code>/usr/local/mysql</code> 的的所有权一不小心也给了 brew  。</p>
+<p>所以导致报错：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Warning:The /usr/local/mysql/data directory is not owned by the &apos;mysql&apos; or &apos;_mysql&apos; user.</span><br></pre></td></tr></table></figure>
+<p>如图：<br><img src="https://ws1.sinaimg.cn/large/006tNc79ly1fnpc5vydl1j30ik08qdgw.jpg" alt=""></p>
+<p><strong>解决方案</strong><br>改所有者喽。。。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo chown -R mysql:mysql /usr/local/mysql</span><br><span class="line">sudo chown -R mysql:mysql /usr/local/mysql/data</span><br></pre></td></tr></table></figure>
+<p>EOF</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/macOS/">macOS</a>
+		  
+			<a href="/tags/database/">database</a>
+		  
+			<a href="/tags/Linux/">Linux</a>
+		  
+			<a href="/tags/MySQL/">MySQL</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2018/01/22/macOS完全卸载使用dmg安装的mysql/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">macOS完全卸载使用dmg安装的mysql</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2018/01/22/MySQL外键踩坑记录/">
+        <span class="next-text nav-default">MySQL外键踩坑记录</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2015 -
+    
+    2018
+    <span class="footer-author">EricLi. 鲁ICP备16001445号.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

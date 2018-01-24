@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="曾经，brew 是使用 root 权限运行的，如今，没有了 root 权限，brew 安装软件的时候经常会遇到缺少权限的问题。本文记录了赋予 brew 权限的方案。"/>
+
+
+
+
+  <meta name="keywords" content="macOS,brew," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="DropLet">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="http://ericli.top/2018/01/18/mac brew 权限问题解决记录/"/>
+
+
+<meta name="description" content="曾经，brew 是使用 root 权限运行的，如今，没有了 root 权限，brew 安装软件的时候经常会遇到缺少权限的问题。本文记录了赋予 brew 权限的方案。">
+<meta name="keywords" content="macOS,brew">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mac brew 权限问题解决记录">
+<meta property="og:url" content="http://ericli.top/2018/01/18/mac brew 权限问题解决记录/index.html">
+<meta property="og:site_name" content="DropLet">
+<meta property="og:description" content="曾经，brew 是使用 root 权限运行的，如今，没有了 root 权限，brew 安装软件的时候经常会遇到缺少权限的问题。本文记录了赋予 brew 权限的方案。">
+<meta property="og:updated_time" content="2018-01-20T16:23:40.295Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mac brew 权限问题解决记录">
+<meta name="twitter:description" content="曾经，brew 是使用 root 权限运行的，如今，没有了 root 权限，brew 安装软件的时候经常会遇到缺少权限的问题。本文记录了赋予 brew 权限的方案。">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> mac brew 权限问题解决记录 - DropLet </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">DropLet</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          mac brew 权限问题解决记录
+        
+      </h1>
+
+      <time class="post-time">
+          Jan 18 2018
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>曾经，<code>brew</code> 是使用<code>root</code> 权限运行的，如今，没有了<code>root</code> 权限，<code>brew</code>安装软件的时候经常会遇到缺少权限的问题。</p>
+<h2 id="更改权限"><a href="#更改权限" class="headerlink" title="更改权限"></a>更改权限</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo chown -R $(whoami):admin /usr/local</span><br><span class="line">// 第一条运行失败了一半</span><br><span class="line">sudo chown -R $(whoami):admin /usr/local/Cellar</span><br><span class="line">sudo chown -R $(whoami):admin /usr/local/Homebrew</span><br><span class="line">sudo chown -R $(whoami):admin /usr/local/lib</span><br></pre></td></tr></table></figure>
+<h2 id="使用「医生」诊断因更改权限造成的问题"><a href="#使用「医生」诊断因更改权限造成的问题" class="headerlink" title="使用「医生」诊断因更改权限造成的问题"></a>使用「医生」诊断因更改权限造成的问题</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew doctor</span><br></pre></td></tr></table></figure>
+<p>运行 <code>doctor</code> 后，输出如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br></pre></td><td class="code"><pre><span class="line">Please note that these warnings are just used to help the Homebrew maintainers</span><br><span class="line">with debugging if you file an issue. If everything you use Homebrew for is</span><br><span class="line">working fine: please don&apos;t worry or file an issue; just ignore this. Thanks!</span><br><span class="line"></span><br><span class="line">Warning: Suspicious Homebrew/brew git origin remote found.</span><br><span class="line"></span><br><span class="line">With a non-standard origin, Homebrew won&apos;t pull updates from</span><br><span class="line">the main repository. The current git origin is:</span><br><span class="line">  git://mirrors.ustc.edu.cn/brew.git</span><br><span class="line"></span><br><span class="line">Unless you have compelling reasons, consider setting the</span><br><span class="line">origin remote to point at the main repository by running:</span><br><span class="line">//执行这句</span><br><span class="line">  git -C &quot;/usr/local/Homebrew&quot; remote set-url origin https://github.com/Homebrew/brew.git</span><br><span class="line"></span><br><span class="line">Warning: Unbrewed header files were found in /usr/local/include.</span><br><span class="line">If you didn&apos;t put them there on purpose they could cause problems when</span><br><span class="line">building Homebrew formulae, and may need to be deleted.</span><br><span class="line"></span><br><span class="line">//删除 /usr/local/include/node 文件夹</span><br><span class="line">Unexpected header files:</span><br><span class="line">  /usr/local/include/node/android-ifaddrs.h</span><br><span class="line">  /usr/local/include/node/ares.h</span><br><span class="line">  /usr/local/include/node/ares_build.h</span><br><span class="line">  /usr/local/include/node/ares_rules.h</span><br><span class="line">  /usr/local/include/node/ares_version.h</span><br><span class="line">  /usr/local/include/node/libplatform/libplatform.h</span><br><span class="line">  /usr/local/include/node/libplatform/v8-tracing.h</span><br><span class="line">  /usr/local/include/node/nameser.h</span><br><span class="line">  /usr/local/include/node/node.h</span><br><span class="line">  /usr/local/include/node/node_buffer.h</span><br><span class="line">  /usr/local/include/node/node_object_wrap.h</span><br><span class="line">  /usr/local/include/node/node_version.h</span><br><span class="line">  /usr/local/include/node/openssl/aes.h</span><br><span class="line">  /usr/local/include/node/openssl/archs/BSD-x86/opensslconf.h</span><br><span class="line">  /usr/local/include/node/openssl/archs/BSD-x86_64/opensslconf.h</span><br><span class="line">  /usr/local/include/node/openssl/archs/VC-WIN32/opensslconf.h</span><br><span class="line">  /usr/local/include/node/openssl/archs/VC-WIN64A/opensslconf.h</span><br><span class="line">  /usr/local/include/node/openssl/archs/aix-gcc/opensslconf.h</span><br><span class="line">  /usr/local/include/node/openssl/archs/aix64-gcc/opensslconf.h</span><br><span class="line">  /usr/local/include/node/openssl/archs/darwin-i386-cc/opensslconf.h</span><br><span class="line">  /usr/local/include/node/openssl/archs/darwin64-x86_64-cc/opensslconf.h</span><br><span class="line">  /usr/local/include/node/openssl/archs/linux-aarch64/opensslconf.h</span><br><span class="line">  /usr/local/include/node/openssl/archs/linux-armv4/opensslconf.h</span><br><span class="line">  /usr/local/include/node/openssl/archs/linux-elf/opensslconf.h</span><br><span class="line">  /usr/local/include/node/openssl/archs/linux-ppc/opensslconf.h</span><br><span class="line">  /usr/local/include/node/openssl/archs/linux-ppc64/opensslconf.h</span><br><span class="line">  /usr/local/include/node/openssl/archs/linux-x32/opensslconf.h</span><br><span class="line">  /usr/local/include/node/openssl/archs/linux-x86_64/opensslconf.h</span><br><span class="line">  /usr/local/include/node/openssl/archs/linux32-s390x/opensslconf.h</span><br><span class="line">  /usr/local/include/node/openssl/archs/linux64-s390x/opensslconf.h</span><br><span class="line">  /usr/local/include/node/openssl/archs/solaris-x86-gcc/opensslconf.h</span><br><span class="line">  /usr/local/include/node/openssl/archs/solaris64-x86_64-gcc/opensslconf.h</span><br><span class="line">  /usr/local/include/node/openssl/asn1.h</span><br><span class="line">  /usr/local/include/node/openssl/asn1_mac.h</span><br><span class="line">  /usr/local/include/node/openssl/asn1t.h</span><br><span class="line">  /usr/local/include/node/openssl/bio.h</span><br><span class="line">  /usr/local/include/node/openssl/blowfish.h</span><br><span class="line">  /usr/local/include/node/openssl/bn.h</span><br><span class="line">  /usr/local/include/node/openssl/buffer.h</span><br><span class="line">  /usr/local/include/node/openssl/camellia.h</span><br><span class="line">  /usr/local/include/node/openssl/cast.h</span><br><span class="line">  /usr/local/include/node/openssl/cmac.h</span><br><span class="line">  /usr/local/include/node/openssl/cms.h</span><br><span class="line">  /usr/local/include/node/openssl/comp.h</span><br><span class="line">  /usr/local/include/node/openssl/conf.h</span><br><span class="line">  /usr/local/include/node/openssl/conf_api.h</span><br><span class="line">  /usr/local/include/node/openssl/crypto.h</span><br><span class="line">  /usr/local/include/node/openssl/des.h</span><br><span class="line">  /usr/local/include/node/openssl/des_old.h</span><br><span class="line">  /usr/local/include/node/openssl/dh.h</span><br><span class="line">  /usr/local/include/node/openssl/dsa.h</span><br><span class="line">  /usr/local/include/node/openssl/dso.h</span><br><span class="line">  /usr/local/include/node/openssl/dtls1.h</span><br><span class="line">  /usr/local/include/node/openssl/e_os2.h</span><br><span class="line">  /usr/local/include/node/openssl/ebcdic.h</span><br><span class="line">  /usr/local/include/node/openssl/ec.h</span><br><span class="line">  /usr/local/include/node/openssl/ecdh.h</span><br><span class="line">  /usr/local/include/node/openssl/ecdsa.h</span><br><span class="line">  /usr/local/include/node/openssl/engine.h</span><br><span class="line">  /usr/local/include/node/openssl/err.h</span><br><span class="line">  /usr/local/include/node/openssl/evp.h</span><br><span class="line">  /usr/local/include/node/openssl/hmac.h</span><br><span class="line">  /usr/local/include/node/openssl/idea.h</span><br><span class="line">  /usr/local/include/node/openssl/krb5_asn.h</span><br><span class="line">  /usr/local/include/node/openssl/kssl.h</span><br><span class="line">  /usr/local/include/node/openssl/lhash.h</span><br><span class="line">  /usr/local/include/node/openssl/md4.h</span><br><span class="line">  /usr/local/include/node/openssl/md5.h</span><br><span class="line">  /usr/local/include/node/openssl/mdc2.h</span><br><span class="line">  /usr/local/include/node/openssl/modes.h</span><br><span class="line">  /usr/local/include/node/openssl/obj_mac.h</span><br><span class="line">  /usr/local/include/node/openssl/objects.h</span><br><span class="line">  /usr/local/include/node/openssl/ocsp.h</span><br><span class="line">  /usr/local/include/node/openssl/opensslconf.h</span><br><span class="line">  /usr/local/include/node/openssl/opensslv.h</span><br><span class="line">  /usr/local/include/node/openssl/ossl_typ.h</span><br><span class="line">  /usr/local/include/node/openssl/pem.h</span><br><span class="line">  /usr/local/include/node/openssl/pem2.h</span><br><span class="line">  /usr/local/include/node/openssl/pkcs12.h</span><br><span class="line">  /usr/local/include/node/openssl/pkcs7.h</span><br><span class="line">  /usr/local/include/node/openssl/pqueue.h</span><br><span class="line">  /usr/local/include/node/openssl/rand.h</span><br><span class="line">  /usr/local/include/node/openssl/rc2.h</span><br><span class="line">  /usr/local/include/node/openssl/rc4.h</span><br><span class="line">  /usr/local/include/node/openssl/ripemd.h</span><br><span class="line">  /usr/local/include/node/openssl/rsa.h</span><br><span class="line">  /usr/local/include/node/openssl/safestack.h</span><br><span class="line">  /usr/local/include/node/openssl/seed.h</span><br><span class="line">  /usr/local/include/node/openssl/sha.h</span><br><span class="line">  /usr/local/include/node/openssl/srp.h</span><br><span class="line">  /usr/local/include/node/openssl/srtp.h</span><br><span class="line">  /usr/local/include/node/openssl/ssl.h</span><br><span class="line">  /usr/local/include/node/openssl/ssl2.h</span><br><span class="line">  /usr/local/include/node/openssl/ssl23.h</span><br><span class="line">  /usr/local/include/node/openssl/ssl3.h</span><br><span class="line">  /usr/local/include/node/openssl/stack.h</span><br><span class="line">  /usr/local/include/node/openssl/symhacks.h</span><br><span class="line">  /usr/local/include/node/openssl/tls1.h</span><br><span class="line">  /usr/local/include/node/openssl/ts.h</span><br><span class="line">  /usr/local/include/node/openssl/txt_db.h</span><br><span class="line">  /usr/local/include/node/openssl/ui.h</span><br><span class="line">  /usr/local/include/node/openssl/ui_compat.h</span><br><span class="line">  /usr/local/include/node/openssl/whrlpool.h</span><br><span class="line">  /usr/local/include/node/openssl/x509.h</span><br><span class="line">  /usr/local/include/node/openssl/x509_vfy.h</span><br><span class="line">  /usr/local/include/node/openssl/x509v3.h</span><br><span class="line">  /usr/local/include/node/pthread-barrier.h</span><br><span class="line">  /usr/local/include/node/stdint-msvc2008.h</span><br><span class="line">  /usr/local/include/node/tree.h</span><br><span class="line">  /usr/local/include/node/uv-aix.h</span><br><span class="line">  /usr/local/include/node/uv-bsd.h</span><br><span class="line">  /usr/local/include/node/uv-darwin.h</span><br><span class="line">  /usr/local/include/node/uv-errno.h</span><br><span class="line">  /usr/local/include/node/uv-linux.h</span><br><span class="line">  /usr/local/include/node/uv-os390.h</span><br><span class="line">  /usr/local/include/node/uv-sunos.h</span><br><span class="line">  /usr/local/include/node/uv-threadpool.h</span><br><span class="line">  /usr/local/include/node/uv-unix.h</span><br><span class="line">  /usr/local/include/node/uv-version.h</span><br><span class="line">  /usr/local/include/node/uv-win.h</span><br><span class="line">  /usr/local/include/node/uv.h</span><br><span class="line">  /usr/local/include/node/v8-debug.h</span><br><span class="line">  /usr/local/include/node/v8-experimental.h</span><br><span class="line">  /usr/local/include/node/v8-inspector-protocol.h</span><br><span class="line">  /usr/local/include/node/v8-inspector.h</span><br><span class="line">  /usr/local/include/node/v8-platform.h</span><br><span class="line">  /usr/local/include/node/v8-profiler.h</span><br><span class="line">  /usr/local/include/node/v8-testing.h</span><br><span class="line">  /usr/local/include/node/v8-util.h</span><br><span class="line">  /usr/local/include/node/v8-version.h</span><br><span class="line">  /usr/local/include/node/v8.h</span><br><span class="line">  /usr/local/include/node/v8config.h</span><br><span class="line">  /usr/local/include/node/zconf.h</span><br><span class="line">  /usr/local/include/node/zlib.h</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//挨个 brew link</span><br><span class="line">Warning: You have unlinked kegs in your Cellar</span><br><span class="line">Leaving kegs unlinked can lead to build-trouble and cause brews that depend on</span><br><span class="line">those kegs to fail to run properly once built. Run `brew link` on these:</span><br><span class="line">  pkg-config</span><br><span class="line">  vim</span><br><span class="line">  libtiff</span><br><span class="line">  libtool</span><br><span class="line">  coreutils</span><br><span class="line">  jansson</span><br><span class="line">  wget</span><br><span class="line">  gdbm</span><br><span class="line">  imap-uw</span><br><span class="line">  freetype</span><br><span class="line">  python</span><br><span class="line">  highlight</span><br><span class="line">  boost</span><br><span class="line">  cscope</span><br><span class="line">  libyaml</span><br><span class="line">  jemalloc</span><br><span class="line">  composer</span><br><span class="line">  perl</span><br><span class="line">  webp</span><br><span class="line">  c-ares</span><br><span class="line">  xz</span><br><span class="line">  unixodbc</span><br><span class="line">  lua</span><br><span class="line">  cunit</span><br><span class="line">  fontconfig</span><br><span class="line">  archey</span><br><span class="line">  spdylay</span><br><span class="line">  htop</span><br><span class="line">  php71</span><br><span class="line">  macvim</span><br><span class="line">  freetds</span><br><span class="line">  autoconf</span><br><span class="line">  gd</span><br><span class="line">  libevent</span><br><span class="line">  rename</span><br><span class="line">  pcre</span><br><span class="line">  imagemagick</span><br><span class="line">  makedepend</span><br><span class="line">  libev</span><br><span class="line">  ruby</span><br><span class="line">  automake</span><br><span class="line"></span><br><span class="line">Warning: Homebrew&apos;s sbin was not found in your PATH but you have installed</span><br><span class="line">formulae that put executables in /usr/local/sbin.</span><br><span class="line">Consider setting the PATH for example like so</span><br><span class="line"></span><br><span class="line">//执行这句，然后 source ~./zshrc</span><br><span class="line">  echo &apos;export PATH=&quot;/usr/local/sbin:$PATH&quot;&apos; &gt;&gt; ~/.zshrc</span><br><span class="line"></span><br><span class="line">Warning: Some installed formula are missing dependencies.</span><br><span class="line">You should `brew install` the missing dependencies:</span><br><span class="line"></span><br><span class="line">//执行这句</span><br><span class="line">  brew install libidn2 libunistring</span><br><span class="line"></span><br><span class="line">Run `brew missing` for more details.</span><br></pre></td></tr></table></figure>
+<p>根据提示完成上文注释中的操作即可，</p>
+<p>然后执行以下命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">brew prune  </span><br><span class="line">brew update</span><br></pre></td></tr></table></figure>
+<p>All Done.</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/macOS/">macOS</a>
+		  
+			<a href="/tags/brew/">brew</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2018/01/22/MySQL外键踩坑记录/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">MySQL外键踩坑记录</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2017/11/09/Alfred 3 等破解版软件每次开机运行后都提示是否允许访问通讯录/">
+        <span class="next-text nav-default">Alfred 3 等破解版软件每次开机运行后都提示是否允许访问通讯录</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2015 -
+    
+    2018
+    <span class="footer-author">EricLi. 鲁ICP备16001445号.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

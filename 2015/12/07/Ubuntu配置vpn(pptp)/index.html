@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="本文记录了笔者在ubuntu云主机搭建vpn服务的过程。"/>
+
+
+
+
+  <meta name="keywords" content="Linux," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="DropLet">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="http://ericli.top/2015/12/07/Ubuntu配置vpn(pptp)/"/>
+
+
+<meta name="description" content="本文记录了笔者在ubuntu云主机搭建vpn服务的过程。">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu配置vpn(pptp)">
+<meta property="og:url" content="http://ericli.top/2015/12/07/Ubuntu配置vpn(pptp)/index.html">
+<meta property="og:site_name" content="DropLet">
+<meta property="og:description" content="本文记录了笔者在ubuntu云主机搭建vpn服务的过程。">
+<meta property="og:updated_time" content="2018-01-21T13:04:19.815Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ubuntu配置vpn(pptp)">
+<meta name="twitter:description" content="本文记录了笔者在ubuntu云主机搭建vpn服务的过程。">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> Ubuntu配置vpn(pptp) - DropLet </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">DropLet</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Ubuntu配置vpn(pptp)
+        
+      </h1>
+
+      <time class="post-time">
+          Dec 07 2015
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <h1 id="1-pptp"><a href="#1-pptp" class="headerlink" title="1.pptp"></a>1.pptp</h1><blockquote>
+<ul>
+<li>PPTP（Point to Point TunnelingProtocol），即点对点隧道协议。该协议是在PPP协议的基础上开发的一种新的增强型安全协议，支持多协议虚拟专用网（VPN），可以通过密码验证协议（PAP）、可扩展认证协议（EAP）等方法增强安全性。可以使远程用户通过拨入ISP、通过直接连接Internet或其他网络安全地访问企业网。</li>
+<li>默认端口：1723</li>
+</ul>
+</blockquote>
+<h2 id="1-安装pptpd服务"><a href="#1-安装pptpd服务" class="headerlink" title="1.安装pptpd服务"></a>1.安装pptpd服务</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install pptpd</span><br></pre></td></tr></table></figure>
+<h2 id="2-ip相关配置"><a href="#2-ip相关配置" class="headerlink" title="2.ip相关配置"></a>2.ip相关配置</h2><p>配置文件为/etc/pptpd.conf<br>可以使用vi对其编辑<br>进行本地ip和远程ip配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/pptpd.conf</span><br></pre></td></tr></table></figure></p>
+<p>将<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># (Recommended)</span><br><span class="line">#localip 192.168.0.1                             #取消注释</span><br><span class="line">#remoteip 192.168.0.234-238,192.168.0.245        #取消注释</span><br><span class="line"># or</span><br><span class="line">#localip 192.168.0.234-238,192.168.0.245</span><br><span class="line">#remoteip 192.168.1.234-238,192.168.1.245</span><br></pre></td></tr></table></figure></p>
+<p>修改为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># (Recommended)</span><br><span class="line">local 192.168.0.1                           </span><br><span class="line">remoteip 192.168.0.234-238,192.168.0.245</span><br><span class="line"># or</span><br><span class="line">#localip 192.168.0.234-238,192.168.0.245</span><br><span class="line">#remoteip 192.168.1.234-238,192.168.1.245</span><br></pre></td></tr></table></figure>
+<p>备注：<br>localip是linux主机的ip地址，remoteip是地址池，也就是远程拨进来的计算机所分配到的ip地址。此配置不唯一，可根据需求自行修改。</p>
+<h2 id="3-配置dns"><a href="#3-配置dns" class="headerlink" title="3.配置dns"></a>3.配置dns</h2><p>配置文件为/etc/ppp/pptpd-options<br>可用vi对其修改，配置dns</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/ppp/pptpd-options</span><br></pre></td></tr></table></figure>
+<p>将</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># Network and Routing</span><br><span class="line"></span><br><span class="line"># If pppd is acting as a server for Microsoft Windows clients, this</span><br><span class="line"># option allows pppd to supply one or two DNS (Domain Name Server)</span><br><span class="line"># addresses to the clients.  The first instance of this option</span><br><span class="line"># specifies the primary DNS address; the second instance (if given)</span><br><span class="line"># specifies the secondary DNS address.</span><br><span class="line"># Attention! This information may not be taken into account by a Windows</span><br><span class="line"># client. See KB311218 in Microsoft&apos;s knowledge base for more information.</span><br><span class="line">#ms-dns 10.0.0.1</span><br><span class="line">#ms-dns 10.0.0.2</span><br></pre></td></tr></table></figure>
+<p>修改最后两行或新增配置信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># Network and Routing</span><br><span class="line"></span><br><span class="line"># If pppd is acting as a server for Microsoft Windows clients, this</span><br><span class="line"># option allows pppd to supply one or two DNS (Domain Name Server)</span><br><span class="line"># addresses to the clients.  The first instance of this option</span><br><span class="line"># specifies the primary DNS address; the second instance (if given)</span><br><span class="line"># specifies the secondary DNS address.</span><br><span class="line"># Attention! This information may not be taken into account by a Windows</span><br><span class="line"># client. See KB311218 in Microsoft&apos;s knowledge base for more information.</span><br><span class="line">ms-dns 192.168.0.1    #可以是之前配置的localip</span><br><span class="line">ms-dns 8.8.8.8        #可以是dns服务器的ip，例如8.8.8.8，8.8.4.4，114.114.114.114。前两者为google提供，最后一个是国内的，可根据需求进行相应配置。</span><br></pre></td></tr></table></figure>
+<h2 id="4-设置vpn登录账号"><a href="#4-设置vpn登录账号" class="headerlink" title="4.设置vpn登录账号"></a>4.设置vpn登录账号</h2><p>配置文件为/etc/ppp/chap-secrets<br>可用vi对其进行修改<br>进行账号相关操作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/ppp/chap-secrets</span><br></pre></td></tr></table></figure>
+<p>将<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># Secrets for authentication using CHAP</span><br><span class="line"># client	server	secret			IP addresses</span><br></pre></td></tr></table></figure></p>
+<p>修改为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Secrets for authentication using CHAP</span><br><span class="line"># client	server	secret			IP addresses</span><br><span class="line">user1	*	password1	*</span><br><span class="line">user2	*	password2	*</span><br></pre></td></tr></table></figure>
+<p>配置操作如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#用户名（tab）主机名（tab）密码（tab）分配的ip</span><br><span class="line"></span><br><span class="line">例如：</span><br><span class="line"></span><br><span class="line">user	*	password	*</span><br><span class="line"></span><br><span class="line">#添加多项则设置多个登陆账号</span><br></pre></td></tr></table></figure>
+<ul>
+<li>client  ——————-用户名</li>
+<li>server  ——————主机名，*代表自动获取</li>
+<li>secret  ——————密码</li>
+<li>IP addresses ———-分配的ip，*代表自动分配</li>
+</ul>
+<h2 id="5-重启pptpd"><a href="#5-重启pptpd" class="headerlink" title="5.重启pptpd"></a>5.重启pptpd</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service pptpd restart</span><br></pre></td></tr></table></figure>
+<h2 id="6-登录"><a href="#6-登录" class="headerlink" title="6.登录"></a>6.登录</h2><ol>
+<li>windows 和 osx 基本没有问题，记得选ppt（点对点隧道）</li>
+<li>linux记得打开”高级”，选中”Use Point-toPoint encryption (MPPE)”</li>
+</ol>
+<h2 id="7-访问外网失败的解决方案"><a href="#7-访问外网失败的解决方案" class="headerlink" title="7.访问外网失败的解决方案"></a>7.访问外网失败的解决方案</h2><p>此时原因是目的主机跟源主机不在同一网段，所以数据包暂时发往内网默认网关处理，而本网段的主机对此数据包不做任何回应。</p>
+<p>打开 ipv4 forward 路由转发功能</p>
+<p>配置文件为/etc/sysctl.conf</p>
+<p>将</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># Uncomment the next line to enable packet forwarding for IPv4</span><br><span class="line">#net.ipv4.ip_forward=1         #取消注释</span><br></pre></td></tr></table></figure>
+<p>修改为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># Uncomment the next line to enable packet forwarding for IPv4</span><br><span class="line">net.ipv4.ip_forward=1</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>关于ip forward的相关信息可参考<a href="http://blog.sina.com.cn/s/blog_a94d887a01017b01.html" target="_blank" rel="noopener">朝花惜时的博客</a></p>
+</blockquote>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/Linux/">Linux</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2015/12/18/Linux 笔记/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Linux 笔记</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2015/12/03/macOS配置Apache+MySQL+PHP+phpmyadmin/">
+        <span class="next-text nav-default">macOS配置Apache+MySQL+PHP+phpmyadmin.md</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2015 -
+    
+    2018
+    <span class="footer-author">EricLi. 鲁ICP备16001445号.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>

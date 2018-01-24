@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="使用 macOS 自带的 Apache 和 PHP 运行 ThinkPHP 时，发现验证码模块无法正常使用。本文总结了多个该问题解决方案。"/>
+
+
+
+
+  <meta name="keywords" content="macOS,PHP,Apache," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="DropLet">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="http://ericli.top/2016/11/03/macOS缺少Freetype终极解决方案/"/>
+
+
+<meta name="description" content="使用 macOS 自带的 Apache 和 PHP 运行 ThinkPHP 时，发现验证码模块无法正常使用。本文总结了多个该问题解决方案。">
+<meta name="keywords" content="macOS,PHP,Apache">
+<meta property="og:type" content="article">
+<meta property="og:title" content="macOS 缺少 Freetype 终极解决方案">
+<meta property="og:url" content="http://ericli.top/2016/11/03/macOS缺少Freetype终极解决方案/index.html">
+<meta property="og:site_name" content="DropLet">
+<meta property="og:description" content="使用 macOS 自带的 Apache 和 PHP 运行 ThinkPHP 时，发现验证码模块无法正常使用。本文总结了多个该问题解决方案。">
+<meta property="og:updated_time" content="2018-01-21T12:57:27.219Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="macOS 缺少 Freetype 终极解决方案">
+<meta name="twitter:description" content="使用 macOS 自带的 Apache 和 PHP 运行 ThinkPHP 时，发现验证码模块无法正常使用。本文总结了多个该问题解决方案。">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> macOS 缺少 Freetype 终极解决方案 - DropLet </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">DropLet</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          macOS 缺少 Freetype 终极解决方案
+        
+      </h1>
+
+      <time class="post-time">
+          Nov 03 2016
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p><code>macOS</code>自带<code>php</code>的<code>gd库</code>有些问题，当用到<code>imagettftext()</code> 和 <code>freetype</code> 相关功能时会出问题，我遇到的问题是：</p>
+<p> 在使用<code>TinkPHP</code>的 <code>topthink/think-captcha</code> 时，验证码图片无法正常显示，<code>ThinkPHP</code>中<code>log</code> 信息为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[ 2017-12-28T16:38:06+08:00 ] 127.0.0.1 GET /captcha.html</span><br><span class="line">[ error ] [0]致命错误: Call to undefined function think\captcha\imagettftext()</span><br></pre></td></tr></table></figure>
+<p>大致意思就是没有 <code>imagettftext()</code>这个函数，这是因为缺少 <code>php</code> 的 <code>gd库</code> 中的 <code>freetype</code> 模块。</p>
+<p>网上的解决方案大致有这么几种：</p>
+<ul>
+<li>重新编译 php</li>
+<li>用 brew 安装一个新的 php</li>
+<li><a href="https://php-osx.liip.ch" target="_blank" rel="noopener">https://php-osx.liip.ch</a> 一句话脚本</li>
+</ul>
+<p>这三种方案都是可行的，而且方便程度逐个递增。<br>但是， Apple 在<code>macOS10.11</code>引入了「Rootless机制」，简单来说就是 root 用户也无法操作某些系统关键部位，例如 php 的目录 <code>/usr/bin</code>，<br>详见<a href="https://developer.apple.com/videos/play/wwdc2015/706/" target="_blank" rel="noopener">wwdc相关内容</a>。</p>
+<p>因此，以上三种方式暂时行不通，他们无法修改 php的默认指向，解决方案有二：</p>
+<ul>
+<li>使用第三方集成环境，e.g. <code>mamp</code> / <code>xampp</code></li>
+<li>关闭<code>Rootless机制</code>，然后自己配置环境</li>
+</ul>
+<p>第一种方式我没实操，但是据说<code>mamp</code>之类软件兼容性也不怎么样。。。<br>我采用了第二种方式，</p>
+<p>关闭Rootless机制的方法为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//重启按住 Command+R，进入恢复模式，打开Terminal。</span><br><span class="line"></span><br><span class="line">csrutil disable</span><br></pre></td></tr></table></figure></p>
+<p>修改好了之后还可以选择再次打开，打开的方式为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//重启按住 Command+R，进入恢复模式，打开Terminal。</span><br><span class="line"></span><br><span class="line">csrutil enable</span><br></pre></td></tr></table></figure>
+<p>好，现在你已经成功的把Rootless机制给关掉了，然后就可以从以下三种方式中选择一种了</p>
+<ul>
+<li>重新编译 php</li>
+<li>用 brew 安装一个新的 php</li>
+<li><a href="https://php-osx.liip.ch" target="_blank" rel="noopener">https://php-osx.liip.ch</a> 一句话脚本</li>
+</ul>
+<p>重新编译PHP，可以参考我的另一篇博客：</p>
+<p>后两种我都试过，macOS 10.11 ~ macOS 10.13 都可以用，</p>
+<p>不过 macOS 10.12 之后，使用<code>brew</code>安装<code>php</code>时，可能会遇到<code>brew</code>缺少权限的问题，解决方案参考我的另一篇博客：<br><a href="http://blog.ericli.top/2018/01/18/mac%20brew%20权限问题解决记录的副本%205/" target="_blank" rel="noopener">mac brew 权限问题解决记录</a></p>
+<p>一句话脚本，放在了AWS，使用的时候最好科学上网。</p>
+<p>EOF</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/macOS/">macOS</a>
+		  
+			<a href="/tags/PHP/">PHP</a>
+		  
+			<a href="/tags/Apache/">Apache</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2016/12/15/mac或linux批量转换文件编码/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">mac或linux批量转换文件编码</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2016/10/11/timestamp变成Xtamp的解决办法/">
+        <span class="next-text nav-default">timestamp变成Xtamp的解决办法</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2015 -
+    
+    2018
+    <span class="footer-author">EricLi. 鲁ICP备16001445号.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>
