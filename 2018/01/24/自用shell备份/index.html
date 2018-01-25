@@ -42,7 +42,7 @@
 <meta property="og:url" content="http://ericli.top/2018/01/24/自用shell备份/index.html">
 <meta property="og:site_name" content="DropLet">
 <meta property="og:description" content="记录了我使用的一些便利性的shell脚本。">
-<meta property="og:updated_time" content="2018-01-24T13:54:55.097Z">
+<meta property="og:updated_time" content="2018-01-25T01:24:03.348Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自用shell备份">
 <meta name="twitter:description" content="记录了我使用的一些便利性的shell脚本。">
@@ -142,7 +142,10 @@
 <li>hexo-depoly server # 开启本地server</li>
 <li>hexo-depoly local  # 只在本地部署并开启本地server</li>
 </ul>
-<p><strong>千万别用root用户执行。。。。。。</strong><br><em>万一执行了。。。。删除 <code>public</code> 和<code>.deploy_git</code> 再换普通用户就可以了</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">cd ~/www/hexo/Droplet</span><br><span class="line"></span><br><span class="line">if [ $1 == &quot;local&quot; ]</span><br><span class="line">then</span><br><span class="line">        cp _config_local.yml _config.yml</span><br><span class="line">        hexo clean</span><br><span class="line">        hexo g -d</span><br><span class="line">        hexo d -g</span><br><span class="line">        hexo server -p 8888</span><br><span class="line">elif [ $1 == &quot;server&quot; ]</span><br><span class="line">then</span><br><span class="line">        hexo server -p 8888</span><br><span class="line">else</span><br><span class="line">         cp _config_all.yml _config.yml</span><br><span class="line">         hexo clean</span><br><span class="line">         hexo g -d</span><br><span class="line">         hexo d -g</span><br><span class="line">fi</span><br></pre></td></tr></table></figure></p>
+<p><strong>千万别用root用户执行。。。。。。</strong><br><em>万一执行了。。。。删除 <code>public</code> 和<code>.deploy_git</code> 再换普通用户就可以了</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">cd ~/www/hexo/Droplet</span><br><span class="line"></span><br><span class="line">if [[ $1 == &quot;local&quot; ]]</span><br><span class="line">then</span><br><span class="line">        cp _config_local.yml _config.yml</span><br><span class="line">        hexo clean</span><br><span class="line">        hexo g -d</span><br><span class="line">        hexo d -g</span><br><span class="line">        hexo server -p 8888</span><br><span class="line">elif [[ $1 == &quot;server&quot; ]]</span><br><span class="line">then</span><br><span class="line">        hexo server -p 8888</span><br><span class="line">else</span><br><span class="line">         cp _config_all.yml _config.yml</span><br><span class="line">         hexo clean</span><br><span class="line">         hexo g -d</span><br><span class="line">         hexo d -g</span><br><span class="line">fi</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>此外，应特别注意：<code>if [ $1 == &quot;local&quot; ]</code> 这种写法在 <code>$1</code> 为空时会有问题，应使用 <code>if [[ $1 == &quot;local&quot; ]]</code> 。</p>
+</blockquote>
 <h2 id="0x03-nginx-logs-conclude-nginx日志文件汇总"><a href="#0x03-nginx-logs-conclude-nginx日志文件汇总" class="headerlink" title="0x03 nginx-logs-conclude  nginx日志文件汇总"></a>0x03 nginx-logs-conclude  nginx日志文件汇总</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line"># 将 nginx 日志文件按日期整理归纳</span><br><span class="line"></span><br><span class="line">base_path=&apos;/usr/local/Cellar/nginx/1.12.2_1/logs&apos;</span><br><span class="line"></span><br><span class="line">#  为了兼容 macOS , 使用 `data -r` 而不是用`data -d`获取日期</span><br><span class="line"></span><br><span class="line">day=`date -r $(expr $(date &apos;+%s&apos;) - 86400)  +&quot;%Y-%m-%d&quot;`</span><br><span class="line">month=`date -r $(expr $(date &apos;+%s&apos;) - 86400)  +&quot;%Y-%m&quot;`</span><br><span class="line"></span><br><span class="line">mkdir -p $base_path/$month</span><br><span class="line">mv $base_path/access.log $base_path/$month/access_$day.log</span><br><span class="line"></span><br><span class="line">kill -USR1 `cat /usr/local/Cellar/nginx/1.12.2_1/logs/nginx.pid`</span><br></pre></td></tr></table></figure>
 
             </div>
@@ -169,13 +172,13 @@
       <a class="prev" href="/2018/01/25/nginx笔记/">
         <i class="iconfont icon-left"></i>
         <span class="prev-text nav-default">nginx笔记</span>
-        <span class="prev-text nav-mobile">Prev</span>
+        <span class="prev-text nav-mobile">上一篇</span>
       </a>
     
     
-      <a class="next" href="/2018/01/22/macOS完全卸载使用dmg安装的mysql/">
-        <span class="next-text nav-default">macOS完全卸载使用dmg安装的mysql</span>
-        <span class="prev-text nav-mobile">Next</span>
+      <a class="next" href="/2018/01/22/MySQL外键踩坑记录/">
+        <span class="next-text nav-default">MySQL外键踩坑记录</span>
+        <span class="prev-text nav-mobile">下一篇</span>
         <i class="iconfont icon-right"></i>
       </a>
     
@@ -204,7 +207,7 @@
     2018
     <span class="footer-author">EricLi. 鲁ICP备16001445号.</span>
     <span class="power-by">
-        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+        由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
     </span>
 </span>
 
