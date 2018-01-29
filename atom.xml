@@ -65,24 +65,28 @@
   </entry>
   
   <entry>
-    <title>MySQL外键踩坑记录</title>
-    <link href="http://ericli.top/2018/01/22/MySQL%E5%A4%96%E9%94%AE%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/"/>
-    <id>http://ericli.top/2018/01/22/MySQL外键踩坑记录/</id>
+    <title>macOS完全卸载使用dmg安装的mysql</title>
+    <link href="http://ericli.top/2018/01/22/macOS%E5%AE%8C%E5%85%A8%E5%8D%B8%E8%BD%BD%E4%BD%BF%E7%94%A8dmg%E5%AE%89%E8%A3%85%E7%9A%84mysql/"/>
+    <id>http://ericli.top/2018/01/22/macOS完全卸载使用dmg安装的mysql/</id>
     <published>2018-01-21T16:00:00.000Z</published>
-    <updated>2018-01-22T11:42:40.644Z</updated>
+    <updated>2018-01-22T11:10:08.429Z</updated>
     
-    <content type="html"><![CDATA[<ol><li><p>MySQL有两种常用的引擎类型：MyISAM和InnoDB。目前只有InnoDB引擎类型支持外键约束。</p></li><li><p>外键的使用需要满足下列的条件：</p><ul><li>两张表必须都是InnoDB表，并且它们没有临时表。</li><li>建立外键关系的对应列必须具有相似的InnoDB内部数据类型。</li><li>建立外键关系的对应列必须建立了索引。</li><li>假如显式的给出了CONSTRAINT symbol，那symbol在数据库中必须是唯一的。假如没有显式的给出，InnoDB会自动的创建。</li></ul></li><li><p>外键的四种动作介绍：（默认是RESTRICT）</p><ul><li>CASCADE: 从父表中删除或更新对应的行，同时自动的删除或更新自表中匹配的行。ON DELETE CANSCADE和ON UPDATE CANSCADE都被InnoDB所支持。</li><li>SET NULL: 从父表中删除或更新对应的行，同时将子表中的外键列设为空。注意，这些在外键列没有被设为NOT NULL时才有效。ON DELETE SET NULL和ON UPDATE SET SET NULL都被InnoDB所支持。</li><li>NO ACTION: InnoDB拒绝删除或者更新父表。</li><li>RESTRICT: 拒绝删除或者更新父表。指定RESTRICT（或者NO ACTION）和忽略ON DELETE或者ON UPDATE选项的效果是一样的。</li></ul></li><li><p>外键的四种动作选择：</p><ul><li>父表更新时子表也更新（CASCADE），父表删除时如果子表有匹配的项，删除失败（RESTRICT）； </li><li>父表更新时子表也更新（CASCADE），父表删除时子表匹配的项也删除 （RESTRICT）。</li></ul></li><li><p><code>Cannot add foreign key constraint</code>, 这是创建外键时经常遇到的一个问题，排查方向：</p><ul><li>两边的类型属性等有出入（注意有些软件默认生成的id是有<code>unsigned</code> 的，注意观察两者类型是否一致）</li><li>某个表里面已经有值了</li></ul></li></ol>]]></content>
+    <content type="html"><![CDATA[<h2 id="凤头"><a href="#凤头" class="headerlink" title="凤头"></a>凤头</h2><p>事情的起因是当我执行这段sql语句时报错：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE `user` (</span><br><span class="line">  `id` int(11) unsigned NOT NULL AUTO_INCREMENT, </span><br><span class="line">  `name` varchar(20) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;姓名&apos;,</span><br><span class="line">  `email` varchar(30) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;邮箱&apos;,</span><br><span class="line">  `is_admin` tinyint(1) NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;是否是超级管理员 1表示是 0 表示不是&apos;,</span><br><span class="line">  `status` tinyint(1) NOT NULL DEFAULT &apos;1&apos; COMMENT &apos;状态 1：有效 0：无效&apos;,</span><br><span class="line">  `updated_time` timestamp NOT NULL DEFAULT &apos;0000-00-00 00:00:00&apos; COMMENT &apos;最后一次更新时间&apos;,</span><br><span class="line">  `created_time` timestamp NOT NULL DEFAULT &apos;0000-00-00 00:00:00&apos; COMMENT &apos;插入时间&apos;,</span><br><span class="line">  PRIMARY KEY (`id`),</span><br><span class="line">  KEY `idx_email` (`email`)</span><br><span class="line">) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT=&apos;用户表&apos;;</span><br></pre></td></tr></table></figure><p>报错的原因是<code>timestamp</code> 在目前版本默认不支持设置<code>0000-00-00 00:00:00</code> 为默认值。</p><hr><h2 id="猪肚"><a href="#猪肚" class="headerlink" title="猪肚"></a>猪肚</h2><h3 id="改默认时间"><a href="#改默认时间" class="headerlink" title="改默认时间"></a>改默认时间</h3><p>我在慕课网相关评论里边看到，只要把默认时间设置为<code>1997-01-01 00:00:00</code> 就可以了。</p><p>尝试&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;失败</p><h3 id="改配置文件my-cnf"><a href="#改配置文件my-cnf" class="headerlink" title="改配置文件my.cnf"></a>改配置文件<code>my.cnf</code></h3><p>据说可以修改<code>/etc/my.cnf</code> 中的<code>sql_mode</code> 使<code>timestamp</code> 支持设置<code>0000-00-00 00:00:00</code> 为默认值。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql_mode=STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION</span><br></pre></td></tr></table></figure><p>然而我却发现： 我并没有 <code>/etc/my.cnf</code> …..</p><p>于是，将<code>/usr/local/mysql/support-files/my-default.cnf</code> 复制到 <code>/etc/my.cnf</code></p><p>并配置</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql_mode=STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION</span><br></pre></td></tr></table></figure><p>然后进入系统设置，重启 mysql ，结果…..</p><hr><h2 id="豹尾"><a href="#豹尾" class="headerlink" title="豹尾"></a>豹尾</h2><p>接下来我就开始准备卸载 mysql ，转用 brew 重装 mysql</p><h3 id="删除-mysql-管理程序"><a href="#删除-mysql-管理程序" class="headerlink" title="删除 mysql 管理程序"></a>删除 mysql 管理程序</h3><p>进入 「系统偏好设置」 右键点 「mysql」 删除之。</p><h3 id="～～擦屁股～～-删除-mysql-残留文件"><a href="#～～擦屁股～～-删除-mysql-残留文件" class="headerlink" title="～～擦屁股～～ 删除 mysql 残留文件"></a>～～擦屁股～～ 删除 mysql 残留文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo rm -rf /usr/local/mysql</span><br><span class="line">sudo rm -rf /usr/local/opt/mysql</span><br><span class="line">sudo rm -rf /usr/local/share/mysql</span><br><span class="line">sudo rm -rf /usr/local/var/mysql</span><br><span class="line">sudo rm -rf /usr/local/include/mysql</span><br><span class="line">sudo rm -rf /usr/local/Cellar/mysql</span><br><span class="line">sudo rm -rf /usr/local/bin/mysql</span><br></pre></td></tr></table></figure><p>大概，，，删除完了吧。。。CleanMyMac 再清理一下吧，，，可怕</p>]]></content>
     
     <summary type="html">
     
-      记录了使用MySQL外键时踩过的坑。
+      当年因为脑子进水了用mysql官网的dmg安装了mysql；事实证明，脑子进的水，早晚得自己一点一点排出来。
     
     </summary>
     
     
+      <category term="macOS" scheme="http://ericli.top/tags/macOS/"/>
+    
       <category term="database" scheme="http://ericli.top/tags/database/"/>
     
       <category term="MySQL" scheme="http://ericli.top/tags/MySQL/"/>
+    
+      <category term="brew" scheme="http://ericli.top/tags/brew/"/>
     
   </entry>
   
@@ -113,28 +117,24 @@
   </entry>
   
   <entry>
-    <title>macOS完全卸载使用dmg安装的mysql</title>
-    <link href="http://ericli.top/2018/01/22/macOS%E5%AE%8C%E5%85%A8%E5%8D%B8%E8%BD%BD%E4%BD%BF%E7%94%A8dmg%E5%AE%89%E8%A3%85%E7%9A%84mysql/"/>
-    <id>http://ericli.top/2018/01/22/macOS完全卸载使用dmg安装的mysql/</id>
+    <title>MySQL外键踩坑记录</title>
+    <link href="http://ericli.top/2018/01/22/MySQL%E5%A4%96%E9%94%AE%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/"/>
+    <id>http://ericli.top/2018/01/22/MySQL外键踩坑记录/</id>
     <published>2018-01-21T16:00:00.000Z</published>
-    <updated>2018-01-22T11:10:08.429Z</updated>
+    <updated>2018-01-22T11:42:40.644Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="凤头"><a href="#凤头" class="headerlink" title="凤头"></a>凤头</h2><p>事情的起因是当我执行这段sql语句时报错：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE `user` (</span><br><span class="line">  `id` int(11) unsigned NOT NULL AUTO_INCREMENT, </span><br><span class="line">  `name` varchar(20) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;姓名&apos;,</span><br><span class="line">  `email` varchar(30) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;邮箱&apos;,</span><br><span class="line">  `is_admin` tinyint(1) NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;是否是超级管理员 1表示是 0 表示不是&apos;,</span><br><span class="line">  `status` tinyint(1) NOT NULL DEFAULT &apos;1&apos; COMMENT &apos;状态 1：有效 0：无效&apos;,</span><br><span class="line">  `updated_time` timestamp NOT NULL DEFAULT &apos;0000-00-00 00:00:00&apos; COMMENT &apos;最后一次更新时间&apos;,</span><br><span class="line">  `created_time` timestamp NOT NULL DEFAULT &apos;0000-00-00 00:00:00&apos; COMMENT &apos;插入时间&apos;,</span><br><span class="line">  PRIMARY KEY (`id`),</span><br><span class="line">  KEY `idx_email` (`email`)</span><br><span class="line">) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT=&apos;用户表&apos;;</span><br></pre></td></tr></table></figure><p>报错的原因是<code>timestamp</code> 在目前版本默认不支持设置<code>0000-00-00 00:00:00</code> 为默认值。</p><hr><h2 id="猪肚"><a href="#猪肚" class="headerlink" title="猪肚"></a>猪肚</h2><h3 id="改默认时间"><a href="#改默认时间" class="headerlink" title="改默认时间"></a>改默认时间</h3><p>我在慕课网相关评论里边看到，只要把默认时间设置为<code>1997-01-01 00:00:00</code> 就可以了。</p><p>尝试&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;失败</p><h3 id="改配置文件my-cnf"><a href="#改配置文件my-cnf" class="headerlink" title="改配置文件my.cnf"></a>改配置文件<code>my.cnf</code></h3><p>据说可以修改<code>/etc/my.cnf</code> 中的<code>sql_mode</code> 使<code>timestamp</code> 支持设置<code>0000-00-00 00:00:00</code> 为默认值。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql_mode=STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION</span><br></pre></td></tr></table></figure><p>然而我却发现： 我并没有 <code>/etc/my.cnf</code> …..</p><p>于是，将<code>/usr/local/mysql/support-files/my-default.cnf</code> 复制到 <code>/etc/my.cnf</code></p><p>并配置</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql_mode=STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION</span><br></pre></td></tr></table></figure><p>然后进入系统设置，重启 mysql ，结果…..</p><hr><h2 id="豹尾"><a href="#豹尾" class="headerlink" title="豹尾"></a>豹尾</h2><p>接下来我就开始准备卸载 mysql ，转用 brew 重装 mysql</p><h3 id="删除-mysql-管理程序"><a href="#删除-mysql-管理程序" class="headerlink" title="删除 mysql 管理程序"></a>删除 mysql 管理程序</h3><p>进入 「系统偏好设置」 右键点 「mysql」 删除之。</p><h3 id="～～擦屁股～～-删除-mysql-残留文件"><a href="#～～擦屁股～～-删除-mysql-残留文件" class="headerlink" title="～～擦屁股～～ 删除 mysql 残留文件"></a>～～擦屁股～～ 删除 mysql 残留文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo rm -rf /usr/local/mysql</span><br><span class="line">sudo rm -rf /usr/local/opt/mysql</span><br><span class="line">sudo rm -rf /usr/local/share/mysql</span><br><span class="line">sudo rm -rf /usr/local/var/mysql</span><br><span class="line">sudo rm -rf /usr/local/include/mysql</span><br><span class="line">sudo rm -rf /usr/local/Cellar/mysql</span><br><span class="line">sudo rm -rf /usr/local/bin/mysql</span><br></pre></td></tr></table></figure><p>大概，，，删除完了吧。。。CleanMyMac 再清理一下吧，，，可怕</p>]]></content>
+    <content type="html"><![CDATA[<ol><li><p>MySQL有两种常用的引擎类型：MyISAM和InnoDB。目前只有InnoDB引擎类型支持外键约束。</p></li><li><p>外键的使用需要满足下列的条件：</p><ul><li>两张表必须都是InnoDB表，并且它们没有临时表。</li><li>建立外键关系的对应列必须具有相似的InnoDB内部数据类型。</li><li>建立外键关系的对应列必须建立了索引。</li><li>假如显式的给出了CONSTRAINT symbol，那symbol在数据库中必须是唯一的。假如没有显式的给出，InnoDB会自动的创建。</li></ul></li><li><p>外键的四种动作介绍：（默认是RESTRICT）</p><ul><li>CASCADE: 从父表中删除或更新对应的行，同时自动的删除或更新自表中匹配的行。ON DELETE CANSCADE和ON UPDATE CANSCADE都被InnoDB所支持。</li><li>SET NULL: 从父表中删除或更新对应的行，同时将子表中的外键列设为空。注意，这些在外键列没有被设为NOT NULL时才有效。ON DELETE SET NULL和ON UPDATE SET SET NULL都被InnoDB所支持。</li><li>NO ACTION: InnoDB拒绝删除或者更新父表。</li><li>RESTRICT: 拒绝删除或者更新父表。指定RESTRICT（或者NO ACTION）和忽略ON DELETE或者ON UPDATE选项的效果是一样的。</li></ul></li><li><p>外键的四种动作选择：</p><ul><li>父表更新时子表也更新（CASCADE），父表删除时如果子表有匹配的项，删除失败（RESTRICT）； </li><li>父表更新时子表也更新（CASCADE），父表删除时子表匹配的项也删除 （RESTRICT）。</li></ul></li><li><p><code>Cannot add foreign key constraint</code>, 这是创建外键时经常遇到的一个问题，排查方向：</p><ul><li>两边的类型属性等有出入（注意有些软件默认生成的id是有<code>unsigned</code> 的，注意观察两者类型是否一致）</li><li>某个表里面已经有值了</li></ul></li></ol>]]></content>
     
     <summary type="html">
     
-      当年因为脑子进水了用mysql官网的dmg安装了mysql；事实证明，脑子进的水，早晚得自己一点一点排出来。
+      记录了使用MySQL外键时踩过的坑。
     
     </summary>
     
     
-      <category term="macOS" scheme="http://ericli.top/tags/macOS/"/>
-    
       <category term="database" scheme="http://ericli.top/tags/database/"/>
     
       <category term="MySQL" scheme="http://ericli.top/tags/MySQL/"/>
-    
-      <category term="brew" scheme="http://ericli.top/tags/brew/"/>
     
   </entry>
   
@@ -176,9 +176,9 @@
     </summary>
     
     
-      <category term="code" scheme="http://ericli.top/tags/code/"/>
-    
       <category term="Java" scheme="http://ericli.top/tags/Java/"/>
+    
+      <category term="code" scheme="http://ericli.top/tags/code/"/>
     
   </entry>
   
@@ -462,9 +462,9 @@
     </summary>
     
     
-      <category term="code" scheme="http://ericli.top/tags/code/"/>
-    
       <category term="Java" scheme="http://ericli.top/tags/Java/"/>
+    
+      <category term="code" scheme="http://ericli.top/tags/code/"/>
     
   </entry>
   
