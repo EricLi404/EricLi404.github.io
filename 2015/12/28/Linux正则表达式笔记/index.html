@@ -42,7 +42,7 @@
 <meta property="og:url" content="http://ericli.top/2015/12/28/Linux正则表达式笔记/index.html">
 <meta property="og:site_name" content="DropLet">
 <meta property="og:description" content="本文摘录了一些Linux正则表达式的使用方式。">
-<meta property="og:updated_time" content="2018-01-21T12:57:27.149Z">
+<meta property="og:updated_time" content="2018-01-29T01:33:18.455Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux正则表达式笔记">
 <meta name="twitter:description" content="本文摘录了一些Linux正则表达式的使用方式。">
@@ -334,16 +334,16 @@
 </tr>
 <tr>
 <td style="text-align:center">(?:pattern)</td>
-<td style="text-align:center">匹配 pattern 但不获取匹配结果，也就是说这是一个非获取匹配，不进行存储供以后使用。这在使用 “或” 字符 (</td>
-<td>) 来组合一个模式的各个部分是很有用。例如， ‘industr(?:y</td>
-<td>ies) 就是一个比 ‘industry</td>
+<td style="text-align:center">匹配 pattern 但不获取匹配结果，也就是说这是一个非获取匹配，不进行存储供以后使用。这在使用 “或” 字符 (\</td>
+<td>) 来组合一个模式的各个部分是很有用。例如， ‘industr(?:y\</td>
+<td>ies) 就是一个比 ‘industry\</td>
 <td>industries’ 更简略的表达式。</td>
 </tr>
 <tr>
 <td style="text-align:center">(?=pattern)</td>
-<td style="text-align:center">正向预查，在任何匹配 pattern 的字符串开始处匹配查找字符串。这是一个非获取匹配，也就是说，该匹配不需要获取供以后使用。例如，’Windows (?=95</td>
-<td>98</td>
-<td>NT</td>
+<td style="text-align:center">正向预查，在任何匹配 pattern 的字符串开始处匹配查找字符串。这是一个非获取匹配，也就是说，该匹配不需要获取供以后使用。例如，’Windows (?=95\</td>
+<td>98\</td>
+<td>NT\</td>
 <td>2000)’ 能匹配 “Windows 2000” 中的 “Windows” ，但不能匹配 “Windows 3.1” 中的 “Windows”。预查不消耗字符，也就是说，在一个匹配发生后，在最后一次匹配之后立即开始下一次匹配的搜索，而不是从包含预查的字符之后开始。</td>
 </tr>
 <tr>
