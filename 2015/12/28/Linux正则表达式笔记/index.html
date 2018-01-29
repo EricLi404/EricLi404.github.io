@@ -42,7 +42,7 @@
 <meta property="og:url" content="http://ericli.top/2015/12/28/Linux正则表达式笔记/index.html">
 <meta property="og:site_name" content="DropLet">
 <meta property="og:description" content="本文摘录了一些Linux正则表达式的使用方式。">
-<meta property="og:updated_time" content="2018-01-29T01:37:39.077Z">
+<meta property="og:updated_time" content="2018-01-29T01:40:28.188Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux正则表达式笔记">
 <meta name="twitter:description" content="本文摘录了一些Linux正则表达式的使用方式。">
@@ -193,22 +193,27 @@
 <tr>
 <td style="text-align:center">*</td>
 <td style="text-align:center">匹配前面的子表达式0次或多次</td>
+<td style="text-align:center"></td>
 </tr>
 <tr>
 <td style="text-align:center">+</td>
 <td style="text-align:center">匹配前面的子表达式1次或多次</td>
+<td style="text-align:center"></td>
 </tr>
 <tr>
 <td style="text-align:center">?</td>
 <td style="text-align:center">匹配前面的子表达式0次或1次</td>
+<td style="text-align:center"></td>
 </tr>
 <tr>
 <td style="text-align:center">\</td>
 <td style="text-align:center">将下一个字符标记为特殊字符、原义字符、向后引用、八进制转义符</td>
+<td style="text-align:center"></td>
 </tr>
 <tr>
 <td style="text-align:center">^</td>
 <td style="text-align:center">匹配输入字符串的开始</td>
+<td style="text-align:center"></td>
 </tr>
 <tr>
 <td style="text-align:center">$</td>
@@ -218,6 +223,7 @@
 <tr>
 <td style="text-align:center">（）</td>
 <td style="text-align:center">标记一个子表达式的开始和结束部分</td>
+<td style="text-align:center"></td>
 </tr>
 <tr>
 <td style="text-align:center">[]</td>
@@ -227,10 +233,10 @@
 <tr>
 <td style="text-align:center">{</td>
 <td style="text-align:center">标记限定符表达式的开始</td>
+<td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">\</td>
-<td style="text-align:center"></td>
+<td style="text-align:center">&#124;</td>
 <td style="text-align:center">指明两项之间的一个选择</td>
 </tr>
 </tbody>
@@ -454,6 +460,10 @@
 <tr>
 <td style="text-align:center">^, $,\anymetacharacter</td>
 <td style="text-align:left">位置和顺序</td>
+</tr>
+<tr>
+<td style="text-align:center">&#124;</td>
+<td style="text-align:left">“或”操作</td>
 </tr>
 </tbody>
 </table>
