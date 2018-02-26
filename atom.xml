@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ericli.top/"/>
-  <updated>2018-01-24T15:50:15.895Z</updated>
+  <updated>2018-02-26T09:45:40.298Z</updated>
   <id>http://ericli.top/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>简历</title>
+    <link href="http://ericli.top/2018/02/26/%E7%AE%80%E5%8E%86/"/>
+    <id>http://ericli.top/2018/02/26/简历/</id>
+    <published>2018-02-25T16:00:00.000Z</published>
+    <updated>2018-02-26T09:45:40.298Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="个人信息"><a href="#个人信息" class="headerlink" title="个人信息"></a>个人信息</h2><ul><li>李宇阳/男/1996</li><li>本科/网络工程/济南大学</li><li>期望职位：PHP/前端/…</li><li>手机：18612563467</li><li>邮箱：job@ericli.top</li><li>博客：<a href="http://csdn.ericli.top" target="_blank" rel="noopener">http://csdn.ericli.top</a></li><li>轮子：<a href="https://github.com/EricLi404" target="_blank" rel="noopener">https://github.com/EricLi404</a></li></ul><h2 id="个人技能"><a href="#个人技能" class="headerlink" title="个人技能"></a>个人技能</h2><ul><li>掌握 PHP 语言和 TP 等常用框架</li><li>熟悉 LNMP/LAMP/LNMPA 开发栈</li><li>熟悉 Shell 脚本以及 composer/git 等常用工具</li><li>熟悉 MySQL ,了解 Memcache/Redis 等缓存技术</li><li>了解 HTML/CSS/JavaScript/Ajax 等 Web 前端技术</li></ul><h2 id="校内经历"><a href="#校内经历" class="headerlink" title="校内经历"></a>校内经历</h2><ul><li>担任济南大学电脑协会网站部部长，负责web相关技术培训</li><li>获批计算机软件著作权一项，SRT两项</li><li>“思科网院杯”2016年度大学生网络技术大赛本科组全国一等奖</li><li>“CCCC”2017网络技术挑战赛华东赛区三等奖</li></ul><h2 id="项目经历"><a href="#项目经历" class="headerlink" title="项目经历"></a>项目经历</h2><h4 id="高校成果管理系统"><a href="#高校成果管理系统" class="headerlink" title="高校成果管理系统"></a>高校成果管理系统</h4><p>使用PHP作为开发语言，TP5作为基本框架，调用多个插件，如Bootstrap，Layer，SweetAlert等，开发了一个具有信息管理系统、内容管理系统、用户管理系统等子系统的信息综合管理系统；独立进行了架构设计，数据库设计，代码实现以及系统上线部署；且此项目申报了了SRT课题和软件著作权。</p><h4 id="济南大学资助管理中心"><a href="#济南大学资助管理中心" class="headerlink" title="济南大学资助管理中心"></a>济南大学资助管理中心</h4><p>使用DedeCMS开发了具有内容管理系统的济南大学资助管理中心门户网站，负责资助管理中心门户网站的日常维护和改版；负责资助管理中心经济困难学生认定系统维护。</p><h4 id="铁塔代维平台"><a href="#铁塔代维平台" class="headerlink" title="铁塔代维平台"></a>铁塔代维平台</h4><p>使用MUI、jQuery等前端框架，调用高德地图及HTML5PLUS相关接口，对接服务端的Web service，开发了一个具有GIS系统的代维平台APP；独立进行了APP端的架构设计、代码实现以及打包发布。</p><h2 id="致谢"><a href="#致谢" class="headerlink" title="致谢"></a>致谢</h2><p>感谢您花时间阅读我的简历，期待能有机会和您共事。</p>]]></content>
+    
+    <summary type="html">
+    
+      找工作啦～
+    
+    </summary>
+    
+    
+      <category term="PHP" scheme="http://ericli.top/tags/PHP/"/>
+    
+  </entry>
   
   <entry>
     <title>nginx笔记</title>
@@ -32,9 +52,9 @@
     </summary>
     
     
-      <category term="Linux" scheme="http://ericli.top/tags/Linux/"/>
-    
       <category term="macOS" scheme="http://ericli.top/tags/macOS/"/>
+    
+      <category term="Linux" scheme="http://ericli.top/tags/Linux/"/>
     
       <category term="shell" scheme="http://ericli.top/tags/shell/"/>
     
@@ -56,37 +76,11 @@
     </summary>
     
     
+      <category term="macOS" scheme="http://ericli.top/tags/macOS/"/>
+    
       <category term="Linux" scheme="http://ericli.top/tags/Linux/"/>
     
-      <category term="macOS" scheme="http://ericli.top/tags/macOS/"/>
-    
       <category term="shell" scheme="http://ericli.top/tags/shell/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>macOS完全卸载使用dmg安装的mysql</title>
-    <link href="http://ericli.top/2018/01/22/macOS%E5%AE%8C%E5%85%A8%E5%8D%B8%E8%BD%BD%E4%BD%BF%E7%94%A8dmg%E5%AE%89%E8%A3%85%E7%9A%84mysql/"/>
-    <id>http://ericli.top/2018/01/22/macOS完全卸载使用dmg安装的mysql/</id>
-    <published>2018-01-21T16:00:00.000Z</published>
-    <updated>2018-01-22T11:10:08.429Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="凤头"><a href="#凤头" class="headerlink" title="凤头"></a>凤头</h2><p>事情的起因是当我执行这段sql语句时报错：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE `user` (</span><br><span class="line">  `id` int(11) unsigned NOT NULL AUTO_INCREMENT, </span><br><span class="line">  `name` varchar(20) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;姓名&apos;,</span><br><span class="line">  `email` varchar(30) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;邮箱&apos;,</span><br><span class="line">  `is_admin` tinyint(1) NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;是否是超级管理员 1表示是 0 表示不是&apos;,</span><br><span class="line">  `status` tinyint(1) NOT NULL DEFAULT &apos;1&apos; COMMENT &apos;状态 1：有效 0：无效&apos;,</span><br><span class="line">  `updated_time` timestamp NOT NULL DEFAULT &apos;0000-00-00 00:00:00&apos; COMMENT &apos;最后一次更新时间&apos;,</span><br><span class="line">  `created_time` timestamp NOT NULL DEFAULT &apos;0000-00-00 00:00:00&apos; COMMENT &apos;插入时间&apos;,</span><br><span class="line">  PRIMARY KEY (`id`),</span><br><span class="line">  KEY `idx_email` (`email`)</span><br><span class="line">) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT=&apos;用户表&apos;;</span><br></pre></td></tr></table></figure><p>报错的原因是<code>timestamp</code> 在目前版本默认不支持设置<code>0000-00-00 00:00:00</code> 为默认值。</p><hr><h2 id="猪肚"><a href="#猪肚" class="headerlink" title="猪肚"></a>猪肚</h2><h3 id="改默认时间"><a href="#改默认时间" class="headerlink" title="改默认时间"></a>改默认时间</h3><p>我在慕课网相关评论里边看到，只要把默认时间设置为<code>1997-01-01 00:00:00</code> 就可以了。</p><p>尝试&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;失败</p><h3 id="改配置文件my-cnf"><a href="#改配置文件my-cnf" class="headerlink" title="改配置文件my.cnf"></a>改配置文件<code>my.cnf</code></h3><p>据说可以修改<code>/etc/my.cnf</code> 中的<code>sql_mode</code> 使<code>timestamp</code> 支持设置<code>0000-00-00 00:00:00</code> 为默认值。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql_mode=STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION</span><br></pre></td></tr></table></figure><p>然而我却发现： 我并没有 <code>/etc/my.cnf</code> …..</p><p>于是，将<code>/usr/local/mysql/support-files/my-default.cnf</code> 复制到 <code>/etc/my.cnf</code></p><p>并配置</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql_mode=STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION</span><br></pre></td></tr></table></figure><p>然后进入系统设置，重启 mysql ，结果…..</p><hr><h2 id="豹尾"><a href="#豹尾" class="headerlink" title="豹尾"></a>豹尾</h2><p>接下来我就开始准备卸载 mysql ，转用 brew 重装 mysql</p><h3 id="删除-mysql-管理程序"><a href="#删除-mysql-管理程序" class="headerlink" title="删除 mysql 管理程序"></a>删除 mysql 管理程序</h3><p>进入 「系统偏好设置」 右键点 「mysql」 删除之。</p><h3 id="～～擦屁股～～-删除-mysql-残留文件"><a href="#～～擦屁股～～-删除-mysql-残留文件" class="headerlink" title="～～擦屁股～～ 删除 mysql 残留文件"></a>～～擦屁股～～ 删除 mysql 残留文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo rm -rf /usr/local/mysql</span><br><span class="line">sudo rm -rf /usr/local/opt/mysql</span><br><span class="line">sudo rm -rf /usr/local/share/mysql</span><br><span class="line">sudo rm -rf /usr/local/var/mysql</span><br><span class="line">sudo rm -rf /usr/local/include/mysql</span><br><span class="line">sudo rm -rf /usr/local/Cellar/mysql</span><br><span class="line">sudo rm -rf /usr/local/bin/mysql</span><br></pre></td></tr></table></figure><p>大概，，，删除完了吧。。。CleanMyMac 再清理一下吧，，，可怕</p>]]></content>
-    
-    <summary type="html">
-    
-      当年因为脑子进水了用mysql官网的dmg安装了mysql；事实证明，脑子进的水，早晚得自己一点一点排出来。
-    
-    </summary>
-    
-    
-      <category term="database" scheme="http://ericli.top/tags/database/"/>
-    
-      <category term="MySQL" scheme="http://ericli.top/tags/MySQL/"/>
-    
-      <category term="macOS" scheme="http://ericli.top/tags/macOS/"/>
-    
-      <category term="brew" scheme="http://ericli.top/tags/brew/"/>
     
   </entry>
   
@@ -128,13 +122,39 @@
     </summary>
     
     
+      <category term="macOS" scheme="http://ericli.top/tags/macOS/"/>
+    
       <category term="database" scheme="http://ericli.top/tags/database/"/>
     
       <category term="Linux" scheme="http://ericli.top/tags/Linux/"/>
     
       <category term="MySQL" scheme="http://ericli.top/tags/MySQL/"/>
     
+  </entry>
+  
+  <entry>
+    <title>macOS完全卸载使用dmg安装的mysql</title>
+    <link href="http://ericli.top/2018/01/22/macOS%E5%AE%8C%E5%85%A8%E5%8D%B8%E8%BD%BD%E4%BD%BF%E7%94%A8dmg%E5%AE%89%E8%A3%85%E7%9A%84mysql/"/>
+    <id>http://ericli.top/2018/01/22/macOS完全卸载使用dmg安装的mysql/</id>
+    <published>2018-01-21T16:00:00.000Z</published>
+    <updated>2018-01-22T11:10:08.429Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="凤头"><a href="#凤头" class="headerlink" title="凤头"></a>凤头</h2><p>事情的起因是当我执行这段sql语句时报错：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE `user` (</span><br><span class="line">  `id` int(11) unsigned NOT NULL AUTO_INCREMENT, </span><br><span class="line">  `name` varchar(20) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;姓名&apos;,</span><br><span class="line">  `email` varchar(30) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;邮箱&apos;,</span><br><span class="line">  `is_admin` tinyint(1) NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;是否是超级管理员 1表示是 0 表示不是&apos;,</span><br><span class="line">  `status` tinyint(1) NOT NULL DEFAULT &apos;1&apos; COMMENT &apos;状态 1：有效 0：无效&apos;,</span><br><span class="line">  `updated_time` timestamp NOT NULL DEFAULT &apos;0000-00-00 00:00:00&apos; COMMENT &apos;最后一次更新时间&apos;,</span><br><span class="line">  `created_time` timestamp NOT NULL DEFAULT &apos;0000-00-00 00:00:00&apos; COMMENT &apos;插入时间&apos;,</span><br><span class="line">  PRIMARY KEY (`id`),</span><br><span class="line">  KEY `idx_email` (`email`)</span><br><span class="line">) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT=&apos;用户表&apos;;</span><br></pre></td></tr></table></figure><p>报错的原因是<code>timestamp</code> 在目前版本默认不支持设置<code>0000-00-00 00:00:00</code> 为默认值。</p><hr><h2 id="猪肚"><a href="#猪肚" class="headerlink" title="猪肚"></a>猪肚</h2><h3 id="改默认时间"><a href="#改默认时间" class="headerlink" title="改默认时间"></a>改默认时间</h3><p>我在慕课网相关评论里边看到，只要把默认时间设置为<code>1997-01-01 00:00:00</code> 就可以了。</p><p>尝试&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;失败</p><h3 id="改配置文件my-cnf"><a href="#改配置文件my-cnf" class="headerlink" title="改配置文件my.cnf"></a>改配置文件<code>my.cnf</code></h3><p>据说可以修改<code>/etc/my.cnf</code> 中的<code>sql_mode</code> 使<code>timestamp</code> 支持设置<code>0000-00-00 00:00:00</code> 为默认值。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql_mode=STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION</span><br></pre></td></tr></table></figure><p>然而我却发现： 我并没有 <code>/etc/my.cnf</code> …..</p><p>于是，将<code>/usr/local/mysql/support-files/my-default.cnf</code> 复制到 <code>/etc/my.cnf</code></p><p>并配置</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql_mode=STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION</span><br></pre></td></tr></table></figure><p>然后进入系统设置，重启 mysql ，结果…..</p><hr><h2 id="豹尾"><a href="#豹尾" class="headerlink" title="豹尾"></a>豹尾</h2><p>接下来我就开始准备卸载 mysql ，转用 brew 重装 mysql</p><h3 id="删除-mysql-管理程序"><a href="#删除-mysql-管理程序" class="headerlink" title="删除 mysql 管理程序"></a>删除 mysql 管理程序</h3><p>进入 「系统偏好设置」 右键点 「mysql」 删除之。</p><h3 id="～～擦屁股～～-删除-mysql-残留文件"><a href="#～～擦屁股～～-删除-mysql-残留文件" class="headerlink" title="～～擦屁股～～ 删除 mysql 残留文件"></a>～～擦屁股～～ 删除 mysql 残留文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo rm -rf /usr/local/mysql</span><br><span class="line">sudo rm -rf /usr/local/opt/mysql</span><br><span class="line">sudo rm -rf /usr/local/share/mysql</span><br><span class="line">sudo rm -rf /usr/local/var/mysql</span><br><span class="line">sudo rm -rf /usr/local/include/mysql</span><br><span class="line">sudo rm -rf /usr/local/Cellar/mysql</span><br><span class="line">sudo rm -rf /usr/local/bin/mysql</span><br></pre></td></tr></table></figure><p>大概，，，删除完了吧。。。CleanMyMac 再清理一下吧，，，可怕</p>]]></content>
+    
+    <summary type="html">
+    
+      当年因为脑子进水了用mysql官网的dmg安装了mysql；事实证明，脑子进的水，早晚得自己一点一点排出来。
+    
+    </summary>
+    
+    
       <category term="macOS" scheme="http://ericli.top/tags/macOS/"/>
+    
+      <category term="database" scheme="http://ericli.top/tags/database/"/>
+    
+      <category term="MySQL" scheme="http://ericli.top/tags/MySQL/"/>
+    
+      <category term="brew" scheme="http://ericli.top/tags/brew/"/>
     
   </entry>
   
@@ -161,26 +181,6 @@
   </entry>
   
   <entry>
-    <title>Alfred 3 等破解版软件每次开机运行后都提示是否允许访问通讯录</title>
-    <link href="http://ericli.top/2017/11/09/Alfred%203%20%E7%AD%89%E7%A0%B4%E8%A7%A3%E7%89%88%E8%BD%AF%E4%BB%B6%E6%AF%8F%E6%AC%A1%E5%BC%80%E6%9C%BA%E8%BF%90%E8%A1%8C%E5%90%8E%E9%83%BD%E6%8F%90%E7%A4%BA%E6%98%AF%E5%90%A6%E5%85%81%E8%AE%B8%E8%AE%BF%E9%97%AE%E9%80%9A%E8%AE%AF%E5%BD%95/"/>
-    <id>http://ericli.top/2017/11/09/Alfred 3 等破解版软件每次开机运行后都提示是否允许访问通讯录/</id>
-    <published>2017-11-08T16:00:00.000Z</published>
-    <updated>2018-01-21T12:51:55.914Z</updated>
-    
-    <content type="html"><![CDATA[<p>和谐版的Alfred 3 在每次开机后，都会提示“是否允许访问通讯录”的弹窗，让人不胜其烦。<br>这是因为和谐片的App丢失了签名导致不会自动加入系统。</p><p>以 Alfred 3 为例的处理方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo codesign -f -d -s - /Applications/Alfred\ 3.app/Contents/Frameworks/Alfred\ Framework.framework/Versions/A/Alfred\ Framework</span><br></pre></td></tr></table></figure></p><p>感谢<a href="http://xclient.info" target="_blank" rel="noopener">xclient.info</a></p>]]></content>
-    
-    <summary type="html">
-    
-      和谐版的Alfred 3 在每次开机后，都会提示“是否允许访问通讯录”的弹窗，让人不胜其烦。本文记录了其解决方案，方案来自[xclient.info](http://xclient.info)。
-    
-    </summary>
-    
-    
-      <category term="macOS" scheme="http://ericli.top/tags/macOS/"/>
-    
-  </entry>
-  
-  <entry>
     <title>根据先序和中序遍历重建二叉树Java实现</title>
     <link href="http://ericli.top/2017/11/09/%E6%A0%B9%E6%8D%AE%E5%85%88%E5%BA%8F%E5%92%8C%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86%E9%87%8D%E5%BB%BA%E4%BA%8C%E5%8F%89%E6%A0%91Java%E5%AE%9E%E7%8E%B0/"/>
     <id>http://ericli.top/2017/11/09/根据先序和中序遍历重建二叉树Java实现/</id>
@@ -199,6 +199,26 @@
       <category term="Java" scheme="http://ericli.top/tags/Java/"/>
     
       <category term="code" scheme="http://ericli.top/tags/code/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Alfred 3 等破解版软件每次开机运行后都提示是否允许访问通讯录</title>
+    <link href="http://ericli.top/2017/11/09/Alfred%203%20%E7%AD%89%E7%A0%B4%E8%A7%A3%E7%89%88%E8%BD%AF%E4%BB%B6%E6%AF%8F%E6%AC%A1%E5%BC%80%E6%9C%BA%E8%BF%90%E8%A1%8C%E5%90%8E%E9%83%BD%E6%8F%90%E7%A4%BA%E6%98%AF%E5%90%A6%E5%85%81%E8%AE%B8%E8%AE%BF%E9%97%AE%E9%80%9A%E8%AE%AF%E5%BD%95/"/>
+    <id>http://ericli.top/2017/11/09/Alfred 3 等破解版软件每次开机运行后都提示是否允许访问通讯录/</id>
+    <published>2017-11-08T16:00:00.000Z</published>
+    <updated>2018-01-21T12:51:55.914Z</updated>
+    
+    <content type="html"><![CDATA[<p>和谐版的Alfred 3 在每次开机后，都会提示“是否允许访问通讯录”的弹窗，让人不胜其烦。<br>这是因为和谐片的App丢失了签名导致不会自动加入系统。</p><p>以 Alfred 3 为例的处理方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo codesign -f -d -s - /Applications/Alfred\ 3.app/Contents/Frameworks/Alfred\ Framework.framework/Versions/A/Alfred\ Framework</span><br></pre></td></tr></table></figure></p><p>感谢<a href="http://xclient.info" target="_blank" rel="noopener">xclient.info</a></p>]]></content>
+    
+    <summary type="html">
+    
+      和谐版的Alfred 3 在每次开机后，都会提示“是否允许访问通讯录”的弹窗，让人不胜其烦。本文记录了其解决方案，方案来自[xclient.info](http://xclient.info)。
+    
+    </summary>
+    
+    
+      <category term="macOS" scheme="http://ericli.top/tags/macOS/"/>
     
   </entry>
   
@@ -288,9 +308,9 @@
     
       <category term="PHP" scheme="http://ericli.top/tags/PHP/"/>
     
-      <category term="brew" scheme="http://ericli.top/tags/brew/"/>
-    
       <category term="Apache" scheme="http://ericli.top/tags/Apache/"/>
+    
+      <category term="brew" scheme="http://ericli.top/tags/brew/"/>
     
       <category term="nginx" scheme="http://ericli.top/tags/nginx/"/>
     
@@ -313,26 +333,6 @@
     
     
       <category term="macOS" scheme="http://ericli.top/tags/macOS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>简历</title>
-    <link href="http://ericli.top/2017/06/14/%E7%AE%80%E5%8E%86/"/>
-    <id>http://ericli.top/2017/06/14/简历/</id>
-    <published>2017-06-13T16:00:00.000Z</published>
-    <updated>2018-02-26T09:43:47.378Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="个人信息"><a href="#个人信息" class="headerlink" title="个人信息"></a>个人信息</h2><ul><li>李宇阳/男/1996</li><li>本科/网络工程/济南大学</li><li>期望职位：PHP/前端/…</li><li>手机：18612563467</li><li>邮箱：job@ericli.top</li><li>博客：<a href="http://csdn.ericli.top" target="_blank" rel="noopener">http://csdn.ericli.top</a></li><li>轮子：<a href="https://github.com/EricLi404" target="_blank" rel="noopener">https://github.com/EricLi404</a></li></ul><h2 id="个人技能"><a href="#个人技能" class="headerlink" title="个人技能"></a>个人技能</h2><ul><li>掌握 PHP 语言和 TP 等常用框架</li><li>熟悉 LNMP/LAMP/LNMPA 开发栈</li><li>熟悉 Shell 脚本以及 composer/git 等常用工具</li><li>熟悉 MySQL ,了解 Memcache/Redis 等缓存技术</li><li>了解 HTML/CSS/JavaScript/Ajax 等 Web 前端技术</li></ul><h2 id="校内经历"><a href="#校内经历" class="headerlink" title="校内经历"></a>校内经历</h2><ul><li>担任济南大学电脑协会网站部部长，负责web相关技术培训</li><li>获批计算机软件著作权一项，SRT两项</li><li>“思科网院杯”2016年度大学生网络技术大赛本科组全国一等奖</li><li>“CCCC”2017网络技术挑战赛华东赛区三等奖</li></ul><h2 id="项目经历"><a href="#项目经历" class="headerlink" title="项目经历"></a>项目经历</h2><h4 id="高校成果管理系统"><a href="#高校成果管理系统" class="headerlink" title="高校成果管理系统"></a>高校成果管理系统</h4><p>使用PHP作为开发语言，TP5作为基本框架，调用多个插件，如Bootstrap，Layer，SweetAlert等，开发了一个具有信息管理系统、内容管理系统、用户管理系统等子系统的信息综合管理系统；独立进行了架构设计，数据库设计，代码实现以及系统上线部署；且此项目申报了了SRT课题和软件著作权。</p><h4 id="济南大学资助管理中心"><a href="#济南大学资助管理中心" class="headerlink" title="济南大学资助管理中心"></a>济南大学资助管理中心</h4><p>使用DedeCMS开发了具有内容管理系统的济南大学资助管理中心门户网站，负责资助管理中心门户网站的日常维护和改版；负责资助管理中心经济困难学生认定系统维护。</p><h4 id="铁塔代维平台"><a href="#铁塔代维平台" class="headerlink" title="铁塔代维平台"></a>铁塔代维平台</h4><p>使用MUI、jQuery等前端框架，调用高德地图及HTML5PLUS相关接口，对接服务端的Web service，开发了一个具有GIS系统的代维平台APP；独立进行了APP端的架构设计、代码实现以及打包发布。</p><h2 id="致谢"><a href="#致谢" class="headerlink" title="致谢"></a>致谢</h2><p>感谢您花时间阅读我的简历，期待能有机会和您共事。</p>]]></content>
-    
-    <summary type="html">
-    
-      找工作啦～
-    
-    </summary>
-    
-    
-      <category term="PHP" scheme="http://ericli.top/tags/PHP/"/>
     
   </entry>
   
@@ -374,9 +374,9 @@
     </summary>
     
     
-      <category term="Linux" scheme="http://ericli.top/tags/Linux/"/>
-    
       <category term="macOS" scheme="http://ericli.top/tags/macOS/"/>
+    
+      <category term="Linux" scheme="http://ericli.top/tags/Linux/"/>
     
   </entry>
   
